@@ -1,0 +1,9 @@
+include: package:lint/analysis_options.yaml
+
+linter:
+  rules:
+    avoid_escaping_inner_quotes: false
+    avoid_void_async: false
+    avoid_positional_boolean_parameters: false
+    prefer_const_literals_to_create_immutables: false
+    sort_pub_dependencies: false
