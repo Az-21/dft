@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'DFT Calculator',
       theme: Themes().lightTheme,
       darkTheme: Themes().darkTheme,
-      themeMode: ThemeServie().getThemeMode(),
+      themeMode: ThemeService().getThemeMode(),
       home: const DarkModeHome(),
     );
   }
@@ -33,7 +33,7 @@ class DarkModeHome extends StatefulWidget {
 }
 
 class _DarkModeHomeState extends State<DarkModeHome> {
-  bool value = ThemeServie().isSavedDarkMode();
+  bool value = ThemeService().isSavedDarkMode();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +51,7 @@ class _DarkModeHomeState extends State<DarkModeHome> {
             value: value,
             onChanged: (value) => setState(() {
               this.value = value;
-              ThemeServie().changeThemeMode(value);
+              ThemeService().changeThemeMode(value);
             }),
           ),
         ],
