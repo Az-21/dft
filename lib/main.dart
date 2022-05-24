@@ -1,11 +1,11 @@
 import 'package:dft/src/about.dart';
 import 'package:dft/src/home.dart';
+import 'package:dft/theme/theme.dart';
+import 'package:dft/theme/theme_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import './theme/theme.dart';
-import './theme/theme_service.dart';
 
 void main() async {
   await GetStorage.init();

@@ -5,7 +5,6 @@ class AboutPage extends StatelessWidget {
   const AboutPage({Key? key}) : super(key: key);
 
   static const _androidURL = 'https://play.google.com/store/apps/details?id=com.flutterDevAz21.dft';
-
   static const _websiteURL = 'https://dft-calculator-az-21.vercel.app/';
 
 // Launch Play Store Listing
@@ -45,22 +44,24 @@ class AboutPage extends StatelessWidget {
             title: const Text('Website | Progressive Web App'),
             subtitle: const Text('DFT Calculator on Web'),
             trailing: IconButton(
-                icon: const Icon(
-                  Icons.launch,
-                  color: Colors.green,
-                ),
-                onPressed: _launchWeb),
+              icon: const Icon(
+                Icons.launch,
+                color: Colors.green,
+              ),
+              onPressed: _launchWeb,
+            ),
           ),
           ListTile(
             leading: const Icon(Icons.phone_android_sharp),
             title: const Text('Google Play Store'),
             subtitle: const Text('DFT Calculator on App'),
             trailing: IconButton(
-                icon: const Icon(
-                  Icons.launch,
-                  color: Colors.green,
-                ),
-                onPressed: _launchAndroid),
+              icon: const Icon(
+                Icons.launch,
+                color: Colors.green,
+              ),
+              onPressed: _launchAndroid,
+            ),
           ),
           const Text(
             '                   Google Play is trademark of Google LLC',

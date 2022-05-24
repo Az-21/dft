@@ -73,8 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           FloatingActionButton(
-            backgroundColor: Colors.green,
-            foregroundColor: Colors.white,
+            elevation: 10,
             onPressed: _addPoint,
             child: const Icon(Icons.post_add_outlined),
           ),
@@ -82,8 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 20,
           ),
           FloatingActionButton(
-            backgroundColor: Colors.redAccent,
-            foregroundColor: Colors.white,
             onPressed: _removePoint,
             heroTag: null,
             child: const Icon(Icons.delete_forever),
