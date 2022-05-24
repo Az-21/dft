@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import 'package:complex/complex.dart';
-import 'package:flutter/material.dart';
 import 'package:dft/src/functions.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ResultsPage extends StatefulWidget {
@@ -95,8 +95,6 @@ class _ResultsPageState extends State<ResultsPage> {
         onPressed: () => Get.back(),
         label: const Text('Back'),
         icon: const Icon(Icons.arrow_back_ios_sharp),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
       ),
       //
       //

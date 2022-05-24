@@ -21,7 +21,7 @@ String printDiscretePoint(String prefix, int index, String real, String img) {
 /// ----------------------------------------------
 List<Complex> getFFT(List<Complex> inputSignal) {
   // ⸻⸻⸻⸻⸻⸻⸻⸻⸻
-  // * FFT -> Adds padding if necessairy
+  // * FFT -> Adds padding if necessary
   // ⸻⸻⸻⸻⸻⸻⸻⸻⸻
   if (!isPowerOfTwo(inputSignal.length)) {
     // ignore: parameter_assignments

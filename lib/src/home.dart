@@ -89,8 +89,6 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 20,
           ),
           FloatingActionButton.extended(
-            backgroundColor: Colors.blue,
-            foregroundColor: Colors.white,
             icon: const Icon(Icons.arrow_forward_ios_sharp),
             label: const Text('Evaluate'),
             onPressed: _resultsPage,
