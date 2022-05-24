@@ -1,5 +1,6 @@
 import 'package:complex/complex.dart';
 import 'package:dft/src/functions.dart';
+import 'package:dft/theme/theme_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -105,15 +106,18 @@ class _ResultsPageState extends State<ResultsPage> {
         children: [
           /// * Precision Picker
           Container(
-            color: Colors.green,
+            color: Theme.of(context).colorScheme.background,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 20),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
                   child: Text(
                     'Precision',
-                    style: TextStyle(color: Colors.white, fontSize: 24),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground,
+                      fontSize: 24,
+                    ),
                   ),
                 ),
                 const Icon(Icons.swap_vert_outlined, color: Colors.white, size: 40),
@@ -208,11 +212,11 @@ class _ResultsPageState extends State<ResultsPage> {
                     ),
                     subtitle: Text(
                       printDiscretePoint('F', index, result[0][index], result[1][index]),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'Inconsolata',
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.w900,
-                        color: Colors.blue,
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                     ),
                   ),

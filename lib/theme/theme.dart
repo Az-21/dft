@@ -15,6 +15,7 @@ class Themes {
     useMaterial3: true,
     colorScheme: ColorScheme.fromSwatch(
       primarySwatch: Colors.green,
+      brightness: Brightness.light,
     ),
   );
 }
