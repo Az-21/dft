@@ -34,6 +34,7 @@ class DarkModeHome extends StatefulWidget {
 
 class _DarkModeHomeState extends State<DarkModeHome> {
   bool value = ThemeService().isSavedDarkMode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

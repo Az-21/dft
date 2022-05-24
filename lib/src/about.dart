@@ -4,9 +4,17 @@ import 'package:url_launcher/url_launcher.dart';
 class AboutPage extends StatelessWidget {
   const AboutPage({Key? key}) : super(key: key);
 
+  static const _androidURL = 'https://play.google.com/store/apps/details?id=com.flutterDevAz21.dft';
+
   static const _websiteURL = 'https://dft-calculator-az-21.vercel.app/';
-  static const _androidURL =
-      'https://play.google.com/store/apps/details?id=com.flutterDevAz21.dft';
+
+// Launch Play Store Listing
+  void _launchAndroid() async =>
+      await canLaunch(_androidURL) ? await launch(_androidURL) : throw 'Could not launch $_androidURL';
+
+// Launch WebApp
+  void _launchWeb() async =>
+      await canLaunch(_websiteURL) ? await launch(_websiteURL) : throw 'Could not launch $_websiteURL';
 
   @override
   Widget build(BuildContext context) {
@@ -73,14 +81,4 @@ class AboutPage extends StatelessWidget {
       ),
     );
   }
-
-// Launch WebApp
-  void _launchWeb() async => await canLaunch(_websiteURL)
-      ? await launch(_websiteURL)
-      : throw 'Could not launch $_websiteURL';
-
-// Launch Play Store Listing
-  void _launchAndroid() async => await canLaunch(_androidURL)
-      ? await launch(_androidURL)
-      : throw 'Could not launch $_androidURL';
 }

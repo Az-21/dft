@@ -11,9 +11,7 @@ String printDiscretePoint(String prefix, int index, String real, String img) {
   real.startsWith('-') ? pointValue += '$real ' : pointValue += ' $real ';
 
   /// * +/- sign aware imaginary part
-  img.startsWith('-')
-      ? pointValue += '- (${img.substring(1)})i'
-      : pointValue += '+ ($img)i';
+  img.startsWith('-') ? pointValue += '- (${img.substring(1)})i' : pointValue += '+ ($img)i';
 
   return pointValue;
 }
@@ -118,11 +116,11 @@ List<Complex> findFFT(List<Complex> f) {
 /// * Class to hold and display data on chart
 /// ----------------------------------------------
 class ChartFFT {
-  final int time;
-  final double realMag;
-  final double imgMag; // not final because of syncfusion bug. see result.dart
-
   ChartFFT(this.time, this.realMag, this.imgMag);
+
+  final double imgMag; // not final because of syncfusion bug. see result.dart
+  final double realMag;
+  final int time;
 }
 
 /// -------------------------------------------------------

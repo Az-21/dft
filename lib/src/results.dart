@@ -17,16 +17,22 @@ class _ResultsPageState extends State<ResultsPage> {
   // ignore: type_annotate_public_apis
   var data = Get.arguments;
 
+  List<ChartFFT> fftChartData = [];
+  List<double> img = [];
+  List<Complex> inputSignal = [];
+  // * List of precision digits for CupertinoPicker
+  List<int> precisionList = List<int>.generate(16, (i) => i + 1);
+
   /// * Extract list of string from the data
   // Init lists
   List<double> real = [];
-  List<double> img = [];
-  List<Complex> inputSignal = [];
+
   List<List<String>> result = [];
+
   // Chart
   late TooltipBehavior _tooltipBehavior;
+
   late ZoomPanBehavior _zoomPanBehavior;
-  List<ChartFFT> fftChartData = [];
 
   // Extract data
   @override
@@ -79,9 +85,6 @@ class _ResultsPageState extends State<ResultsPage> {
     );
   }
 
-  // * List of precision digits for CupertinoPicker
-  List<int> precisionList = List<int>.generate(16, (i) => i + 1);
-
   /// -------------------------------------------------------
   /// * User Interface
   /// -------------------------------------------------------
@@ -115,14 +118,12 @@ class _ResultsPageState extends State<ResultsPage> {
                     style: TextStyle(color: Colors.white, fontSize: 24),
                   ),
                 ),
-                const Icon(Icons.swap_vert_outlined,
-                    color: Colors.white, size: 40),
+                const Icon(Icons.swap_vert_outlined, color: Colors.white, size: 40),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.15,
                   width: MediaQuery.of(context).size.width * 0.40,
                   child: CupertinoPicker(
-                    scrollController:
-                        FixedExtentScrollController(initialItem: 2),
+                    scrollController: FixedExtentScrollController(initialItem: 2),
                     diameterRatio: 1,
                     itemExtent: 40,
                     looping: true,
@@ -133,8 +134,7 @@ class _ResultsPageState extends State<ResultsPage> {
                     children: [
                       for (int precision in precisionList)
                         Center(
-                          child: Text('$precision',
-                              style: const TextStyle(color: Colors.white)),
+                          child: Text('$precision', style: const TextStyle(color: Colors.white)),
                         ),
                     ],
                   ),
@@ -203,15 +203,13 @@ class _ResultsPageState extends State<ResultsPage> {
                 child: ListTile(
                   title: ListTile(
                     title: Text(
-                      printDiscretePoint('f', index, real[index].toString(),
-                          img[index].toString()),
+                      printDiscretePoint('f', index, real[index].toString(), img[index].toString()),
                       style: const TextStyle(
                         fontFamily: 'Inconsolata',
                       ),
                     ),
                     subtitle: Text(
-                      printDiscretePoint(
-                          'F', index, result[0][index], result[1][index]),
+                      printDiscretePoint('F', index, result[0][index], result[1][index]),
                       style: const TextStyle(
                         fontFamily: 'Inconsolata',
                         fontSize: 18,

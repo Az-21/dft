@@ -12,9 +12,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<TextEditingController> img = [TextEditingController()];
   // * Text Controllers
   List<TextEditingController> real = [TextEditingController()];
-  List<TextEditingController> img = [TextEditingController()];
+
+  /// * Tracker for number of points
+  int _numPoints = 1;
 
   /// * Set inital state to have 0 + i(0)
   @override
@@ -23,9 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
     real[0].text = '0';
     img[0].text = '0';
   }
-
-  /// * Tracker for number of points
-  int _numPoints = 1;
 
   /// * Add a discrete point
   void _addPoint() {
@@ -54,8 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // Update UI
       setState(() {});
     } else {
-      Get.snackbar('Info', 'At least one point is required',
-          barBlur: 100, icon: const Icon(Icons.info_outline));
+      Get.snackbar('Info', 'At least one point is required', barBlur: 100, icon: const Icon(Icons.info_outline));
     }
   }
 
@@ -114,8 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
               // * Print Point
               ListTile(
                 title: Text(
-                  printDiscretePoint(
-                      'x', index, real[index].text, img[index].text),
+                  printDiscretePoint('x', index, real[index].text, img[index].text),
                   style: const TextStyle(fontFamily: 'Inconsolata'),
                 ),
                 leading: const Icon(Icons.label_important_outline),
@@ -132,11 +130,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
 
                       /// * Allow only double input
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp(r'(^\-?\d*\.?\d*)')),
+                        FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)')),
                       ],
 
                       /// * Update UI
@@ -166,11 +162,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
 
                       /// Allow only double
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp(r'(^\-?\d*\.?\d*)')),
+                        FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)')),
                       ],
 
                       /// * Update UI
