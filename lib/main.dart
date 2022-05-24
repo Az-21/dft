@@ -46,7 +46,7 @@ class _DarkModeHomeState extends State<DarkModeHome> {
           IconButton(
             icon: const Icon(Icons.info_outline),
             onPressed: () => Get.to(() => const AboutPage()),
-            iconSize: 38,
+            iconSize: 24,
           ),
           CupertinoSwitch(
             value: value,
