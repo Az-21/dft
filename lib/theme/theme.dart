@@ -5,11 +5,16 @@ import 'package:flutter/material.dart';
 class Themes {
   final darkTheme = ThemeData.dark().copyWith(
     useMaterial3: true,
-    brightness: Brightness.dark,
+    colorScheme: ColorScheme.fromSwatch(
+      primarySwatch: Colors.green,
+      brightness: Brightness.dark,
+    ),
   );
 
   final lightTheme = ThemeData.light().copyWith(
     useMaterial3: true,
-    brightness: Brightness.light,
+    colorScheme: ColorScheme.fromSwatch(
+      primarySwatch: Colors.green,
+    ),
   );
 }
