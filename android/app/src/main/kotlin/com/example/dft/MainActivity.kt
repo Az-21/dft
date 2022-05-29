@@ -1,4 +1,4 @@
-package com.example.dft
+package com.flutterDevAz21.dft
 
 import io.flutter.embedding.android.FlutterActivity
 
