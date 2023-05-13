@@ -16,14 +16,14 @@ dependencies:
   get: ^4.1.1
   get_storage: ^2.0.1
   complex: ^0.7.2
-  syncfusion_flutter_charts: ^20.1.57
+  syncfusion_flutter_charts: ^21.2.4
   url_launcher: ^6.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.9.0
-  lint: ^1.5.3
+  flutter_launcher_icons: ^0.13.1
+  lint: ^2.1.2
 
 flutter_icons:
   android: true
