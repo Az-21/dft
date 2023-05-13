@@ -1,6 +1,5 @@
 import 'package:complex/complex.dart';
 import 'package:dft/src/functions.dart';
-import 'package:dft/theme/theme_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,24 +14,21 @@ class ResultsPage extends StatefulWidget {
 
 class _ResultsPageState extends State<ResultsPage> {
   /// * Get data from home page
-  // ignore: type_annotate_public_apis
   var data = Get.arguments;
 
   List<ChartFFT> fftChartData = [];
   List<double> img = [];
   List<Complex> inputSignal = [];
+
   // * List of precision digits for CupertinoPicker
   List<int> precisionList = List<int>.generate(16, (i) => i + 1);
 
   /// * Extract list of string from the data
-  // Init lists
   List<double> real = [];
-
   List<List<String>> result = [];
 
   // Chart
   late TooltipBehavior _tooltipBehavior;
-
   late ZoomPanBehavior _zoomPanBehavior;
 
   // Extract data
@@ -120,7 +116,11 @@ class _ResultsPageState extends State<ResultsPage> {
                     ),
                   ),
                 ),
-                const Icon(Icons.swap_vert_outlined, color: Colors.white, size: 40),
+                const Icon(
+                  Icons.swap_vert_outlined,
+                  color: Colors.white,
+                  size: 40,
+                ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.15,
                   width: MediaQuery.of(context).size.width * 0.40,
@@ -195,7 +195,8 @@ class _ResultsPageState extends State<ResultsPage> {
           ListView.separated(
             // rename to ListView.builder if separator isn't required
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            itemCount: result[0].length, // length of result FFT with padding
+            itemCount: result[0].length,
+            // length of result FFT with padding
             shrinkWrap: true,
             physics: const ClampingScrollPhysics(),
             // Widget children
