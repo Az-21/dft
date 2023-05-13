@@ -126,7 +126,6 @@ class _ResultsPageState extends State<ResultsPage> {
                   width: MediaQuery.of(context).size.width * 0.40,
                   child: CupertinoPicker(
                     scrollController: FixedExtentScrollController(initialItem: 2),
-                    diameterRatio: 1,
                     itemExtent: 40,
                     looping: true,
                     onSelectedItemChanged: (value) {
