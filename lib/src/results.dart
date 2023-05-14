@@ -56,7 +56,7 @@ class _ResultsPageState extends State<ResultsPage> {
     }
 
     /// * Calculate fft of input signal
-    result = resultFFT(inputSignal, 12);
+    result = resultFFT(inputSignal, 3);
 
     /// * Pad the input signal to prevent index error
     final List<double> padding = List.filled(result[0].length - real.length, 0);
