@@ -197,7 +197,7 @@ class _ResultsPageState extends State<ResultsPage> {
                 child: ListTile(
                   title: ListTile(
                     title: Text(
-                      printDiscretePoint('f', index, real[index].toString(), img[index].toString()),
+                      printDiscretePoint('x', index, real[index].toString(), img[index].toString()),
                       style: const TextStyle(fontFamily: 'Inconsolata'),
                     ),
                     subtitle: Text(
