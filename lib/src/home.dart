@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -13,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<TextEditingController> img = [TextEditingController()];
+
   // * Text Controllers
   List<TextEditingController> real = [TextEditingController()];
 
@@ -183,10 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         // Separator
         separatorBuilder: (_, index) {
-          return const Divider(
-            height: 20,
-            thickness: 2,
-          );
+          return const SizedBox(height: 20);
         },
       ),
     );
