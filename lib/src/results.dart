@@ -89,9 +89,10 @@ class _ResultsPageState extends State<ResultsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
+        elevation: 0,
         onPressed: () => Get.back(),
         label: const Text('Back'),
-        icon: const Icon(Icons.arrow_back_ios_sharp),
+        icon: const Icon(Icons.arrow_back),
       ),
       //
       //
