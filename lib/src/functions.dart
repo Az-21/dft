@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:complex/complex.dart';
 
 /// ----------------------------------------------
@@ -132,8 +133,14 @@ List<List<String>> resultFFT(List<Complex> inputSignal, int precision) {
 
   final List<Complex> outputSignal = getFFT(inputSignal);
   for (final Complex complexNum in outputSignal) {
-    outputReal.add(complexNum.real.toStringAsFixed(precision));
-    outputImg.add(complexNum.imaginary.toStringAsFixed(precision));
+    // Apply fixed precision
+    final double real = complexNum.real;
+    final String fReal = real.toStringAsFixed(precision);
+    final double img = complexNum.imaginary;
+    final String fImg = img.toStringAsFixed(precision);
+
+    outputReal.add(fReal);
+    outputImg.add(fImg);
   }
   return [outputReal, outputImg];
 }
