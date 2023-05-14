@@ -2,7 +2,6 @@ import 'package:dft/src/about.dart';
 import 'package:dft/src/home.dart';
 import 'package:dft/theme/theme.dart';
 import 'package:dft/theme/theme_service.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
 }
 
 class DarkModeHome extends StatefulWidget {
-  const DarkModeHome({Key? key}) : super(key: key);
+  const DarkModeHome({super.key});
 
   @override
   _DarkModeHomeState createState() => _DarkModeHomeState();
@@ -48,7 +47,7 @@ class _DarkModeHomeState extends State<DarkModeHome> {
             onPressed: () => Get.to(() => const AboutPage()),
             iconSize: 24,
           ),
-          CupertinoSwitch(
+          Switch(
             value: value,
             onChanged: (value) => setState(() {
               this.value = value;
