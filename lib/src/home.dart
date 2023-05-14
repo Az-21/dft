@@ -74,9 +74,10 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           FloatingActionButton(
-            elevation: 10,
             onPressed: _addPoint,
-            child: const Icon(Icons.post_add_outlined),
+            elevation: 0,
+            backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+            child: Icon(Icons.add, color: Theme.of(context).colorScheme.onSecondaryContainer),
           ),
           const SizedBox(
             height: 20,
@@ -84,13 +85,16 @@ class _HomeScreenState extends State<HomeScreen> {
           FloatingActionButton(
             onPressed: _removePoint,
             heroTag: null,
-            child: const Icon(Icons.delete_forever),
+            elevation: 0,
+            backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+            child: Icon(Icons.remove, color: Theme.of(context).colorScheme.onSecondaryContainer),
           ),
           const SizedBox(
             height: 20,
           ),
           FloatingActionButton.extended(
-            icon: const Icon(Icons.arrow_forward_ios_sharp),
+            elevation: 0,
+            icon: const Icon(Icons.insights),
             label: const Text('Evaluate'),
             onPressed: _resultsPage,
             heroTag: null,
