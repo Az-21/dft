@@ -55,7 +55,13 @@ class _HomeScreenState extends State<HomeScreen> {
       // Update UI
       setState(() {});
     } else {
-      Get.snackbar('Info', 'At least one point is required', barBlur: 100, icon: const Icon(Icons.info_outline));
+      Get.snackbar(
+        'Info',
+        'At least one point is required',
+        icon: const Icon(Icons.info_outline),
+        colorText: Theme.of(context).colorScheme.onPrimaryContainer,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      );
     }
   }
 
