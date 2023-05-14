@@ -56,7 +56,7 @@ class _ResultsPageState extends State<ResultsPage> {
     }
 
     /// * Calculate fft of input signal
-    result = resultFFT(inputSignal, 3);
+    result = resultFFT(inputSignal, 12);
 
     /// * Pad the input signal to prevent index error
     final List<double> padding = List.filled(result[0].length - real.length, 0);
@@ -101,47 +101,37 @@ class _ResultsPageState extends State<ResultsPage> {
         physics: const ClampingScrollPhysics(),
         children: [
           /// * Precision Picker
-          Container(
-            color: Theme.of(context).colorScheme.background,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Text(
-                    'Precision',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onBackground,
-                      fontSize: 24,
-                    ),
-                  ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Text('Precision', style: TextStyle(fontSize: 24)),
+              ),
+              const Icon(
+                Icons.swap_vert_outlined,
+                size: 40,
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.15,
+                width: MediaQuery.of(context).size.width * 0.40,
+                child: CupertinoPicker(
+                  scrollController: FixedExtentScrollController(initialItem: 2),
+                  itemExtent: 40,
+                  looping: true,
+                  onSelectedItemChanged: (value) {
+                    result = resultFFT(inputSignal, value + 1);
+                    setState(() {});
+                  },
+                  children: [
+                    for (int precision in precisionList)
+                      Center(
+                        child: Text('$precision'),
+                      ),
+                  ],
                 ),
-                const Icon(
-                  Icons.swap_vert_outlined,
-                  color: Colors.white,
-                  size: 40,
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.15,
-                  width: MediaQuery.of(context).size.width * 0.40,
-                  child: CupertinoPicker(
-                    scrollController: FixedExtentScrollController(initialItem: 2),
-                    itemExtent: 40,
-                    looping: true,
-                    onSelectedItemChanged: (value) {
-                      result = resultFFT(inputSignal, value + 1);
-                      setState(() {});
-                    },
-                    children: [
-                      for (int precision in precisionList)
-                        Center(
-                          child: Text('$precision', style: const TextStyle(color: Colors.white)),
-                        ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
 
           /// * Chart
@@ -206,18 +196,11 @@ class _ResultsPageState extends State<ResultsPage> {
                   title: ListTile(
                     title: Text(
                       printDiscretePoint('f', index, real[index].toString(), img[index].toString()),
-                      style: const TextStyle(
-                        fontFamily: 'Inconsolata',
-                      ),
+                      style: const TextStyle(fontFamily: 'Inconsolata'),
                     ),
                     subtitle: Text(
                       printDiscretePoint('F', index, result[0][index], result[1][index]),
-                      style: TextStyle(
-                        fontFamily: 'Inconsolata',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w900,
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
+                      style: const TextStyle(fontFamily: 'Inconsolata', fontSize: 16, fontWeight: FontWeight.w900),
                     ),
                   ),
                 ),
