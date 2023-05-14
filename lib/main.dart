@@ -62,8 +62,8 @@ class _DarkModeHomeState extends State<DarkModeHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 72,
-        elevation: 5,
+        toolbarHeight: 100,
+        elevation: 1,
         title: const Text('DFT Calculator'),
         actions: [
           IconButton(
