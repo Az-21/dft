@@ -1,5 +1,3 @@
-// * Theme data
-
 import 'package:flutter/material.dart';
 
 class Themes {
