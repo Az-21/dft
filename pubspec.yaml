@@ -18,6 +18,7 @@ dependencies:
   complex: ^0.7.2
   syncfusion_flutter_charts: ^21.2.4
   url_launcher: ^6.0.3
+  dynamic_color: ^1.6.3
 
 dev_dependencies:
   flutter_test:
