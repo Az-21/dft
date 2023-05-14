@@ -191,7 +191,8 @@ class _ResultsPageState extends State<ResultsPage> {
             // Widget children
             itemBuilder: (_, index) {
               return Card(
-                elevation: 3,
+                elevation: 0,
+                color: Theme.of(context).colorScheme.surfaceVariant,
                 child: ListTile(
                   title: ListTile(
                     title: Text(
