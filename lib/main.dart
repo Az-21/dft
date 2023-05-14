@@ -38,8 +38,8 @@ class MyApp extends StatelessWidget {
 
         return GetMaterialApp(
           title: 'DFT Calculator',
-          theme: ThemeData(colorScheme: lightColorScheme),
-          darkTheme: ThemeData(colorScheme: darkColorScheme),
+          theme: ThemeData(colorScheme: lightColorScheme, useMaterial3: true),
+          darkTheme: ThemeData(colorScheme: darkColorScheme, useMaterial3: true),
           themeMode: ThemeService().getThemeMode(),
           home: const DarkModeHome(),
         );

@@ -1,13 +1,11 @@
 name: dft
 description: Calculate Discrete Fourier Transform using Radix2 Algorithm.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
-
-# Internal version + Google Play Store build number (unique int)
 version: 1.3.0+6
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: '>=3.1.0-63.1.beta <4.0.0'
 
 dependencies:
   flutter:
@@ -23,17 +21,14 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_lints: ^2.0.0
   flutter_launcher_icons: ^0.13.1
   lint: ^2.1.2
 
-flutter_icons:
-  android: true
+flutter_launcher_icons:
+  android: "launcher_icon"
   image_path: "assets/icon/icon.png"
 
 flutter:
   uses-material-design: true
-
-  fonts:
-    - family: Inconsolata
-      fonts:
-        - asset: fonts/Inconsolata-Regular.ttf
