@@ -184,7 +184,7 @@ class _ResultsPageState extends State<ResultsPage> {
           /// * Results
           ListView.separated(
             // rename to ListView.builder if separator isn't required
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             itemCount: result[0].length,
             // length of result FFT with padding
             shrinkWrap: true,
@@ -193,21 +193,19 @@ class _ResultsPageState extends State<ResultsPage> {
             itemBuilder: (_, index) {
               return Card(
                 elevation: 0,
-                color: Theme.of(context).colorScheme.surfaceVariant,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Theme.of(context).colorScheme.outline),
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                ),
                 child: ListTile(
                   title: ListTile(
                     title: Text(
-                      printDiscretePoint('x', index, real[index].toString(),
-                          img[index].toString()),
+                      printDiscretePoint('x', index, real[index].toString(), img[index].toString()),
                       style: const TextStyle(fontFamily: 'Inconsolata'),
                     ),
                     subtitle: Text(
-                      printDiscretePoint(
-                          'F', index, result[0][index], result[1][index]),
-                      style: const TextStyle(
-                          fontFamily: 'Inconsolata',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w900),
+                      printDiscretePoint('F', index, result[0][index], result[1][index]),
+                      style: const TextStyle(fontFamily: 'Inconsolata', fontSize: 16, fontWeight: FontWeight.w900),
                     ),
                   ),
                 ),
@@ -215,9 +213,12 @@ class _ResultsPageState extends State<ResultsPage> {
             },
             // Separator
             separatorBuilder: (_, index) {
-              return const SizedBox(height: 10);
+              return const SizedBox(height: 2);
             },
           ),
+
+          // Allow some overscroll (prevent "Back" button showing over last result)
+          const SizedBox(height: 64),
         ],
       ),
     );
