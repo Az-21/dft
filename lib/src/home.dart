@@ -8,7 +8,7 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   /// * Tracker for number of points
   int _numPoints = 1;
 
-  /// * Set inital state to have 0 + i(0)
+  /// * Set initial state to have 0 + i(0)
   @override
   void initState() {
     super.initState();
@@ -83,7 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: _addPoint,
             elevation: 0,
             backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-            child: Icon(Icons.add, color: Theme.of(context).colorScheme.onSecondaryContainer),
+            child: Icon(Icons.add,
+                color: Theme.of(context).colorScheme.onSecondaryContainer),
           ),
           const SizedBox(
             height: 20,
@@ -93,7 +94,8 @@ class _HomeScreenState extends State<HomeScreen> {
             heroTag: null,
             elevation: 0,
             backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-            child: Icon(Icons.remove, color: Theme.of(context).colorScheme.onSecondaryContainer),
+            child: Icon(Icons.remove,
+                color: Theme.of(context).colorScheme.onSecondaryContainer),
           ),
           const SizedBox(
             height: 20,
@@ -119,7 +121,8 @@ class _HomeScreenState extends State<HomeScreen> {
               // * Print Point
               ListTile(
                 title: Text(
-                  printDiscretePoint('x', index, real[index].text, img[index].text),
+                  printDiscretePoint(
+                      'x', index, real[index].text, img[index].text),
                   style: const TextStyle(fontFamily: 'Inconsolata'),
                 ),
                 leading: const Icon(Icons.label_important_outline),
@@ -136,9 +139,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
 
                       /// * Allow only double input
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)')),
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'(^\-?\d*\.?\d*)')),
                       ],
 
                       /// * Update UI
@@ -168,9 +173,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
 
                       /// Allow only double
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)')),
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'(^\-?\d*\.?\d*)')),
                       ],
 
                       /// * Update UI

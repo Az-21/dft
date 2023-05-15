@@ -8,12 +8,14 @@ import 'package:get_storage/get_storage.dart';
 
 void main() async {
   await GetStorage.init();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 const _fallbackGreen = Color(0xFF386A20);
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return DynamicColorBuilder(
@@ -39,7 +41,8 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           title: 'DFT Calculator',
           theme: ThemeData(colorScheme: lightColorScheme, useMaterial3: true),
-          darkTheme: ThemeData(colorScheme: darkColorScheme, useMaterial3: true),
+          darkTheme:
+              ThemeData(colorScheme: darkColorScheme, useMaterial3: true),
           themeMode: ThemeService().getThemeMode(),
           home: const DarkModeHome(),
         );
@@ -52,7 +55,7 @@ class DarkModeHome extends StatefulWidget {
   const DarkModeHome({super.key});
 
   @override
-  _DarkModeHomeState createState() => _DarkModeHomeState();
+  State createState() => _DarkModeHomeState();
 }
 
 class _DarkModeHomeState extends State<DarkModeHome> {

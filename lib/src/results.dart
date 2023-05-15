@@ -9,7 +9,7 @@ class ResultsPage extends StatefulWidget {
   const ResultsPage({super.key});
 
   @override
-  _ResultsPageState createState() => _ResultsPageState();
+  State createState() => _ResultsPageState();
 }
 
 class _ResultsPageState extends State<ResultsPage> {
@@ -63,7 +63,7 @@ class _ResultsPageState extends State<ResultsPage> {
     real += padding;
     img += padding;
 
-    /// * Create chart datapoint
+    /// * Create chart data point
     for (var index = 0; index < result[0].length; index++) {
       final ChartFFT o = ChartFFT(
         index,
@@ -197,12 +197,17 @@ class _ResultsPageState extends State<ResultsPage> {
                 child: ListTile(
                   title: ListTile(
                     title: Text(
-                      printDiscretePoint('x', index, real[index].toString(), img[index].toString()),
+                      printDiscretePoint('x', index, real[index].toString(),
+                          img[index].toString()),
                       style: const TextStyle(fontFamily: 'Inconsolata'),
                     ),
                     subtitle: Text(
-                      printDiscretePoint('F', index, result[0][index], result[1][index]),
-                      style: const TextStyle(fontFamily: 'Inconsolata', fontSize: 16, fontWeight: FontWeight.w900),
+                      printDiscretePoint(
+                          'F', index, result[0][index], result[1][index]),
+                      style: const TextStyle(
+                          fontFamily: 'Inconsolata',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w900),
                     ),
                   ),
                 ),
