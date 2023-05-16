@@ -35,6 +35,11 @@ const List<List<String>> constDataCredit = [
     "${_github}material-foundation/flutter-packages/tree/main/packages/dynamic_color",
   ],
   [
+    "Flutter Animate",
+    "BSD 3-Clause License",
+    "${_github}gskinner/flutter_animate",
+  ],
+  [
     "Syncfusion Flutter Charts",
     "Syncfusion Community License",
     "${_github}syncfusion/flutter-widgets/tree/master/packages/syncfusion_flutter_charts",
