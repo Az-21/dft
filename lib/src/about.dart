@@ -1,6 +1,7 @@
 import 'package:dft/constant/about.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 Future<void> _launchUrl(String url) async {
   final Uri uri = Uri.parse(url);
@@ -63,7 +64,7 @@ class ListTilesFromIterable extends StatelessWidget {
           onPressed: () => _launchUrl(iterable[index][2]),
           icon: const Icon(Icons.open_in_new),
         ),
-      ),
+      ).animate(delay: (index * 100).milliseconds).flipV(),
     );
   }
 }
@@ -77,7 +78,7 @@ class CreditsListTile extends StatelessWidget {
       leading: Icon(Icons.favorite_outline, color: Theme.of(context).colorScheme.error),
       title: const Text("Credits"),
       subtitle: const Text("Special thanks to these open source projects"),
-    );
+    ).animate(delay: 300.milliseconds).fadeIn();
   }
 }
 
