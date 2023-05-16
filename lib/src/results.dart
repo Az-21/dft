@@ -96,10 +96,7 @@ class _ResultsPageState extends State<ResultsPage> {
                 padding: EdgeInsets.only(left: 20),
                 child: Text('Precision', style: TextStyle(fontSize: 24)),
               ),
-              const Icon(
-                Icons.swap_vert_outlined,
-                size: 40,
-              ),
+              const Icon(Icons.swap_vert_outlined, size: 40),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.15,
                 width: MediaQuery.of(context).size.width * 0.40,
@@ -128,7 +125,6 @@ class _ResultsPageState extends State<ResultsPage> {
 
 class InteractiveChart extends StatelessWidget {
   final List<ChartFFT> fftChartData;
-  final _tooltipBehavior = TooltipBehavior(enable: true);
   final _zoomPanBehavior = ZoomPanBehavior(enablePinching: true, enablePanning: true);
   InteractiveChart({super.key, required this.fftChartData});
 
@@ -140,24 +136,26 @@ class InteractiveChart extends StatelessWidget {
         child: SfCartesianChart(
           title: ChartTitle(text: 'Graphical Result'),
           primaryXAxis: NumericAxis(
-            majorTickLines: const MajorTickLines(size: 6, width: 2, color: Colors.red),
-            minorTickLines: const MinorTickLines(size: 4, width: 2, color: Colors.blue),
-            minorTicksPerInterval: 2,
             crossesAt: 0,
+            minorTicksPerInterval: 2,
+            majorTickLines: const MajorTickLines(size: 6, width: 2),
           ),
-          tooltipBehavior: _tooltipBehavior,
           zoomPanBehavior: _zoomPanBehavior,
           legend: Legend(isVisible: true, position: LegendPosition.bottom),
           series: <ChartSeries>[
-            LineSeries<ChartFFT, int>(
+            ColumnSeries<ChartFFT, int>(
               name: 'Real Part',
+              width: 0.05,
+              opacity: 0.3,
               dataSource: fftChartData,
               markerSettings: const MarkerSettings(isVisible: true),
               xValueMapper: (ChartFFT data, _) => data.time,
               yValueMapper: (ChartFFT data, _) => data.realMag,
             ),
-            LineSeries<ChartFFT, int>(
+            ColumnSeries<ChartFFT, int>(
               name: 'Imaginary Part',
+              width: 0.05,
+              opacity: 0.3,
               dataSource: fftChartData,
               markerSettings: const MarkerSettings(isVisible: true),
               xValueMapper: (ChartFFT data, _) => data.time,
