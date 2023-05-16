@@ -115,7 +115,7 @@ class _ResultsPageState extends State<ResultsPage> {
           ),
 
           InteractiveChart(fftChartData: fftChartData),
-          Results(result: result, real: real, img: img),
+          NumericResults(result: result, real: real, img: img),
           const SizedBox(height: 64) // Allow some over-scroll
         ],
       ),
@@ -168,8 +168,8 @@ class InteractiveChart extends StatelessWidget {
   }
 }
 
-class Results extends StatelessWidget {
-  const Results({
+class NumericResults extends StatelessWidget {
+  const NumericResults({
     super.key,
     required this.result,
     required this.real,
