@@ -2,6 +2,7 @@ import 'package:complex/complex.dart';
 import 'package:dft/src/functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -19,17 +20,12 @@ class _ResultsPageState extends State<ResultsPage> {
   List<ChartFFT> fftChartData = [];
   List<double> img = [];
   List<Complex> inputSignal = [];
-
   // * List of precision digits for CupertinoPicker
   List<int> precisionList = List<int>.generate(16, (i) => i + 1);
 
   /// * Extract list of string from the data
   List<double> real = [];
   List<List<String>> result = [];
-
-  // Chart
-  late TooltipBehavior _tooltipBehavior;
-  late ZoomPanBehavior _zoomPanBehavior;
 
   // Extract data
   @override
@@ -74,12 +70,6 @@ class _ResultsPageState extends State<ResultsPage> {
     }
 
     /// * Tooltip + zoom for chart
-    _tooltipBehavior = TooltipBehavior(enable: true);
-    _zoomPanBehavior = ZoomPanBehavior(
-      enablePinching: true,
-      enableDoubleTapZooming: true,
-      enablePanning: true,
-    );
   }
 
   /// -------------------------------------------------------
@@ -94,9 +84,6 @@ class _ResultsPageState extends State<ResultsPage> {
         label: const Text('Back'),
         icon: const Icon(Icons.arrow_back),
       ),
-      //
-      //
-      //
       body: ListView(
         shrinkWrap: true,
         physics: const ClampingScrollPhysics(),
@@ -124,103 +111,113 @@ class _ResultsPageState extends State<ResultsPage> {
                     result = resultFFT(inputSignal, value + 1);
                     setState(() {});
                   },
-                  children: [
-                    for (int precision in precisionList)
-                      Center(
-                        child: Text('$precision'),
-                      ),
-                  ],
+                  children: [for (int precision in precisionList) Center(child: Text('$precision'))],
                 ),
               ),
             ],
           ),
 
-          /// * Chart
-          Center(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.65,
-              child: SfCartesianChart(
-                title: ChartTitle(text: 'Graphical Result'),
-                primaryXAxis: NumericAxis(
-                  majorTickLines: const MajorTickLines(
-                    size: 6,
-                    width: 2,
-                    color: Colors.red,
-                  ),
-                  minorTickLines: const MinorTickLines(
-                    size: 4,
-                    width: 2,
-                    color: Colors.blue,
-                  ),
-                  minorTicksPerInterval: 2,
-                  crossesAt: 0,
-                ),
-                tooltipBehavior: _tooltipBehavior,
-                legend: Legend(
-                  isVisible: true,
-                  position: LegendPosition.bottom,
-                ),
-                zoomPanBehavior: _zoomPanBehavior,
-                series: <ChartSeries>[
-                  LineSeries<ChartFFT, int>(
-                    name: 'Real Part',
-                    dataSource: fftChartData,
-                    markerSettings: const MarkerSettings(isVisible: true),
-                    xValueMapper: (ChartFFT data, _) => data.time,
-                    yValueMapper: (ChartFFT data, _) => data.realMag,
-                  ),
-                  LineSeries<ChartFFT, int>(
-                    name: 'Imaginary Part',
-                    dataSource: fftChartData,
-                    markerSettings: const MarkerSettings(isVisible: true),
-                    xValueMapper: (ChartFFT data, _) => data.time,
-                    yValueMapper: (ChartFFT data, _) => data.imgMag,
-                  ),
-                ],
+          InteractiveChart(fftChartData: fftChartData),
+          Results(result: result, real: real, img: img),
+          const SizedBox(height: 64) // Allow some over-scroll
+        ],
+      ),
+    );
+  }
+}
+
+class InteractiveChart extends StatelessWidget {
+  final List<ChartFFT> fftChartData;
+  final _tooltipBehavior = TooltipBehavior(enable: true);
+  final _zoomPanBehavior = ZoomPanBehavior(enablePinching: true, enablePanning: true);
+  InteractiveChart({super.key, required this.fftChartData});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        // height: MediaQuery.of(context).size.height * 0.50,
+        child: SfCartesianChart(
+          title: ChartTitle(text: 'Graphical Result'),
+          primaryXAxis: NumericAxis(
+            majorTickLines: const MajorTickLines(size: 6, width: 2, color: Colors.red),
+            minorTickLines: const MinorTickLines(size: 4, width: 2, color: Colors.blue),
+            minorTicksPerInterval: 2,
+            crossesAt: 0,
+          ),
+          tooltipBehavior: _tooltipBehavior,
+          zoomPanBehavior: _zoomPanBehavior,
+          legend: Legend(isVisible: true, position: LegendPosition.bottom),
+          series: <ChartSeries>[
+            LineSeries<ChartFFT, int>(
+              name: 'Real Part',
+              dataSource: fftChartData,
+              markerSettings: const MarkerSettings(isVisible: true),
+              xValueMapper: (ChartFFT data, _) => data.time,
+              yValueMapper: (ChartFFT data, _) => data.realMag,
+            ),
+            LineSeries<ChartFFT, int>(
+              name: 'Imaginary Part',
+              dataSource: fftChartData,
+              markerSettings: const MarkerSettings(isVisible: true),
+              xValueMapper: (ChartFFT data, _) => data.time,
+              yValueMapper: (ChartFFT data, _) => data.imgMag,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Results extends StatelessWidget {
+  const Results({
+    super.key,
+    required this.result,
+    required this.real,
+    required this.img,
+  });
+
+  final List<double> img;
+  final List<double> real;
+  final List<List<String>> result;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const ClampingScrollPhysics(),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      itemCount: result[0].length,
+      itemBuilder: (_, index) {
+        return Card(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: Theme.of(context).colorScheme.outline),
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+          ),
+          child: ListTile(
+            title: ListTile(
+              title: Text(
+                printDiscretePoint('x', index, real[index].toString(), img[index].toString()),
+                style: const TextStyle(fontFamily: 'Inconsolata'),
+              ),
+              subtitle: Text(
+                printDiscretePoint('F', index, result[0][index], result[1][index]),
+                style: const TextStyle(fontFamily: 'Inconsolata', fontSize: 16, fontWeight: FontWeight.w900),
               ),
             ),
           ),
-
-          /// * Results
-          ListView.separated(
-            // rename to ListView.builder if separator isn't required
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            itemCount: result[0].length,
-            // length of result FFT with padding
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
-            // Widget children
-            itemBuilder: (_, index) {
-              return Card(
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Theme.of(context).colorScheme.outline),
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                ),
-                child: ListTile(
-                  title: ListTile(
-                    title: Text(
-                      printDiscretePoint('x', index, real[index].toString(), img[index].toString()),
-                      style: const TextStyle(fontFamily: 'Inconsolata'),
-                    ),
-                    subtitle: Text(
-                      printDiscretePoint('F', index, result[0][index], result[1][index]),
-                      style: const TextStyle(fontFamily: 'Inconsolata', fontSize: 16, fontWeight: FontWeight.w900),
-                    ),
-                  ),
-                ),
-              );
-            },
-            // Separator
-            separatorBuilder: (_, index) {
-              return const SizedBox(height: 2);
-            },
-          ),
-
-          // Allow some overscroll (prevent "Back" button showing over last result)
-          const SizedBox(height: 64),
-        ],
-      ),
+        )
+            .animate(delay: (index * 100).ms)
+            .fade(duration: 200.ms)
+            .then()
+            .shimmer(duration: 400.ms, color: Theme.of(context).colorScheme.tertiaryContainer);
+      },
+      // Separator
+      separatorBuilder: (_, index) {
+        return const SizedBox(height: 2);
+      },
     );
   }
 }
