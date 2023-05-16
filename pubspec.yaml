@@ -17,6 +17,7 @@ dependencies:
   syncfusion_flutter_charts: ^21.2.4
   url_launcher: ^6.1.11
   dynamic_color: ^1.6.3
+  flutter_animate: ^4.1.1+1
 
 dev_dependencies:
   flutter_lints: ^2.0.0
