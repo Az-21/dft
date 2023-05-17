@@ -13,13 +13,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<TextEditingController> img = [TextEditingController()];
-  // * Text Controllers
   List<TextEditingController> real = [TextEditingController()];
 
-  /// * Tracker for number of points
+  // Tracker for number of points
   int _numPoints = 1;
 
-  /// * Set initial state to have 0 + i(0)
+  // Set initial state to have 0 + i(0)
   @override
   void initState() {
     super.initState();
@@ -27,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     img[0].text = '0';
   }
 
-  /// * Add a discrete point
+  // Add a discrete point
   void _addPoint() {
     // Add controllers and set them to '0'
     real.add(TextEditingController());
@@ -35,20 +34,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
     real[_numPoints].text = '0';
     img[_numPoints].text = '0';
-
     _numPoints++;
 
     // Update UI
     setState(() {});
   }
 
-  /// * Remove a discrete point (with index <= 1 safety)
+  // Remove a discrete point (with index <= 1 safety)
   void _removePoint() {
     if (_numPoints > 1) {
       // Remove controllers
       real.removeLast();
       img.removeLast();
-
       _numPoints--;
 
       // Update UI
@@ -69,16 +66,14 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  /// * Goto results page + send data as a list
   void _resultsPage() {
     Get.to(() => const ResultsPage(), arguments: [real, img]);
   }
 
-  /// * UI
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // * Add and remove FAB
+      // Add and remove FAB
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -89,9 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
             child: Icon(Icons.add, color: Theme.of(context).colorScheme.onSecondaryContainer),
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           FloatingActionButton(
             onPressed: _removePoint,
             heroTag: null,
@@ -99,9 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
             child: Icon(Icons.remove, color: Theme.of(context).colorScheme.onSecondaryContainer),
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           FloatingActionButton.extended(
             elevation: 0,
             icon: const Icon(Icons.insights),
@@ -112,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
 
-      // * Body: Text + 2x TextField
+      // Body: Text + 2x TextField
       body: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         itemCount: _numPoints,
@@ -131,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 children: <Widget>[
                   Expanded(
-                    // * Real Part
+                    // Real Part
                     child: TextField(
                       controller: real[index],
                       decoration: const InputDecoration(
@@ -139,18 +130,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         labelText: 'Real Part',
                       ),
 
-                      /// * Allow only double input
+                      // Allow only double input
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)')),
-                      ],
+                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)'))],
 
-                      /// * Update UI
-                      onChanged: (value) {
-                        setState(() {});
-                      },
+                      // Update UI
+                      onChanged: (value) => setState(() {}),
 
-                      /// * Reset value to '0' if user saves '' or '-'
+                      // Reset value to '0' if user saves '' or '-'
                       onSubmitted: (value) {
                         if (real[index].text == '' || real[index].text == '-') {
                           real[index].text = '0';
@@ -159,10 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   ),
-
                   const SizedBox(width: 20),
-
-                  // * Img Part
                   Expanded(
                     child: TextField(
                       controller: img[index],
@@ -171,18 +155,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         labelText: 'Imaginary Part',
                       ),
 
-                      /// Allow only double
+                      // Allow only double
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)')),
                       ],
 
-                      /// * Update UI
-                      onChanged: (value) {
-                        setState(() {});
-                      },
+                      // Update UI
+                      onChanged: (value) => setState(() {}),
 
-                      /// * Reset value to '0' if user saves '' or '-'
+                      // Reset value to '0' if user saves '' or '-'
                       onSubmitted: (value) {
                         if (img[index].text == '' || img[index].text == '-') {
                           img[index].text = '0';
