@@ -45,9 +45,9 @@ const List<List<String>> constDataCredit = [
     "${_github}syncfusion/flutter-widgets/tree/master/packages/syncfusion_flutter_charts",
   ],
   [
-    "GetX",
+    "Easy Dynamic Theme",
     "MIT License",
-    "${_github}jonataslaw/getx",
+    "${_github}rlazom/easy_dynamic_theme",
   ],
   [
     "URL Launcher",
