@@ -2,6 +2,7 @@ import 'package:dft/src/functions.dart';
 import 'package:dft/src/results.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -177,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               )
             ],
-          );
+          ).animate().fadeIn(duration: 300.ms).slideX(duration: 100.ms);
         },
         // Separator
         separatorBuilder: (_, index) {
