@@ -68,8 +68,6 @@ class _ResultsPageState extends State<ResultsPage> {
       );
       fftChartData.add(o);
     }
-
-    /// * Tooltip + zoom for chart
   }
 
   /// -------------------------------------------------------

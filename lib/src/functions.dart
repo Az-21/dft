@@ -1,10 +1,7 @@
 import 'dart:math';
-
 import 'package:complex/complex.dart';
 
-/// ----------------------------------------------
-/// * Print the output in `x(0) = a + (b)i` format
-/// ----------------------------------------------
+/// Format output in `x(0) = a + (b)i` format
 String printDiscretePoint(String prefix, int index, String real, String img) {
   String pointValue = '$prefix($index) = ';
 
@@ -17,23 +14,17 @@ String printDiscretePoint(String prefix, int index, String real, String img) {
   return pointValue;
 }
 
-/// ----------------------------------------------
-/// * FFT Algo
-/// ----------------------------------------------
+/// Public f(x):=FFT(signal)
 List<Complex> getFFT(List<Complex> inputSignal) {
-  // ⸻⸻⸻⸻⸻⸻⸻⸻⸻
-  // * FFT -> Adds padding if necessary
-  // ⸻⸻⸻⸻⸻⸻⸻⸻⸻
+  // Add padding if necessary
   if (!isPowerOfTwo(inputSignal.length)) {
-    // ignore: parameter_assignments
     inputSignal = padWithZeros(inputSignal);
   }
+
   return findFFT(inputSignal);
 }
 
-// ⸻⸻⸻⸻⸻⸻⸻⸻
-// * Function to check 2^n form
-// ⸻⸻⸻⸻⸻⸻⸻⸻
+// Function to check 2^n binning length required for Rx2FFT
 bool isPowerOfTwo(int num) {
   // 8 = 1000
   // 7 = 0111
@@ -42,9 +33,7 @@ bool isPowerOfTwo(int num) {
   return (num & num - 1 == 0) ? true : false;
 }
 
-// ⸻⸻⸻⸻⸻⸻⸻⸻
-// * Function to pad signal with zeros
-// ⸻⸻⸻⸻⸻⸻⸻⸻
+// Function to pad signal with zeros
 List<Complex> padWithZeros(List<Complex> f) {
   final int N = f.length;
   // 2 ^ (log(N)/log(2)) -> nearest 2^n
@@ -54,17 +43,13 @@ List<Complex> padWithZeros(List<Complex> f) {
   return f + List<Complex>.filled(paddingReqd, const Complex(0, 0));
 }
 
-// ⸻⸻⸻⸻⸻⸻⸻⸻
-// * Twiddle Factor Generator W_N^{k}
-// ⸻⸻⸻⸻⸻⸻⸻⸻
+// Twiddle Factor Generator W_N^{k}
 Complex W(int k, int N) {
   final Complex W = Complex(0, 2 * pi * k / N).exp();
   return W;
 }
 
-// ⸻⸻⸻⸻⸻⸻⸻⸻
-// * Radix2 FFT Algorithm
-// ⸻⸻⸻⸻⸻⸻⸻⸻
+// Radix2 FFT Algorithm
 List<Complex> findFFT(List<Complex> f) {
   final int N = f.length; // length of half split
   if (N <= 1) {
@@ -113,20 +98,16 @@ List<Complex> findFFT(List<Complex> f) {
   return currentFFT;
 }
 
-/// ----------------------------------------------
-/// * Class to hold and display data on chart
-/// ----------------------------------------------
+// Syncfusion chart format
 class ChartFFT {
   ChartFFT(this.time, this.realMag, this.imgMag);
 
-  final double imgMag; // not final because of syncfusion bug. see result.dart
+  final double imgMag;
   final double realMag;
   final int time;
 }
 
-/// -------------------------------------------------------
-/// * Function to convert inputSignal to outputSignal (DFT)
-/// -------------------------------------------------------
+// Private f(x):=FFT(signal)
 List<List<String>> resultFFT(List<Complex> inputSignal, int precision) {
   final List<String> outputReal = [];
   final List<String> outputImg = [];
