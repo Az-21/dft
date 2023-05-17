@@ -1,9 +1,8 @@
 import 'package:dft/src/functions.dart';
-import 'package:dft/src/results.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -67,10 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _resultsPage() {
-    Get.to(() => const ResultsPage(), arguments: [real, img]);
-  }
-
   @override
   Widget build(BuildContext context) {
     final m3 = Theme.of(context).colorScheme;
@@ -99,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
             elevation: 0,
             icon: const Icon(Icons.insights),
             label: const Text('Evaluate'),
-            onPressed: _resultsPage,
+            onPressed: () => context.go("/results", extra: [real, img]),
             heroTag: null,
           ),
         ],

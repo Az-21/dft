@@ -3,20 +3,18 @@ import 'package:dft/src/functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ResultsPage extends StatefulWidget {
-  const ResultsPage({super.key});
+  final List<List<TextEditingController>> points;
+  const ResultsPage({super.key, required this.points});
 
   @override
   State createState() => _ResultsPageState();
 }
 
 class _ResultsPageState extends State<ResultsPage> {
-  /// * Get data from home page
-  var data = Get.arguments;
-
   List<ChartFFT> fftChartData = [];
   List<double> img = [];
   List<Complex> inputSignal = [];
@@ -31,14 +29,14 @@ class _ResultsPageState extends State<ResultsPage> {
   @override
   void initState() {
     super.initState();
-    for (final textController in data[0]) {
+    for (final textController in widget.points[0]) {
       /// * Failsafe to ensure empty data is not parsed
       if (textController.text == '' || textController.text == '-') {
         textController.text = '0';
       }
       real.add(double.parse(textController.text.toString()));
     }
-    for (final textController in data[1]) {
+    for (final textController in widget.points[1]) {
       /// * Failsafe to ensure empty data is not parsed
       if (textController.text == '' || textController.text == '-') {
         textController.text = '0';
@@ -78,7 +76,7 @@ class _ResultsPageState extends State<ResultsPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         elevation: 0,
-        onPressed: () => Get.back(),
+        onPressed: () => context.go("/"),
         label: const Text('Back'),
         icon: const Icon(Icons.arrow_back),
       ),

@@ -1,10 +1,10 @@
-import 'package:dft/src/about.dart';
+import 'package:dft/routes.dart';
 import 'package:dft/src/home.dart';
 import 'package:dft/theme/theme_service.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:go_router/go_router.dart';
 
 void main() async {
   await GetStorage.init();
@@ -38,26 +38,26 @@ class MyApp extends StatelessWidget {
           );
         }
 
-        return GetMaterialApp(
+        return MaterialApp.router(
           title: 'DFT Calculator',
           theme: ThemeData(colorScheme: lightColorScheme, useMaterial3: true),
           darkTheme: ThemeData(colorScheme: darkColorScheme, useMaterial3: true),
           themeMode: ThemeService().getThemeMode(),
-          home: const DarkModeHome(),
+          routerConfig: router,
         );
       },
     );
   }
 }
 
-class DarkModeHome extends StatefulWidget {
-  const DarkModeHome({super.key});
+class Root extends StatefulWidget {
+  const Root({super.key});
 
   @override
-  State createState() => _DarkModeHomeState();
+  State createState() => _RootState();
 }
 
-class _DarkModeHomeState extends State<DarkModeHome> {
+class _RootState extends State<Root> {
   bool value = ThemeService().isSavedDarkMode();
 
   @override
@@ -70,7 +70,7 @@ class _DarkModeHomeState extends State<DarkModeHome> {
         actions: [
           IconButton(
             icon: const Icon(Icons.info_outline),
-            onPressed: () => Get.to(() => const AboutPage()),
+            onPressed: () => context.go("/about"),
             iconSize: 24,
           ),
           Switch(
