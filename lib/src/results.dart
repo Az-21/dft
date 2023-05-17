@@ -198,11 +198,11 @@ class NumericResults extends StatelessWidget {
             title: ListTile(
               title: Text(
                 printDiscretePoint('x', index, real[index].toString(), img[index].toString()),
-                style: const TextStyle(fontFamily: 'Inconsolata'),
+                style: const TextStyle(fontFamily: "JetBrainsMono", fontSize: 12),
               ),
               subtitle: Text(
                 printDiscretePoint('F', index, result[0][index], result[1][index]),
-                style: const TextStyle(fontFamily: 'Inconsolata', fontSize: 16, fontWeight: FontWeight.w900),
+                style: const TextStyle(fontFamily: "JetBrainsMono", fontSize: 16),
               ),
             ),
           ),

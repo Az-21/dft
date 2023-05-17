@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ListTile(
                 title: Text(
                   printDiscretePoint('x', index, real[index].text, img[index].text),
-                  style: const TextStyle(fontFamily: 'Inconsolata'),
+                  style: const TextStyle(fontFamily: "JetBrainsMono"),
                 ),
                 leading: const Icon(Icons.label_important_outline),
               ),
