@@ -58,7 +58,7 @@ List<Complex> padWithZeros(List<Complex> f) {
 // * Twiddle Factor Generator W_N^{k}
 // ⸻⸻⸻⸻⸻⸻⸻⸻
 Complex W(int k, int N) {
-  final Complex W = Complex(0, -2 * pi * k / N).exp();
+  final Complex W = Complex(0, 2 * pi * k / N).exp();
   return W;
 }
 
