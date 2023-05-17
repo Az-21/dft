@@ -15,6 +15,11 @@ DFT Calculator and Visualizer is an assist tool for college level students enrol
 <br>
   <a href="https://www.buymeacoffee.com/az21" alt="Buy Me a Coffee">
     <img src="https://ucarecdn.com/c60f694f-91a4-4edc-bb95-088c18076bfc/bmac.png" width="25%" /></a>
+<br>  
+  <p float="left">
+    <img src="https://ucarecdn.com/bceb8e36-22cd-4c58-aa9d-2e7177681cf7/dft1.png" width=49%/>
+    <img src="https://ucarecdn.com/aa5db2c3-4e8a-4705-8630-9804bb61992a/dft2.png" width=49%/> 
+  </p>
 </p>
 
 ## Features
