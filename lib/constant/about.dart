@@ -59,4 +59,9 @@ const List<List<String>> constDataCredit = [
     "MIT License",
     "${_github}fluttercommunity/flutter_launcher_icons",
   ],
+  [
+    "JetBrains Mono",
+    "SIL Open Font License 1.1",
+    "${_github}JetBrains/JetBrainsMono",
+  ],
 ];
