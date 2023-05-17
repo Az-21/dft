@@ -106,84 +106,86 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
 
       // Body: Text + 2x TextField
-      body: ListView.separated(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        itemCount: _numPoints,
-        // Widget children
-        itemBuilder: (_, index) {
-          return Column(
-            children: <Widget>[
-              // * Print Point
-              ListTile(
-                title: Text(
-                  printDiscretePoint('x', index, real[index].text, img[index].text),
-                  style: const TextStyle(fontFamily: "JetBrainsMono"),
-                ),
-                leading: const Icon(Icons.label_important_outline),
-              ),
-              Row(
+      body: ListView(
+        children: [
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            itemCount: _numPoints,
+            itemBuilder: (_, index) {
+              return Column(
                 children: <Widget>[
-                  Expanded(
-                    // Real Part
-                    child: TextField(
-                      controller: real[index],
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Real Part',
-                      ),
-
-                      // Allow only double input
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)'))],
-
-                      // Update UI
-                      onChanged: (value) => setState(() {}),
-
-                      // Reset value to '0' if user saves '' or '-'
-                      onSubmitted: (value) {
-                        if (real[index].text == '' || real[index].text == '-') {
-                          real[index].text = '0';
-                          setState(() {});
-                        }
-                      },
+                  ListTile(
+                    title: Text(
+                      printDiscretePoint('x', index, real[index].text, img[index].text),
+                      style: const TextStyle(fontFamily: "JetBrainsMono"),
                     ),
+                    leading: const Icon(Icons.label_important_outline),
                   ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: TextField(
-                      controller: img[index],
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Imaginary Part',
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        // Real Part
+                        child: TextField(
+                          controller: real[index],
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Real Part',
+                          ),
+
+                          // Allow only double input
+                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)'))],
+
+                          // Update UI
+                          onChanged: (value) => setState(() {}),
+
+                          // Reset value to '0' if user saves '' or '-'
+                          onSubmitted: (value) {
+                            if (real[index].text == '' || real[index].text == '-') {
+                              real[index].text = '0';
+                              setState(() {});
+                            }
+                          },
+                        ),
                       ),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: TextField(
+                          controller: img[index],
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Imaginary Part',
+                          ),
 
-                      // Allow only double
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)')),
-                      ],
+                          // Allow only double
+                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)')),
+                          ],
 
-                      // Update UI
-                      onChanged: (value) => setState(() {}),
+                          // Update UI
+                          onChanged: (value) => setState(() {}),
 
-                      // Reset value to '0' if user saves '' or '-'
-                      onSubmitted: (value) {
-                        if (img[index].text == '' || img[index].text == '-') {
-                          img[index].text = '0';
-                          setState(() {});
-                        }
-                      },
-                    ),
-                  ),
+                          // Reset value to '0' if user saves '' or '-'
+                          onSubmitted: (value) {
+                            if (img[index].text == '' || img[index].text == '-') {
+                              img[index].text = '0';
+                              setState(() {});
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  )
                 ],
-              )
-            ],
-          ).animate().fadeIn(duration: 300.ms).slideX(duration: 100.ms);
-        },
-        // Separator
-        separatorBuilder: (_, index) {
-          return const SizedBox(height: 20);
-        },
+              ).animate().fadeIn(duration: 300.ms).slideX(duration: 100.ms);
+            },
+            separatorBuilder: (_, index) => const SizedBox(height: 20),
+          ),
+          const SizedBox(height: 72),
+        ],
       ),
     );
   }
