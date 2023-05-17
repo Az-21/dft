@@ -13,7 +13,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<TextEditingController> img = [TextEditingController()];
-
   // * Text Controllers
   List<TextEditingController> real = [TextEditingController()];
 
@@ -55,12 +54,17 @@ class _HomeScreenState extends State<HomeScreen> {
       // Update UI
       setState(() {});
     } else {
-      Get.snackbar(
-        'Info',
-        'At least one point is required',
-        icon: const Icon(Icons.info_outline),
-        colorText: Theme.of(context).colorScheme.onPrimaryContainer,
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      final m3 = Theme.of(context).colorScheme;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: m3.errorContainer,
+          content: ListTile(
+            leading: Icon(Icons.running_with_errors, color: m3.onErrorContainer),
+            title: Text("Illegal Operation", style: TextStyle(color: m3.onErrorContainer)),
+            subtitle: Text("At least one point is required", style: TextStyle(color: m3.onErrorContainer)),
+          ),
+          action: SnackBarAction(label: "Got it", onPressed: () {}, textColor: m3.onErrorContainer),
+        ),
       );
     }
   }
@@ -83,8 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: _addPoint,
             elevation: 0,
             backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-            child: Icon(Icons.add,
-                color: Theme.of(context).colorScheme.onSecondaryContainer),
+            child: Icon(Icons.add, color: Theme.of(context).colorScheme.onSecondaryContainer),
           ),
           const SizedBox(
             height: 20,
@@ -94,8 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
             heroTag: null,
             elevation: 0,
             backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-            child: Icon(Icons.remove,
-                color: Theme.of(context).colorScheme.onSecondaryContainer),
+            child: Icon(Icons.remove, color: Theme.of(context).colorScheme.onSecondaryContainer),
           ),
           const SizedBox(
             height: 20,
@@ -121,8 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
               // * Print Point
               ListTile(
                 title: Text(
-                  printDiscretePoint(
-                      'x', index, real[index].text, img[index].text),
+                  printDiscretePoint('x', index, real[index].text, img[index].text),
                   style: const TextStyle(fontFamily: 'Inconsolata'),
                 ),
                 leading: const Icon(Icons.label_important_outline),
@@ -139,11 +140,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
 
                       /// * Allow only double input
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp(r'(^\-?\d*\.?\d*)')),
+                        FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)')),
                       ],
 
                       /// * Update UI
@@ -173,11 +172,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
 
                       /// Allow only double
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp(r'(^\-?\d*\.?\d*)')),
+                        FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)')),
                       ],
 
                       /// * Update UI
