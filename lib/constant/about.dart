@@ -55,11 +55,6 @@ const List<List<String>> constDataCredit = [
     "${_github}flutter/packages/tree/main/packages/url_launcher/url_launcher",
   ],
   [
-    "Flutter Launcher Icons",
-    "MIT License",
-    "${_github}fluttercommunity/flutter_launcher_icons",
-  ],
-  [
     "JetBrains Mono",
     "SIL Open Font License 1.1",
     "${_github}JetBrains/JetBrainsMono",
