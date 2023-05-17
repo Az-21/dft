@@ -72,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final m3 = Theme.of(context).colorScheme;
     return Scaffold(
       // Add and remove FAB
       floatingActionButton: Column(
@@ -81,16 +82,16 @@ class _HomeScreenState extends State<HomeScreen> {
           FloatingActionButton(
             onPressed: _addPoint,
             elevation: 0,
-            backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-            child: Icon(Icons.add, color: Theme.of(context).colorScheme.onSecondaryContainer),
+            backgroundColor: m3.secondaryContainer,
+            child: Icon(Icons.add, color: m3.onSecondaryContainer),
           ),
           const SizedBox(height: 20),
           FloatingActionButton(
             onPressed: _removePoint,
             heroTag: null,
             elevation: 0,
-            backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-            child: Icon(Icons.remove, color: Theme.of(context).colorScheme.onSecondaryContainer),
+            backgroundColor: m3.secondaryContainer,
+            child: Icon(Icons.remove, color: m3.onSecondaryContainer),
           ),
           const SizedBox(height: 20),
           FloatingActionButton.extended(
