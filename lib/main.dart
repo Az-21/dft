@@ -1,14 +1,15 @@
 import 'package:dft/routes.dart';
-import 'package:dft/src/home.dart';
-import 'package:dft/theme/theme_service.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:go_router/go_router.dart';
 
 void main() async {
-  await GetStorage.init();
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized(); // Flutter black magic. Wasted three hours on this.
+  runApp(
+    EasyDynamicThemeWidget(
+      child: const MyApp(),
+    ),
+  );
 }
 
 const _fallbackGreen = Color(0xFF386A20);
@@ -42,47 +43,10 @@ class MyApp extends StatelessWidget {
           title: 'DFT Calculator',
           theme: ThemeData(colorScheme: lightColorScheme, useMaterial3: true),
           darkTheme: ThemeData(colorScheme: darkColorScheme, useMaterial3: true),
-          themeMode: ThemeService().getThemeMode(),
+          themeMode: EasyDynamicTheme.of(context).themeMode,
           routerConfig: router,
         );
       },
-    );
-  }
-}
-
-class Root extends StatefulWidget {
-  const Root({super.key});
-
-  @override
-  State createState() => _RootState();
-}
-
-class _RootState extends State<Root> {
-  bool value = ThemeService().isSavedDarkMode();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 100,
-        elevation: 1,
-        title: const Text('DFT Calculator'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            onPressed: () => context.go("/about"),
-            iconSize: 24,
-          ),
-          Switch(
-            value: value,
-            onChanged: (value) => setState(() {
-              this.value = value;
-              ThemeService().changeThemeMode(value);
-            }),
-          ),
-        ],
-      ),
-      body: const HomeScreen(),
     );
   }
 }

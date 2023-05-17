@@ -1,4 +1,5 @@
 import 'package:dft/src/functions.dart';
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -70,6 +71,19 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final m3 = Theme.of(context).colorScheme;
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 100,
+        elevation: 1,
+        title: const Text('DFT Calculator'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            onPressed: () => context.go("/about"),
+            iconSize: 24,
+          ),
+          EasyDynamicThemeSwitch(),
+        ],
+      ),
       // Add and remove FAB
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
