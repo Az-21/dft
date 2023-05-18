@@ -2,7 +2,7 @@ import 'package:dft/src/home.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dft/src/about.dart';
-import 'package:dft/src/results.dart';
+import 'package:dft/src/result/resultTemplate.dart';
 
 final router = GoRouter(routes: [
   GoRoute(path: "/", builder: (context, state) => const HomeScreen(), routes: [
@@ -15,7 +15,7 @@ final router = GoRouter(routes: [
       builder: (context, state) {
         // TODO: Add a class to encapsulate points as Complex instead of a nested list
         List<List<TextEditingController>> points = state.extra as List<List<TextEditingController>>;
-        return ResultsPage(points: points);
+        return ResultsPageTemplate(points: points);
       },
     ),
   ])

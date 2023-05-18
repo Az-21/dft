@@ -6,15 +6,16 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class ResultsPage extends StatefulWidget {
+class ResultsPageTemplate extends StatefulWidget {
+  const ResultsPageTemplate({super.key, required this.points});
+
   final List<List<TextEditingController>> points;
-  const ResultsPage({super.key, required this.points});
 
   @override
-  State createState() => _ResultsPageState();
+  State createState() => _ResultsPageTemplateState();
 }
 
-class _ResultsPageState extends State<ResultsPage> {
+class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
   List<ChartFFT> fftChartData = [];
   List<double> img = [];
   List<Complex> inputSignal = [];
@@ -23,6 +24,7 @@ class _ResultsPageState extends State<ResultsPage> {
 
   /// * Extract list of string from the data
   List<double> real = [];
+
   List<List<String>> result = [];
 
   // Extract data
@@ -68,12 +70,14 @@ class _ResultsPageState extends State<ResultsPage> {
     }
   }
 
-  /// -------------------------------------------------------
-  /// * User Interface
-  /// -------------------------------------------------------
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 100,
+        elevation: 1,
+        title: const Text("Radix2 DIT FFT"),
+      ),
       floatingActionButton: FloatingActionButton.extended(
         elevation: 0,
         onPressed: () => context.go("/"),
@@ -84,33 +88,29 @@ class _ResultsPageState extends State<ResultsPage> {
         shrinkWrap: true,
         physics: const ClampingScrollPhysics(),
         children: [
-          /// * Precision Picker
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Text('Precision', style: TextStyle(fontSize: 24)),
-              ),
-              const Icon(Icons.swap_vert_outlined, size: 40),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.15,
-                width: MediaQuery.of(context).size.width * 0.40,
-                child: CupertinoPicker(
-                  scrollController: FixedExtentScrollController(initialItem: 2),
-                  itemExtent: 40,
-                  looping: true,
-                  onSelectedItemChanged: (value) {
-                    result = resultFFT(inputSignal, value + 1);
-                    setState(() {});
-                  },
-                  children: [for (int precision in precisionList) Center(child: Text('$precision'))],
-                ),
-              ),
-            ],
-          ),
-
           InteractiveChart(fftChartData: fftChartData),
+
+          ListTile(
+            leading: const Icon(Icons.swipe_vertical),
+            title: const Text("Precision"),
+            // titleAlignment: ListTileTitleAlignment.top,
+            subtitle: const Text("Set decimal precision"),
+            trailing: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.34,
+              child: CupertinoPicker(
+                scrollController: FixedExtentScrollController(initialItem: 2),
+                useMagnifier: true,
+                magnification: 1.2,
+                itemExtent: 32,
+                looping: true,
+                onSelectedItemChanged: (value) {
+                  result = resultFFT(inputSignal, value + 1);
+                  setState(() {});
+                },
+                children: [for (int precision in precisionList) Center(child: Text('$precision'))],
+              ),
+            ),
+          ),
           NumericResults(result: result, real: real, img: img),
           const SizedBox(height: 64) // Allow some over-scroll
         ],
@@ -120,9 +120,11 @@ class _ResultsPageState extends State<ResultsPage> {
 }
 
 class InteractiveChart extends StatelessWidget {
-  final List<ChartFFT> fftChartData;
-  final _zoomPanBehavior = ZoomPanBehavior(enablePinching: true, enablePanning: true);
   InteractiveChart({super.key, required this.fftChartData});
+
+  final List<ChartFFT> fftChartData;
+
+  final _zoomPanBehavior = ZoomPanBehavior(enablePinching: true, enablePanning: true);
 
   @override
   Widget build(BuildContext context) {
