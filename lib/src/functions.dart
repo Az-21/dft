@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:complex/complex.dart';
 
+enum SignalProcessingOperation { opRadix2FFT, opDFT, opIDFT }
+
 /// Format output in `x(0) = a + (b)i` format
 String printDiscretePoint(String prefix, int index, String real, String img) {
   String pointValue = '$prefix($index) = ';
@@ -108,7 +110,7 @@ class ChartFFT {
 }
 
 // Private f(x):=FFT(signal)
-List<List<String>> resultFFT(List<Complex> inputSignal, int precision) {
+List<List<String>> resultFFT(List<Complex> inputSignal, int precision, SignalProcessingOperation operation) {
   final List<String> outputReal = [];
   final List<String> outputImg = [];
 

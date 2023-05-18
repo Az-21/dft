@@ -106,9 +106,9 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 20),
           FloatingActionButton.extended(
             elevation: 0,
-            icon: const Icon(Icons.insights),
-            label: const Text('Evaluate'),
-            onPressed: () => context.go("/results", extra: [real, img]),
+            icon: const Icon(Icons.calculate),
+            label: const Text("Rx2 FFT"),
+            onPressed: () => context.go("/radix2FFT", extra: [real, img]),
             heroTag: null,
           ),
         ],

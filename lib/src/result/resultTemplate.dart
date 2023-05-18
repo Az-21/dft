@@ -7,7 +7,16 @@ import 'package:go_router/go_router.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ResultsPageTemplate extends StatefulWidget {
-  const ResultsPageTemplate({super.key, required this.points});
+  final String appBarTitle;
+  final Uri wikiLink;
+  final SignalProcessingOperation operation;
+  const ResultsPageTemplate({
+    super.key,
+    required this.points,
+    required this.appBarTitle,
+    required this.wikiLink,
+    required this.operation,
+  });
 
   final List<List<TextEditingController>> points;
 
@@ -16,16 +25,14 @@ class ResultsPageTemplate extends StatefulWidget {
 }
 
 class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
-  List<ChartFFT> fftChartData = [];
-  List<double> img = [];
   List<Complex> inputSignal = [];
+  List<double> img = [];
+  List<double> real = [];
+  List<List<String>> result = [];
+  List<ChartFFT> fftChartData = [];
+
   // * List of precision digits for CupertinoPicker
   List<int> precisionList = List<int>.generate(16, (i) => i + 1);
-
-  /// * Extract list of string from the data
-  List<double> real = [];
-
-  List<List<String>> result = [];
 
   // Extract data
   @override
@@ -52,7 +59,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
     }
 
     /// * Calculate fft of input signal
-    result = resultFFT(inputSignal, 3);
+    result = resultFFT(inputSignal, 3, widget.operation);
 
     /// * Pad the input signal to prevent index error
     final List<double> padding = List.filled(result[0].length - real.length, 0);
@@ -76,7 +83,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
       appBar: AppBar(
         toolbarHeight: 100,
         elevation: 1,
-        title: const Text("Radix2 DIT FFT"),
+        title: Text(widget.appBarTitle),
       ),
       floatingActionButton: FloatingActionButton.extended(
         elevation: 0,
@@ -89,7 +96,6 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
         physics: const ClampingScrollPhysics(),
         children: [
           InteractiveChart(fftChartData: fftChartData),
-
           ListTile(
             leading: const Icon(Icons.swipe_vertical),
             title: const Text("Precision"),
@@ -104,7 +110,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
                 itemExtent: 32,
                 looping: true,
                 onSelectedItemChanged: (value) {
-                  result = resultFFT(inputSignal, value + 1);
+                  result = resultFFT(inputSignal, value + 1, widget.operation);
                   setState(() {});
                 },
                 children: [for (int precision in precisionList) Center(child: Text('$precision'))],

@@ -1,4 +1,5 @@
 import 'package:dft/src/home.dart';
+import 'package:dft/src/result/radix2Result.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dft/src/about.dart';
@@ -11,11 +12,11 @@ final router = GoRouter(routes: [
       builder: (context, state) => const AboutPage(),
     ),
     GoRoute(
-      path: "results",
+      path: "radix2FFT",
       builder: (context, state) {
         // TODO: Add a class to encapsulate points as Complex instead of a nested list
         List<List<TextEditingController>> points = state.extra as List<List<TextEditingController>>;
-        return ResultsPageTemplate(points: points);
+        return Radix2FFT(points: points);
       },
     ),
   ])
