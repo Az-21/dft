@@ -19,7 +19,7 @@ String printDiscretePoint(String prefix, int index, String real, String img) {
 /// Private f(x):=DiscreteFourierTransform(signal, isInverse flag) | Uses standard notation N, n, k
 List<Complex> _discreteFourierTransform(final List<Complex> inputSignal, {required bool isInverse}) {
   final N = inputSignal.length;
-  List<Complex> outputSignal = List.empty();
+  List<Complex> outputSignal = <Complex>[];
 
   for (int n = 0; n < N; n++) {
     double re = 0;
@@ -88,8 +88,8 @@ List<Complex> findFFT(List<Complex> f) {
   }
 
   // Init Lists for even and odd half splits
-  final List<Complex> halfOdd = List.empty();
-  final List<Complex> halfEven = List.empty();
+  List<Complex> halfOdd = <Complex>[];
+  List<Complex> halfEven = <Complex>[];
 
   // Get even elements from {super:f}
   for (int i = 0; i < N; i += 2) {
@@ -137,10 +137,8 @@ class ChartFFT {
   final int time;
 }
 
-// Private f(x):=FFT(signal)
+// DFT, IDFT, and Rx2FFT handler
 List<List<String>> resultFFT(List<Complex> inputSignal, int precision, SignalProcessingOperation operation) {
-  final List<String> outputReal = List.empty();
-  final List<String> outputImg = List.empty();
   List<Complex> outputSignal;
 
   switch (operation) {
@@ -160,6 +158,8 @@ List<List<String>> resultFFT(List<Complex> inputSignal, int precision, SignalPro
       throw Exception("Unimplemented Fourier transform requested");
   }
 
+  List<String> outputReal = <String>[];
+  List<String> outputImg = <String>[];
   for (final Complex complexNum in outputSignal) {
     // Apply fixed precision
     final double real = complexNum.real;
