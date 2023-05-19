@@ -7,7 +7,7 @@
 <a href="https://m3.material.io/" alt="Material You">
   <img src="https://img.shields.io/badge/Styled%20With-Material%20You-%23757575?style=for-the-badge&logo=material%20design" /></a>
 
-DFT Calculator and Visualizer is an assist tool for college level students enrolled in digital signal subjects. Aim of this calculator is to help students cross-verify their DFT problems.
+iDFT Calculator and Visualizer is an assist tool for college level students enrolled in digital signal subjects. The aim of this calculator is to help students cross-verify their DFT, IDFT, and Rx2FFT problems.
 
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=com.flutterDevAz21.dft" alt="Play Store">
@@ -17,17 +17,24 @@ DFT Calculator and Visualizer is an assist tool for college level students enrol
     <img src="https://ucarecdn.com/c60f694f-91a4-4edc-bb95-088c18076bfc/bmac.png" width="25%" /></a>
 <br>  
   <p float="left">
-    <img src="https://ucarecdn.com/bceb8e36-22cd-4c58-aa9d-2e7177681cf7/dft1.png" width=49%/>
-    <img src="https://ucarecdn.com/aa5db2c3-4e8a-4705-8630-9804bb61992a/dft2.png" width=49%/> 
+    <img src="https://ucarecdn.com/783eed04-3498-4d02-8a24-f3755497b156/idft1.png" width=49%/>
+    <img src="https://ucarecdn.com/55aac469-6741-4b1b-878f-89b6fe20bf4a/idft2.png" width=49%/> 
+  </p>
+<br>  
+  <p float="left">
+    <img src="https://ucarecdn.com/d2f042e8-4b4a-478f-8eea-a255f00de2a5/idft3.png" width=49%/>
+    <img src="https://ucarecdn.com/acfc1b65-1c2b-46a8-a0ac-4456fe132a71/idft4.png" width=49%/>
   </p>
 </p>
 
 ## Features
-🚀 Dynamic list of $n$-points: add or remove points in an intuitive way
+- Dynamic list of n-points: add or remove points in an intuitive way.
+- Supported operations: DFT, IDFT, and Rx2 FFT.
+- Padding safety: automatically pad the input signal to 2^n when calculating FFT using Rx2 algorithm.
+- Interactive output signal visualization on a stem-graph.
 
-🦺 Padding safety: automatically pad the input signal to $2^n$
-
-📈 Interactive output signal visualization
+## Contribution
+Contributions are welcomed, but please know this project is built using _Vibes_ ™ architecture. I made it when I was still learning Flutter, so it its pretty hard to refactor stuff without breaking something. I did a lot of cleanup when I resumed working on this app to support Material You, but overall the codebase is still a mess.
 
 ## Privacy Policy
 This app does not collect any data whatsoever. Everything is processed on the local (end-user's) device.
