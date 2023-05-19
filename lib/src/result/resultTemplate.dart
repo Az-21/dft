@@ -41,17 +41,9 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
   void initState() {
     super.initState();
     for (final textController in widget.points[0]) {
-      /// * Failsafe to ensure empty data is not parsed
-      if (textController.text == '' || textController.text == '-') {
-        textController.text = '0';
-      }
       real.add(double.parse(textController.text.toString()));
     }
     for (final textController in widget.points[1]) {
-      /// * Failsafe to ensure empty data is not parsed
-      if (textController.text == '' || textController.text == '-') {
-        textController.text = '0';
-      }
       img.add(double.parse(textController.text.toString()));
     }
 
