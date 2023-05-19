@@ -137,37 +137,23 @@ class ChartFFT {
 }
 
 // DFT, IDFT, and Rx2FFT handler
-List<List<String>> resultFFT(List<Complex> inputSignal, int precision, SignalProcessingOperation operation) {
-  List<Complex> outputSignal;
+List<Complex> fourierTransform(final List<Complex> inputSignal, final SignalProcessingOperation operation) {
+  return switch (operation) {
+    SignalProcessingOperation.opRadix2FFT => _radix2FFT(inputSignal),
+    SignalProcessingOperation.opDFT => _discreteFourierTransform(inputSignal, isInverse: false),
+    SignalProcessingOperation.opIDFT => _discreteFourierTransform(inputSignal, isInverse: true),
+  };
+}
 
-  switch (operation) {
-    case SignalProcessingOperation.opRadix2FFT:
-      outputSignal = _radix2FFT(inputSignal);
-      break;
+// Decimal precision handler
+List<List<String>> signalWithFixedPrecision(final List<Complex> signal, final int precision) {
+  List<String> reSignal = <String>[];
+  List<String> imSignal = <String>[];
 
-    case SignalProcessingOperation.opDFT:
-      outputSignal = _discreteFourierTransform(inputSignal, isInverse: false);
-      break;
-
-    case SignalProcessingOperation.opIDFT:
-      outputSignal = _discreteFourierTransform(inputSignal, isInverse: true);
-      break;
-
-    default:
-      throw Exception("Unimplemented Fourier transform requested");
+  for (Complex point in signal) {
+    reSignal.add(point.real.toStringAsFixed(precision));
+    imSignal.add(point.imaginary.toStringAsFixed(precision));
   }
 
-  List<String> outputReal = <String>[];
-  List<String> outputImg = <String>[];
-  for (final Complex complexNum in outputSignal) {
-    // Apply fixed precision
-    final double real = complexNum.real;
-    final String fReal = real.toStringAsFixed(precision);
-    final double img = complexNum.imaginary;
-    final String fImg = img.toStringAsFixed(precision);
-
-    outputReal.add(fReal);
-    outputImg.add(fImg);
-  }
-  return [outputReal, outputImg];
+  return [reSignal, imSignal];
 }

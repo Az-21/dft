@@ -26,6 +26,7 @@ class ResultsPageTemplate extends StatefulWidget {
 
 class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
   List<Complex> inputSignal = [];
+  List<Complex> outputSignal = [];
   List<double> img = [];
   List<double> real = [];
   List<List<String>> result = [];
@@ -58,8 +59,9 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
       inputSignal.add(Complex(real[i], img[i]));
     }
 
-    /// * Calculate fft of input signal
-    result = resultFFT(inputSignal, 3, widget.operation);
+    // Calculate relevant Fourier transform of input signal
+    outputSignal = fourierTransform(inputSignal, widget.operation);
+    result = signalWithFixedPrecision(outputSignal, 3); // Open with default precision of 3
 
     /// * Pad the input signal to prevent index error
     final List<double> padding = List.filled(result[0].length - real.length, 0);
@@ -110,7 +112,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
                 itemExtent: 32,
                 looping: true,
                 onSelectedItemChanged: (value) {
-                  result = resultFFT(inputSignal, value + 1, widget.operation);
+                  result = signalWithFixedPrecision(outputSignal, value + 1);
                   setState(() {});
                 },
                 children: [for (int precision in precisionList) Center(child: Text('$precision'))],
