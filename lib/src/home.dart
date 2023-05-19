@@ -58,8 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: m3.errorContainer,
           content: ListTile(
             leading: Icon(Icons.running_with_errors, color: m3.onErrorContainer),
-            title: Text("Illegal Operation", style: TextStyle(color: m3.onErrorContainer)),
-            subtitle: Text("At least one point is required", style: TextStyle(color: m3.onErrorContainer)),
+            title: Text("At least one point is required", style: TextStyle(color: m3.onErrorContainer)),
           ),
           action: SnackBarAction(label: "Got it", onPressed: () {}, textColor: m3.onErrorContainer),
         ),
