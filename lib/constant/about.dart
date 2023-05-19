@@ -2,11 +2,6 @@ const String _github = "https://github.com/";
 
 const List<List<String>> constDataInfo = [
   [
-    "Discrete Fourier Transform Calculator",
-    "Radix2 DIT FFT Algorithm",
-    "https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm",
-  ],
-  [
     "Made by Az-21",
     "Built with Flutter",
     "${_github}Az-21",
