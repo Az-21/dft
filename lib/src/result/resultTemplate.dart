@@ -211,10 +211,10 @@ class NumericResults extends StatelessWidget {
             ),
           ),
         )
-            .animate(delay: (index * 100).ms)
-            .fade(duration: 200.ms)
+            .animate(delay: ((index + 1) * 100).ms)
+            .fade(duration: 100.ms)
             .then()
-            .shimmer(duration: 400.ms, color: Theme.of(context).colorScheme.tertiaryContainer);
+            .shimmer(duration: 200.ms, color: Theme.of(context).colorScheme.tertiaryContainer);
       },
       // Separator
       separatorBuilder: (_, index) {
