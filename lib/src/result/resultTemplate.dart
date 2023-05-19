@@ -200,11 +200,11 @@ class NumericResults extends StatelessWidget {
           ),
           child: ListTile(
             title: ListTile(
-              title: Text(
+              title: SelectableText(
                 printDiscretePoint('x', index, real[index].toString(), img[index].toString()),
                 style: const TextStyle(fontFamily: "JetBrainsMono", fontSize: 12),
               ),
-              subtitle: Text(
+              subtitle: SelectableText(
                 printDiscretePoint('F', index, result[0][index], result[1][index]),
                 style: const TextStyle(fontFamily: "JetBrainsMono", fontSize: 16),
               ),
