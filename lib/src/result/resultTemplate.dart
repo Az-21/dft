@@ -3,7 +3,6 @@ import 'package:dft/src/functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:go_router/go_router.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ResultsPageTemplate extends StatefulWidget {
@@ -79,12 +78,6 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
         toolbarHeight: 100,
         elevation: 1,
         title: Text(widget.appBarTitle),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        elevation: 0,
-        onPressed: () => context.go("/"),
-        label: const Text('Back'),
-        icon: const Icon(Icons.arrow_back),
       ),
       body: ListView(
         shrinkWrap: true,
