@@ -10,6 +10,7 @@ class ResultsPageTemplate extends StatefulWidget {
   final String appBarTitle;
   final String transformSymbol;
   final SignalProcessingOperation operation;
+
   const ResultsPageTemplate({
     super.key,
     required this.points,
@@ -129,6 +130,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
 
 class InteractiveChart extends StatelessWidget {
   InteractiveChart({super.key, required this.fftChartData});
+
   final List<ChartFFT> fftChartData;
   final _zoomPanBehavior = ZoomPanBehavior(enablePinching: true, enablePanning: true);
 
@@ -194,25 +196,7 @@ class NumericResults extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       itemCount: result[0].length,
       itemBuilder: (_, index) {
-        return Card(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(color: Theme.of(context).colorScheme.outline),
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
-          ),
-          child: ListTile(
-            title: ListTile(
-              title: SelectableText(
-                printDiscretePoint('x', index, real[index].toString(), img[index].toString()),
-                style: const TextStyle(fontFamily: "JetBrainsMono", fontSize: 12),
-              ),
-              subtitle: SelectableText(
-                printDiscretePoint(transformSymbol, index, result[0][index], result[1][index]),
-                style: const TextStyle(fontFamily: "JetBrainsMono", fontSize: 16),
-              ),
-            ),
-          ),
-        )
+        return NumericResultCard(real: real, img: img, transformSymbol: transformSymbol, result: result, index: index)
             .animate(delay: ((index + 1) * 100).ms)
             .fade(duration: 100.ms)
             .then()
@@ -222,6 +206,72 @@ class NumericResults extends StatelessWidget {
       separatorBuilder: (_, index) {
         return const SizedBox(height: 2);
       },
+    );
+  }
+}
+
+class NumericResultCard extends StatelessWidget {
+  const NumericResultCard({
+    super.key,
+    required this.real,
+    required this.img,
+    required this.transformSymbol,
+    required this.result,
+    required this.index,
+  });
+
+  final List<double> real;
+  final List<double> img;
+  final String transformSymbol;
+  final List<List<String>> result;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Theme.of(context).colorScheme.outline),
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+      ),
+      child: NumericResultListTile(
+        real: real,
+        img: img,
+        transformSymbol: transformSymbol,
+        result: result,
+        index: index,
+      ),
+    );
+  }
+}
+
+class NumericResultListTile extends StatelessWidget {
+  const NumericResultListTile({
+    super.key,
+    required this.real,
+    required this.img,
+    required this.transformSymbol,
+    required this.result,
+    required this.index,
+  });
+
+  final List<double> real;
+  final List<double> img;
+  final String transformSymbol;
+  final List<List<String>> result;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: SelectableText(
+        printDiscretePoint('x', index, real[index].toString(), img[index].toString()),
+        style: const TextStyle(fontFamily: "JetBrainsMono", fontSize: 12),
+      ),
+      subtitle: SelectableText(
+        printDiscretePoint(transformSymbol, index, result[0][index], result[1][index]),
+        style: const TextStyle(fontFamily: "JetBrainsMono", fontSize: 16),
+      ),
     );
   }
 }
