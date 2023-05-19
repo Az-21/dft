@@ -17,7 +17,7 @@ String printDiscretePoint(String prefix, int index, String real, String img) {
 }
 
 /// Public f(x):=FFT(signal)
-List<Complex> getFFT(List<Complex> inputSignal) {
+List<Complex> radix2FFT(List<Complex> inputSignal) {
   // Add padding if necessary
   if (!isPowerOfTwo(inputSignal.length)) {
     inputSignal = padWithZeros(inputSignal);
@@ -60,8 +60,8 @@ List<Complex> findFFT(List<Complex> f) {
   }
 
   // Init Lists for even and odd half splits
-  final List<Complex> halfEven = [];
-  final List<Complex> halfOdd = [];
+  final List<Complex> halfOdd = List.empty();
+  final List<Complex> halfEven = List.empty();
 
   // Get even elements from {super:f}
   for (int i = 0; i < N; i += 2) {
@@ -111,10 +111,10 @@ class ChartFFT {
 
 // Private f(x):=FFT(signal)
 List<List<String>> resultFFT(List<Complex> inputSignal, int precision, SignalProcessingOperation operation) {
-  final List<String> outputReal = [];
-  final List<String> outputImg = [];
+  final List<String> outputReal = List.empty();
+  final List<String> outputImg = List.empty();
 
-  final List<Complex> outputSignal = getFFT(inputSignal);
+  final List<Complex> outputSignal = radix2FFT(inputSignal);
   for (final Complex complexNum in outputSignal) {
     // Apply fixed precision
     final double real = complexNum.real;
