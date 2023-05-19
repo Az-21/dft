@@ -161,6 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () => WidgetsBinding.instance.addPostFrameCallback((_) => real[index].clear()),
                       onSubmitted: (value) {
                         _fixMissingTextField(real[index]);
+                        img[index].clear();
                         setState(() {});
                       },
                       onTapOutside: (value) {
@@ -185,6 +186,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () => WidgetsBinding.instance.addPostFrameCallback((_) => img[index].clear()),
                       onSubmitted: (value) {
                         _fixMissingTextField(img[index]);
+                        // Ensure index++ element actually exists
+                        if (index + 1 != _numPoints) {
+                          real[index + 1].clear();
+                        }
                         setState(() {});
                       },
                       onTapOutside: (value) {
