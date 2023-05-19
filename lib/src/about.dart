@@ -22,12 +22,12 @@ class AboutPage extends StatelessWidget {
         title: const Text("About"),
       ),
       body: ListView(
-        children: const <Widget>[
+        children: const [
           // Basic info
           ListTilesFromIterable(iterable: constDataInfo),
 
           // Credits
-          SizedBox(height: 64),
+          SizedBox(height: 32),
           CreditsListTile(),
           ListTilesFromIterable(iterable: constDataCredit),
 
@@ -64,7 +64,10 @@ class ListTilesFromIterable extends StatelessWidget {
           onPressed: () => _launchUrl(iterable[index][2]),
           icon: const Icon(Icons.open_in_new),
         ),
-      ).animate(delay: (index * 100).milliseconds).flipV(),
+      )
+          .animate(delay: ((index + 1) * 100).milliseconds)
+          .fadeIn()
+          .shimmer(color: Theme.of(context).colorScheme.surfaceTint),
     );
   }
 }
@@ -74,11 +77,12 @@ class CreditsListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final m3 = Theme.of(context).colorScheme;
     return ListTile(
-      leading: Icon(Icons.favorite_outline, color: Theme.of(context).colorScheme.error),
+      leading: Icon(Icons.favorite_outline, color: m3.error).animate().shake(delay: 800.ms),
       title: const Text("Credits"),
       subtitle: const Text("Special thanks to these open source projects"),
-    ).animate(delay: 300.milliseconds).fadeIn();
+    ).animate().fadeIn().shimmer(duration: 900.ms, color: m3.surfaceTint);
   }
 }
 
