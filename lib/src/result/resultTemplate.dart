@@ -189,7 +189,7 @@ class NumericResults extends StatelessWidget {
     return ListView.separated(
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       itemCount: result[0].length,
       itemBuilder: (_, index) {
         return Card(
