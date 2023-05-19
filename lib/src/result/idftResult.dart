@@ -6,7 +6,7 @@ class IDFT extends StatelessWidget {
   final List<List<TextEditingController>> points;
   const IDFT({super.key, required this.points});
 
-  static String appBarTitle = "IDFT";
+  static String appBarTitle = "Inverse DFT";
   static Uri wikiLink = Uri.parse("https://en.wikipedia.org/wiki/Discrete_Fourier_transform#Inverse_transform");
   static SignalProcessingOperation operation = SignalProcessingOperation.opIDFT;
 
