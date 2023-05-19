@@ -16,8 +16,36 @@ String printDiscretePoint(String prefix, int index, String real, String img) {
   return pointValue;
 }
 
-/// Public f(x):=FFT(signal)
-List<Complex> radix2FFT(List<Complex> inputSignal) {
+/// Private f(x):=DiscreteFourierTransform(signal, isInverse flag) | Uses standard notation N, n, k
+List<Complex> _discreteFourierTransform(final List<Complex> inputSignal, {required bool isInverse}) {
+  final N = inputSignal.length;
+  List<Complex> outputSignal = List.empty();
+
+  for (int n = 0; n < N; n++) {
+    double re = 0;
+    double im = 0;
+
+    // Sigma DFT
+    for (int k = 0; k < N; k++) {
+      final double theta = 2 * pi * n * k / N;
+      re += inputSignal[k].real * cos(theta) - inputSignal[k].imaginary * sin(theta);
+      im += inputSignal[k].real * sin(theta) + inputSignal[k].imaginary * cos(theta);
+    }
+
+    // Extra scaling step to convert Sigma DFT -> Sigma IDFT
+    if (isInverse) {
+      re /= N;
+      im /= N;
+    }
+
+    outputSignal.add(Complex(re, im));
+  }
+
+  return outputSignal;
+}
+
+/// Private f(x):=FFT(signal)
+List<Complex> _radix2FFT(List<Complex> inputSignal) {
   // Add padding if necessary
   if (!isPowerOfTwo(inputSignal.length)) {
     inputSignal = padWithZeros(inputSignal);
@@ -113,8 +141,25 @@ class ChartFFT {
 List<List<String>> resultFFT(List<Complex> inputSignal, int precision, SignalProcessingOperation operation) {
   final List<String> outputReal = List.empty();
   final List<String> outputImg = List.empty();
+  List<Complex> outputSignal;
 
-  final List<Complex> outputSignal = radix2FFT(inputSignal);
+  switch (operation) {
+    case SignalProcessingOperation.opRadix2FFT:
+      outputSignal = _radix2FFT(inputSignal);
+      break;
+
+    case SignalProcessingOperation.opDFT:
+      outputSignal = _discreteFourierTransform(inputSignal, isInverse: false);
+      break;
+
+    case SignalProcessingOperation.opIDFT:
+      outputSignal = _discreteFourierTransform(inputSignal, isInverse: true);
+      break;
+
+    default:
+      throw Exception("Unimplemented Fourier transform requested");
+  }
+
   for (final Complex complexNum in outputSignal) {
     // Apply fixed precision
     final double real = complexNum.real;
