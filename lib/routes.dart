@@ -3,7 +3,6 @@ import 'package:dft/src/result/radix2Result.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dft/src/about.dart';
-import 'package:dft/src/result/resultTemplate.dart';
 
 final router = GoRouter(routes: [
   GoRoute(path: "/", builder: (context, state) => const HomeScreen(), routes: [
