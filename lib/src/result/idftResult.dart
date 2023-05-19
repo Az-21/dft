@@ -7,11 +7,16 @@ class IDFT extends StatelessWidget {
   const IDFT({super.key, required this.points});
 
   static String appBarTitle = "Inverse DFT";
-  static Uri wikiLink = Uri.parse("https://en.wikipedia.org/wiki/Discrete_Fourier_transform#Inverse_transform");
+  static String transformSymbol = "F′";
   static SignalProcessingOperation operation = SignalProcessingOperation.opIDFT;
 
   @override
   Widget build(BuildContext context) {
-    return ResultsPageTemplate(points: points, appBarTitle: appBarTitle, wikiLink: wikiLink, operation: operation);
+    return ResultsPageTemplate(
+      points: points,
+      operation: operation,
+      appBarTitle: appBarTitle,
+      transformSymbol: transformSymbol,
+    );
   }
 }

@@ -8,14 +8,14 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ResultsPageTemplate extends StatefulWidget {
   final String appBarTitle;
-  final Uri wikiLink;
+  final String transformSymbol;
   final SignalProcessingOperation operation;
   const ResultsPageTemplate({
     super.key,
     required this.points,
-    required this.appBarTitle,
-    required this.wikiLink,
     required this.operation,
+    required this.appBarTitle,
+    required this.transformSymbol,
   });
 
   final List<List<TextEditingController>> points;
@@ -117,7 +117,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
               ),
             ),
           ),
-          NumericResults(result: result, real: real, img: img),
+          NumericResults(result: result, real: real, img: img, transformSymbol: widget.transformSymbol),
           const SizedBox(height: 64) // Allow some over-scroll
         ],
       ),
@@ -127,9 +127,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
 
 class InteractiveChart extends StatelessWidget {
   InteractiveChart({super.key, required this.fftChartData});
-
   final List<ChartFFT> fftChartData;
-
   final _zoomPanBehavior = ZoomPanBehavior(enablePinching: true, enablePanning: true);
 
   @override
@@ -178,11 +176,13 @@ class NumericResults extends StatelessWidget {
     required this.result,
     required this.real,
     required this.img,
+    required this.transformSymbol,
   });
 
   final List<double> img;
   final List<double> real;
   final List<List<String>> result;
+  final String transformSymbol;
 
   @override
   Widget build(BuildContext context) {
@@ -205,7 +205,7 @@ class NumericResults extends StatelessWidget {
                 style: const TextStyle(fontFamily: "JetBrainsMono", fontSize: 12),
               ),
               subtitle: SelectableText(
-                printDiscretePoint('F', index, result[0][index], result[1][index]),
+                printDiscretePoint(transformSymbol, index, result[0][index], result[1][index]),
                 style: const TextStyle(fontFamily: "JetBrainsMono", fontSize: 16),
               ),
             ),
