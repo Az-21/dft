@@ -70,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final m3 = Theme.of(context).colorScheme;
     return Scaffold(
+      bottomNavigationBar: FourierTransformOperations(real: real, img: img),
       appBar: AppBar(
         toolbarHeight: 100,
         elevation: 1,
@@ -103,119 +104,115 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Icon(Icons.remove, color: m3.onSecondaryContainer),
           ),
           const SizedBox(height: 32),
-          Wrap(
-            spacing: 8,
-            children: [
-              FloatingActionButton.extended(
-                elevation: 0,
-                icon: const Icon(Icons.calculate),
-                label: const Text("DFT"),
-                onPressed: () => context.go("/DFT", extra: [real, img]),
-                heroTag: null,
-              ),
-              FloatingActionButton.extended(
-                elevation: 0,
-                icon: const Icon(Icons.calculate),
-                label: const Text("IDFT"),
-                onPressed: () => context.go("/IDFT", extra: [real, img]),
-                heroTag: null,
-              ),
-              FloatingActionButton.extended(
-                elevation: 0,
-                icon: const Icon(Icons.calculate),
-                label: const Text("FFT"),
-                onPressed: () => context.go("/Radix2FFT", extra: [real, img]),
-                heroTag: null,
-              ),
-            ],
-          ),
         ],
       ),
 
       // Body: Text + 2x TextField
-      body: ListView(
-        children: [
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            itemCount: _numPoints,
-            itemBuilder: (_, index) {
-              return Column(
+      body: ListView.separated(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        itemCount: _numPoints,
+        itemBuilder: (_, index) {
+          return Column(
+            children: <Widget>[
+              ListTile(
+                title: Text(
+                  printDiscretePoint('x', index, real[index].text, img[index].text),
+                  style: const TextStyle(fontFamily: "JetBrainsMono"),
+                ),
+                leading: const Icon(Icons.label_important_outline),
+              ),
+              Row(
                 children: <Widget>[
-                  ListTile(
-                    title: Text(
-                      printDiscretePoint('x', index, real[index].text, img[index].text),
-                      style: const TextStyle(fontFamily: "JetBrainsMono"),
+                  Expanded(
+                    // Real Part
+                    child: TextField(
+                      controller: real[index],
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: m3.background,
+                        border: const OutlineInputBorder(),
+                        labelText: 'Real Part',
+                      ),
+
+                      // Allow only double input
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)'))],
+
+                      // Update UI
+                      onChanged: (value) => setState(() {}),
+
+                      // Reset value to '0' if user saves '' or '-'
+                      onSubmitted: (value) {
+                        if (real[index].text == '' || real[index].text == '-') {
+                          real[index].text = '0';
+                          setState(() {});
+                        }
+                      },
                     ),
-                    leading: const Icon(Icons.label_important_outline),
                   ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        // Real Part
-                        child: TextField(
-                          controller: real[index],
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: m3.background,
-                            border: const OutlineInputBorder(),
-                            labelText: 'Real Part',
-                          ),
-
-                          // Allow only double input
-                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)'))],
-
-                          // Update UI
-                          onChanged: (value) => setState(() {}),
-
-                          // Reset value to '0' if user saves '' or '-'
-                          onSubmitted: (value) {
-                            if (real[index].text == '' || real[index].text == '-') {
-                              real[index].text = '0';
-                              setState(() {});
-                            }
-                          },
-                        ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: TextField(
+                      controller: img[index],
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: m3.background,
+                        border: const OutlineInputBorder(),
+                        labelText: 'Imaginary Part',
                       ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: TextField(
-                          controller: img[index],
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: m3.background,
-                            border: const OutlineInputBorder(),
-                            labelText: 'Imaginary Part',
-                          ),
 
-                          // Allow only double
-                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)')),
-                          ],
+                      // Allow only double
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)'))],
 
-                          // Update UI
-                          onChanged: (value) => setState(() {}),
+                      // Update UI
+                      onChanged: (value) => setState(() {}),
 
-                          // Reset value to '0' if user saves '' or '-'
-                          onSubmitted: (value) {
-                            if (img[index].text == '' || img[index].text == '-') {
-                              img[index].text = '0';
-                              setState(() {});
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  )
+                      // Reset value to '0' if user saves '' or '-'
+                      onSubmitted: (value) {
+                        if (img[index].text == '' || img[index].text == '-') {
+                          img[index].text = '0';
+                          setState(() {});
+                        }
+                      },
+                    ),
+                  ),
                 ],
-              ).animate().fadeIn(duration: 100.ms).then().shimmer(duration: 200.ms, color: m3.secondaryContainer);
-            },
-            separatorBuilder: (_, index) => const SizedBox(height: 20),
+              )
+            ],
+          ).animate().fadeIn(duration: 100.ms).then().shimmer(duration: 200.ms, color: m3.secondaryContainer);
+        },
+        separatorBuilder: (_, index) => const SizedBox(height: 20),
+      ),
+    );
+  }
+}
+
+class FourierTransformOperations extends StatelessWidget {
+  const FourierTransformOperations({super.key, required this.real, required this.img});
+
+  final List<TextEditingController> real;
+  final List<TextEditingController> img;
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
+      elevation: 1,
+      child: Wrap(
+        spacing: 8,
+        children: [
+          OutlinedButton(
+            onPressed: () => context.go("/IDFT", extra: [real, img]),
+            child: const Text("IDFT"),
           ),
-          const SizedBox(height: 72),
+          OutlinedButton(
+            onPressed: () => context.go("/DFT", extra: [real, img]),
+            child: const Text("DFT"),
+          ),
+          OutlinedButton(
+            onPressed: () => context.go("/Radix2FFT", extra: [real, img]),
+            child: const Text("FFT"),
+          ),
         ],
       ),
     );
