@@ -21,6 +21,9 @@ List<Complex> _discreteFourierTransform(final List<Complex> inputSignal, {requir
   final N = inputSignal.length;
   List<Complex> outputSignal = <Complex>[];
 
+  // Account for a minor difference between im(DFT) and im(IDFT)
+  final signModifier = isInverse ? 1 : -1;
+
   for (int n = 0; n < N; n++) {
     double re = 0;
     double im = 0;
@@ -29,7 +32,7 @@ List<Complex> _discreteFourierTransform(final List<Complex> inputSignal, {requir
     for (int k = 0; k < N; k++) {
       final double theta = 2 * pi * n * k / N;
       re += inputSignal[k].real * cos(theta) - inputSignal[k].imaginary * sin(theta);
-      im += inputSignal[k].real * sin(theta) + inputSignal[k].imaginary * cos(theta);
+      im += signModifier * inputSignal[k].real * sin(theta) + inputSignal[k].imaginary * cos(theta);
     }
 
     // Extra scaling step to convert Sigma DFT -> Sigma IDFT
