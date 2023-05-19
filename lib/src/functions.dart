@@ -4,14 +4,14 @@ import 'package:complex/complex.dart';
 enum SignalProcessingOperation { opRadix2FFT, opDFT, opIDFT }
 
 /// Format output in `x(0) = a + (b)i` format
-String printDiscretePoint(String prefix, int index, String real, String img) {
+String printDiscretePoint(String prefix, int index, String re, String im) {
   String pointValue = '$prefix($index) = ';
 
-  /// * Real part with '-' padding
-  real.startsWith('-') ? pointValue += '$real ' : pointValue += ' $real ';
+  // Real part with '-' padding
+  re.startsWith('-') ? pointValue += '$re ' : pointValue += ' $re ';
 
-  /// * +/- sign aware imaginary part
-  img.startsWith('-') ? pointValue += '- (${img.substring(1)})i' : pointValue += '+ ($img)i';
+  // * +/- sign aware imaginary part
+  im.startsWith('-') ? pointValue += '- (${im.substring(1)})i' : pointValue += '+ ($im)i';
 
   return pointValue;
 }
@@ -71,9 +71,9 @@ List<Complex> padWithZeros(List<Complex> f) {
   final int N = f.length;
   // 2 ^ (log(N)/log(2)) -> nearest 2^n
   final int nextPowerOfTwo = pow(2, (log(N) / log(2)).ceil()).toInt();
-  final int paddingReqd = nextPowerOfTwo - N;
+  final int paddingRequired = nextPowerOfTwo - N;
 
-  return f + List<Complex>.filled(paddingReqd, const Complex(0, 0));
+  return f + List<Complex>.filled(paddingRequired, const Complex(0, 0));
 }
 
 // Twiddle Factor Generator W_N^{k}
@@ -94,14 +94,10 @@ List<Complex> findFFT(List<Complex> f) {
   List<Complex> halfOdd = <Complex>[];
   List<Complex> halfEven = <Complex>[];
 
-  // Get even elements from {super:f}
+  // Get even and odd elements from {super:f}
   for (int i = 0; i < N; i += 2) {
     halfEven.add(f[i]);
-  }
-
-  // Get odd elements from {super:f}
-  for (int i = 1; i < N; i += 2) {
-    halfOdd.add(f[i]);
+    halfOdd.add(f[i + 1]);
   }
 
   // Iterative Radix2 FFT [super:f] -> [f:even][f:odd]
