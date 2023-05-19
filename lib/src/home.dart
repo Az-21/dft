@@ -157,8 +157,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         // Real Part
                         child: TextField(
                           controller: real[index],
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: m3.background,
+                            border: const OutlineInputBorder(),
                             labelText: 'Real Part',
                           ),
 
@@ -178,12 +180,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                         ),
                       ),
-                      const SizedBox(width: 20),
+                      const SizedBox(width: 8),
                       Expanded(
                         child: TextField(
                           controller: img[index],
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: m3.background,
+                            border: const OutlineInputBorder(),
                             labelText: 'Imaginary Part',
                           ),
 
@@ -208,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   )
                 ],
-              ).animate().fadeIn(duration: 300.ms).slideX(duration: 100.ms);
+              ).animate().fadeIn(duration: 100.ms).then().shimmer(duration: 200.ms, color: m3.secondaryContainer);
             },
             separatorBuilder: (_, index) => const SizedBox(height: 20),
           ),
