@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: m3.secondaryContainer,
             child: Icon(Icons.add, color: m3.onSecondaryContainer),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 8),
           FloatingActionButton(
             onPressed: _removePoint,
             heroTag: null,
@@ -103,13 +103,32 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: m3.secondaryContainer,
             child: Icon(Icons.remove, color: m3.onSecondaryContainer),
           ),
-          const SizedBox(height: 20),
-          FloatingActionButton.extended(
-            elevation: 0,
-            icon: const Icon(Icons.calculate),
-            label: const Text("Rx2 FFT"),
-            onPressed: () => context.go("/radix2FFT", extra: [real, img]),
-            heroTag: null,
+          const SizedBox(height: 32),
+          Wrap(
+            spacing: 8,
+            children: [
+              FloatingActionButton.extended(
+                elevation: 0,
+                icon: const Icon(Icons.calculate),
+                label: const Text("DFT"),
+                onPressed: () => context.go("/DFT", extra: [real, img]),
+                heroTag: null,
+              ),
+              FloatingActionButton.extended(
+                elevation: 0,
+                icon: const Icon(Icons.calculate),
+                label: const Text("IDFT"),
+                onPressed: () => context.go("/IDFT", extra: [real, img]),
+                heroTag: null,
+              ),
+              FloatingActionButton.extended(
+                elevation: 0,
+                icon: const Icon(Icons.calculate),
+                label: const Text("FFT"),
+                onPressed: () => context.go("/Radix2FFT", extra: [real, img]),
+                heroTag: null,
+              ),
+            ],
           ),
         ],
       ),
