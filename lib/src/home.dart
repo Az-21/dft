@@ -70,7 +70,37 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final m3 = Theme.of(context).colorScheme;
     return Scaffold(
-      bottomNavigationBar: FourierTransformOperations(real: real, img: img),
+      bottomNavigationBar: BottomAppBar(
+        elevation: 1,
+        child: Wrap(
+          spacing: 8,
+          children: [
+            FilledButton.tonal(
+              onPressed: () {
+                _fixMissingTextFields(real, img);
+                context.go("/IDFT", extra: [real, img]);
+              },
+              child: const Text("IDFT"),
+            ),
+            FilledButton.tonal(
+              onPressed: () {
+                _fixMissingTextFields(real, img);
+                context.go("/DFT", extra: [real, img]);
+              },
+              child: const Text("DFT"),
+            ),
+            FilledButton.tonal(
+              onPressed: () {
+                _fixMissingTextFields(real, img);
+                context.go("/Radix2FFT", extra: [real, img]);
+              },
+              child: const Text("FFT"),
+            ),
+          ],
+        ),
+      ),
+
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         toolbarHeight: 100,
         elevation: 1,
@@ -85,25 +115,23 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       // Add and remove FAB
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.end,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
+      floatingActionButton: Wrap(
+        spacing: 8,
         children: [
           FloatingActionButton(
             onPressed: _addPoint,
             elevation: 0,
-            backgroundColor: m3.secondaryContainer,
-            child: Icon(Icons.add, color: m3.onSecondaryContainer),
+            backgroundColor: m3.primaryContainer,
+            child: Icon(Icons.add, color: m3.onPrimaryContainer),
           ),
-          const SizedBox(height: 8),
           FloatingActionButton(
             onPressed: _removePoint,
             heroTag: null,
             elevation: 0,
-            backgroundColor: m3.secondaryContainer,
-            child: Icon(Icons.remove, color: m3.onSecondaryContainer),
+            backgroundColor: m3.tertiaryContainer,
+            child: Icon(Icons.remove, color: m3.onTertiaryContainer),
           ),
-          const SizedBox(height: 32),
         ],
       ),
 
@@ -127,54 +155,32 @@ class _HomeScreenState extends State<HomeScreen> {
                     // Real Part
                     child: TextField(
                       controller: real[index],
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)'))],
+                      onTap: () => WidgetsBinding.instance.addPostFrameCallback((_) => real[index].clear()),
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: m3.background,
                         border: const OutlineInputBorder(),
                         labelText: 'Real Part',
                       ),
-
-                      // Allow only double input
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)'))],
-
-                      // Update UI
-                      onChanged: (value) => setState(() {}),
-
-                      // Reset value to '0' if user saves '' or '-'
-                      onSubmitted: (value) {
-                        if (real[index].text == '' || real[index].text == '-') {
-                          real[index].text = '0';
-                          setState(() {});
-                        }
-                      },
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: TextField(
                       controller: img[index],
+                      textInputAction: TextInputAction.next,
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)'))],
+                      onTap: () => WidgetsBinding.instance.addPostFrameCallback((_) => img[index].clear()),
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: m3.background,
                         border: const OutlineInputBorder(),
                         labelText: 'Imaginary Part',
                       ),
-
-                      // Allow only double
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)'))],
-
-                      // Update UI
-                      onChanged: (value) => setState(() {}),
-
-                      // Reset value to '0' if user saves '' or '-'
-                      onSubmitted: (value) {
-                        if (img[index].text == '' || img[index].text == '-') {
-                          img[index].text = '0';
-                          setState(() {});
-                        }
-                      },
                     ),
                   ),
                 ],
@@ -188,33 +194,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class FourierTransformOperations extends StatelessWidget {
-  const FourierTransformOperations({super.key, required this.real, required this.img});
+/// WARN: function with side-effect
+_fixMissingTextFields(List<TextEditingController> re, List<TextEditingController> im) {
+  final N = re.length;
 
-  final List<TextEditingController> real;
-  final List<TextEditingController> img;
+  for (int i = 0; i < N; i++) {
+    _fixMissingTextField(re[i]);
+    _fixMissingTextField(im[i]);
+  }
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return BottomAppBar(
-      elevation: 1,
-      child: Wrap(
-        spacing: 8,
-        children: [
-          OutlinedButton(
-            onPressed: () => context.go("/IDFT", extra: [real, img]),
-            child: const Text("IDFT"),
-          ),
-          OutlinedButton(
-            onPressed: () => context.go("/DFT", extra: [real, img]),
-            child: const Text("DFT"),
-          ),
-          OutlinedButton(
-            onPressed: () => context.go("/Radix2FFT", extra: [real, img]),
-            child: const Text("FFT"),
-          ),
-        ],
-      ),
-    );
+/// WARN: Function with side-effect
+_fixMissingTextField(TextEditingController textfield) {
+  if (textfield.text == '' || textfield.text == '-' || textfield.text == '.') {
+    textfield.text = '0';
   }
 }
