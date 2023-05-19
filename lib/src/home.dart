@@ -159,6 +159,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)'))],
                       onTap: () => WidgetsBinding.instance.addPostFrameCallback((_) => real[index].clear()),
+                      onSubmitted: (value) {
+                        _fixMissingTextField(real[index]);
+                        setState(() {});
+                      },
+                      onTapOutside: (value) {
+                        _fixMissingTextField(real[index]);
+                        setState(() {});
+                      },
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: m3.background,
@@ -175,6 +183,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
                       inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)'))],
                       onTap: () => WidgetsBinding.instance.addPostFrameCallback((_) => img[index].clear()),
+                      onSubmitted: (value) {
+                        _fixMissingTextField(img[index]);
+                        setState(() {});
+                      },
+                      onTapOutside: (value) {
+                        _fixMissingTextField(img[index]);
+                        setState(() {});
+                      },
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: m3.background,
