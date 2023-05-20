@@ -79,21 +79,21 @@ class _HomeScreenState extends State<HomeScreen> {
             FilledButton.tonal(
               onPressed: () {
                 _fixMissingTextFields(real, img);
-                context.go("/IDFT", extra: [real, img]);
+                context.go("/IDFT", extra: _parseTextfieldsAsComplex(real, img));
               },
               child: const Text("IDFT"),
             ),
             FilledButton.tonal(
               onPressed: () {
                 _fixMissingTextFields(real, img);
-                context.go("/DFT", extra: [real, img]);
+                context.go("/DFT", extra: _parseTextfieldsAsComplex(real, img));
               },
               child: const Text("DFT"),
             ),
             FilledButton.tonal(
               onPressed: () {
                 _fixMissingTextFields(real, img);
-                context.go("/Radix2FFT", extra: [real, img]);
+                context.go("/FFT", extra: _parseTextfieldsAsComplex(real, img));
               },
               child: const Text("FFT"),
             ),
