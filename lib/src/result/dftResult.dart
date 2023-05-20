@@ -1,9 +1,11 @@
+import 'package:complex/complex.dart';
 import 'package:dft/src/functions.dart';
 import 'package:dft/src/result/resultTemplate.dart';
 import 'package:flutter/material.dart';
 
 class DFT extends StatelessWidget {
-  final List<List<TextEditingController>> points;
+  final List<Complex> points;
+
   const DFT({super.key, required this.points});
 
   static String appBarTitle = "DFT";
@@ -14,9 +16,9 @@ class DFT extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResultsPageTemplate(
       points: points,
+      operation: operation,
       appBarTitle: appBarTitle,
       transformSymbol: transformSymbol,
-      operation: operation,
     );
   }
 }

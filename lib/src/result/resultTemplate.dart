@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ResultsPageTemplate extends StatefulWidget {
   final String appBarTitle;
+  final List<Complex> points;
   final String transformSymbol;
   final SignalProcessingOperation operation;
 
@@ -17,8 +18,6 @@ class ResultsPageTemplate extends StatefulWidget {
     required this.appBarTitle,
     required this.transformSymbol,
   });
-
-  final List<List<TextEditingController>> points;
 
   @override
   State createState() => _ResultsPageTemplateState();

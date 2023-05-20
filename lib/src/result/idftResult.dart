@@ -1,9 +1,11 @@
+import 'package:complex/complex.dart';
 import 'package:dft/src/functions.dart';
 import 'package:dft/src/result/resultTemplate.dart';
 import 'package:flutter/material.dart';
 
 class IDFT extends StatelessWidget {
-  final List<List<TextEditingController>> points;
+  final List<Complex> points;
+
   const IDFT({super.key, required this.points});
 
   static String appBarTitle = "Inverse DFT";
