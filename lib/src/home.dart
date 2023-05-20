@@ -1,3 +1,4 @@
+import 'package:complex/complex.dart';
 import 'package:dft/src/functions.dart';
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
@@ -230,4 +231,17 @@ _fixMissingTextField(TextEditingController textfield) {
   if (textfield.text == '' || textfield.text == '-' || textfield.text == '.') {
     textfield.text = '0';
   }
+}
+
+List<Complex> _parseTextfieldsAsComplex(List<TextEditingController> re, List<TextEditingController> im) {
+  final N = re.length;
+  List<Complex> inputSignal = <Complex>[];
+
+  for (int i = 0; i < N; i++) {
+    double reParsed = double.tryParse(re[i].text) ?? 0;
+    double imParsed = double.tryParse(im[i].text) ?? 0;
+    inputSignal.add(Complex(reParsed, imParsed));
+  }
+
+  return inputSignal;
 }
