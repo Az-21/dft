@@ -17,13 +17,13 @@ iDFT Calculator and Visualizer is an assist tool for college level students enro
     <img src="https://ucarecdn.com/c60f694f-91a4-4edc-bb95-088c18076bfc/bmac.png" width="25%" /></a>
 <br>  
   <p float="left">
-    <img src="https://ucarecdn.com/783eed04-3498-4d02-8a24-f3755497b156/idft1.png" width=49%/>
-    <img src="https://ucarecdn.com/55aac469-6741-4b1b-878f-89b6fe20bf4a/idft2.png" width=49%/> 
+    <img src="https://ucarecdn.com/fc9ce56f-1293-454b-a34c-75d57801bfe4/dft1.png" width=49%/>
+    <img src="https://ucarecdn.com/8b4cf3bd-d090-4f4d-bd9b-2fe73875f378/dft2.png" width=49%/> 
   </p>
 <br>  
   <p float="left">
-    <img src="https://ucarecdn.com/d2f042e8-4b4a-478f-8eea-a255f00de2a5/idft3.png" width=49%/>
-    <img src="https://ucarecdn.com/acfc1b65-1c2b-46a8-a0ac-4456fe132a71/idft4.png" width=49%/>
+    <img src="https://ucarecdn.com/2f86fc35-5303-41bf-af63-ac2d89a20e97/dft3.png" width=49%/>
+    <img src="https://ucarecdn.com/cbd9c476-eff5-4f7b-9643-2dc9986096f6/dft4.png" width=49%/>
   </p>
 </p>
 
