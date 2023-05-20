@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       controller: real[index],
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)'))],
+                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^-?\d*\.?\d*)'))],
                       onTap: () => WidgetsBinding.instance.addPostFrameCallback((_) => real[index].clear()),
                       onSubmitted: (value) {
                         _fixMissingTextField(real[index]);
@@ -182,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       controller: img[index],
                       textInputAction: TextInputAction.next,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^\-?\d*\.?\d*)'))],
+                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^-?\d*\.?\d*)'))],
                       onTap: () => WidgetsBinding.instance.addPostFrameCallback((_) => img[index].clear()),
                       onSubmitted: (value) {
                         _fixMissingTextField(img[index]);
