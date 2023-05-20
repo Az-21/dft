@@ -38,26 +38,9 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
   @override
   void initState() {
     super.initState();
-    for (final textController in widget.points[0]) {
-      real.add(double.parse(textController.text.toString()));
-    }
-    for (final textController in widget.points[1]) {
-      img.add(double.parse(textController.text.toString()));
-    }
-
-    /// * Convert this data into complex form (real[index] + i*img[index])
-    for (var i = 0; i < real.length; i++) {
-      inputSignal.add(Complex(real[i], img[i]));
-    }
-
     // Calculate relevant Fourier transform of input signal
     outputSignal = fourierTransform(inputSignal, widget.operation);
     result = signalWithFixedPrecision(outputSignal, 3); // Open with default precision of 3
-
-    /// * Pad the input signal to prevent index error
-    final List<double> padding = List.filled(result[0].length - real.length, 0);
-    real += padding;
-    img += padding;
 
     /// * Create chart data point
     for (var index = 0; index < result[0].length; index++) {
