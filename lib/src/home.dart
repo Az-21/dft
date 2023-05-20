@@ -180,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Expanded(
                     child: TextField(
                       controller: img[index],
-                      textInputAction: TextInputAction.next,
+                      textInputAction: index + 1 == _numPoints ? TextInputAction.done : TextInputAction.next,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
                       inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^-?\d*\.?\d*)'))],
                       onTap: () => WidgetsBinding.instance.addPostFrameCallback((_) => img[index].clear()),
