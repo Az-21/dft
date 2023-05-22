@@ -37,7 +37,24 @@ iDFT Calculator and Visualizer is an assist tool for college level students enro
 Contributions are welcomed, but please know this project is built using _Vibes_ ™ architecture. I made it when I was still learning Flutter, so it its pretty hard to refactor stuff without breaking something. I did a lot of cleanup when I resumed working on this app to support Material You, but overall the codebase is still a mess.
 
 ## Privacy Policy
-This app does not collect any data whatsoever. Everything is processed on the local (end-user's) device.
+Thank you for using iDFT Calculator and Visualizer (hereinafter referred to as "the application"). This Privacy Policy explains how the application handles and protects your personal information.
 
-### Disclaimer
+### Data Collection and Usage
+The application does not collect any personal data or information from you, nor does it share any data with third parties. All processing and calculations are performed locally on your device without any external data transmission.
+
+### Data Storage
+Since no data is collected, the application does not store any personal information or data related to your usage. The application starts in the input stage (as seen in screenshots) and there is no account creation requirement.
+
+### Third-Party Services
+The application does not integrate any third-party services, plugins, or frameworks that would collect or access your personal information.
+
+### Analytics and Cookies
+The application does not use any analytics or tracking technologies, including cookies or similar technologies, to gather information about your usage or preferences.
+
+Please note that this guarantee does not extend to Google Play Store. I have no way to influence what Google collects via their app distribution platfrom. I can only guarentee that this application does not collect any data whatsoever.
+
+### Data Security
+As the application does not collect or transmit any data, the risk of data breaches or unauthorized access to your information is eliminated.
+
+## Disclaimer
 Google Play and the Google Play logo are trademarks of Google LLC.
