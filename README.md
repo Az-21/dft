@@ -11,16 +11,16 @@ iDFT Calculator and Visualizer is an assist tool for college level students enro
 
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=com.flutterDevAz21.dft" alt="Play Store">
-    <img src="https://ucarecdn.com/33721984-62cf-4ebd-8015-00fd2aa31150/googleplaybadge.png" width="50%" /></a>    
+    <img src="https://ucarecdn.com/33721984-62cf-4ebd-8015-00fd2aa31150/googleplaybadge.png" width="50%" /></a>
 <br>
   <a href="https://www.buymeacoffee.com/az21" alt="Buy Me a Coffee">
     <img src="https://ucarecdn.com/c60f694f-91a4-4edc-bb95-088c18076bfc/bmac.png" width="25%" /></a>
-<br>  
+<br>
   <p float="left">
     <img src="https://ucarecdn.com/fc9ce56f-1293-454b-a34c-75d57801bfe4/dft1.png" width=49%/>
-    <img src="https://ucarecdn.com/8b4cf3bd-d090-4f4d-bd9b-2fe73875f378/dft2.png" width=49%/> 
+    <img src="https://ucarecdn.com/8b4cf3bd-d090-4f4d-bd9b-2fe73875f378/dft2.png" width=49%/>
   </p>
-<br>  
+<br>
   <p float="left">
     <img src="https://ucarecdn.com/2f86fc35-5303-41bf-af63-ac2d89a20e97/dft3.png" width=49%/>
     <img src="https://ucarecdn.com/cbd9c476-eff5-4f7b-9643-2dc9986096f6/dft4.png" width=49%/>
@@ -51,10 +51,7 @@ The application does not integrate any third-party services, plugins, or framewo
 ### Analytics and Cookies
 The application does not use any analytics or tracking technologies, including cookies or similar technologies, to gather information about your usage or preferences.
 
-Please note that this guarantee does not extend to Google Play Store. I have no way to influence what Google collects via their app distribution platfrom. I can only guarentee that this application does not collect any data whatsoever.
-
-### Data Security
-As the application does not collect or transmit any data, the risk of data breaches or unauthorized access to your information is eliminated.
+Please note that this guarantee does not extend to Google Play Store. I have no way to influence what Google collects via their app distribution platform.
 
 ## Disclaimer
 Google Play and the Google Play logo are trademarks of Google LLC.
