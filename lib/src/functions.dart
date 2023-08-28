@@ -62,8 +62,7 @@ bool isPowerOfTwo(int num) {
   // 8 = 1000
   // 7 = 0111
   // & = 0000
-  // ignore: avoid_bool_literals_in_conditional_expressions
-  return (num & num - 1 == 0) ? true : false;
+  return (num & num - 1 == 0);
 }
 
 // Function to pad signal with zeros
