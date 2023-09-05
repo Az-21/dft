@@ -30,7 +30,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
   List<List<String>> fOutputSignal = <List<String>>[];
 
   // * List of precision digits for CupertinoPicker
-  List<int> precisionList = List<int>.generate(16, (i) => i + 1);
+  List<int> precisionList = List<int>.generate(15, (i) => i + 1);
 
   // Extract data
   @override
