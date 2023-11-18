@@ -77,7 +77,6 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
           ListTile(
             leading: const Icon(Icons.swipe_vertical),
             title: const Text("Precision"),
-            // titleAlignment: ListTileTitleAlignment.top,
             subtitle: const Text("Set decimal precision"),
             trailing: SizedBox(
               width: MediaQuery.of(context).size.width * 0.34,
@@ -116,7 +115,6 @@ class InteractiveChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        // height: MediaQuery.of(context).size.height * 0.50,
         child: SfCartesianChart(
           enableSideBySideSeriesPlacement: false,
           title: ChartTitle(text: 'Graphical Result'),
