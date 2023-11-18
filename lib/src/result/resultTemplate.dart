@@ -121,6 +121,8 @@ class InteractiveChart extends StatelessWidget {
           primaryXAxis: NumericAxis(
             interval: 1,
             crossesAt: 0,
+            rangePadding: ChartRangePadding.additional,
+            edgeLabelPlacement: EdgeLabelPlacement.hide,
             majorTickLines: const MajorTickLines(size: 6, width: 2),
           ),
           legend: const Legend(isVisible: true, position: LegendPosition.bottom),
