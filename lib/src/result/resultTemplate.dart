@@ -122,8 +122,8 @@ class InteractiveChart extends StatelessWidget {
           enableSideBySideSeriesPlacement: false,
           title: ChartTitle(text: 'Graphical Result'),
           primaryXAxis: NumericAxis(
+            interval: 1,
             crossesAt: 0,
-            minorTicksPerInterval: 2,
             majorTickLines: const MajorTickLines(size: 6, width: 2),
           ),
           zoomPanBehavior: _zoomPanBehavior,
