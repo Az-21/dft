@@ -126,7 +126,7 @@ class InteractiveChart extends StatelessWidget {
             majorTickLines: const MajorTickLines(size: 6, width: 2),
           ),
           zoomPanBehavior: _zoomPanBehavior,
-          legend: Legend(isVisible: true, position: LegendPosition.bottom),
+          legend: const Legend(isVisible: true, position: LegendPosition.bottom),
           series: <ChartSeries>[
             ColumnSeries<ChartFFT, int>(
               name: 'Real Part',
