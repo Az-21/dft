@@ -108,7 +108,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
 }
 
 class InteractiveChart extends StatelessWidget {
-  InteractiveChart({super.key, required this.fftChartData});
+  const InteractiveChart({super.key, required this.fftChartData});
 
   final List<ChartFFT> fftChartData;
 
