@@ -111,7 +111,6 @@ class InteractiveChart extends StatelessWidget {
   InteractiveChart({super.key, required this.fftChartData});
 
   final List<ChartFFT> fftChartData;
-  final _zoomPanBehavior = ZoomPanBehavior(enablePinching: true, enablePanning: true);
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +125,6 @@ class InteractiveChart extends StatelessWidget {
             crossesAt: 0,
             majorTickLines: const MajorTickLines(size: 6, width: 2),
           ),
-          zoomPanBehavior: _zoomPanBehavior,
           legend: const Legend(isVisible: true, position: LegendPosition.bottom),
           series: <ChartSeries>[
             ColumnSeries<ChartFFT, int>(
