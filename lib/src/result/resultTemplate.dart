@@ -119,6 +119,7 @@ class InteractiveChart extends StatelessWidget {
       child: SizedBox(
         // height: MediaQuery.of(context).size.height * 0.50,
         child: SfCartesianChart(
+          enableSideBySideSeriesPlacement: false,
           title: ChartTitle(text: 'Graphical Result'),
           primaryXAxis: NumericAxis(
             crossesAt: 0,
