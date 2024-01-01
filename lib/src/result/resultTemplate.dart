@@ -117,16 +117,14 @@ class InteractiveChart extends StatelessWidget {
       child: SizedBox(
         child: SfCartesianChart(
           enableSideBySideSeriesPlacement: false,
-          title: ChartTitle(text: 'Graphical Result'),
-          primaryXAxis: NumericAxis(
+          title: const ChartTitle(text: 'Graphical Result'),
+          primaryXAxis: const NumericAxis(
             interval: 1,
             crossesAt: 0,
-            rangePadding: ChartRangePadding.additional,
-            edgeLabelPlacement: EdgeLabelPlacement.hide,
-            majorTickLines: const MajorTickLines(size: 6, width: 2),
+            majorTickLines: MajorTickLines(size: 6, width: 2),
           ),
           legend: const Legend(isVisible: true, position: LegendPosition.bottom),
-          series: <ChartSeries>[
+          series: <CartesianSeries>[
             ColumnSeries<ChartFFT, int>(
               name: 'Real Part',
               width: 0.05,
