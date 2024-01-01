@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         toolbarHeight: 100,
         elevation: 1,
-        title: const Text("iDFT Calculator"),
+        title: const Text("DFT Calculator"),
         actions: [
           IconButton(
             icon: const Icon(Icons.info_outline),
