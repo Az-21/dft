@@ -29,6 +29,8 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
+    compileSdkVersion 34
+
     namespace "com.flutterDevAz21.dft"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
@@ -37,7 +39,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
