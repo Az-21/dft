@@ -22,10 +22,20 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     namespace "com.flutterDevAz21.dft"
-    compileSdk flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
+
+    // https://developer.android.com/tools/releases/platforms
+    compileSdk 34
+
+    // https://developer.android.com/ndk/downloads
+    ndkVersion "26.2.11394342"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
