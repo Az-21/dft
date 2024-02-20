@@ -7,7 +7,7 @@
 <a href="https://m3.material.io/" alt="Material You">
   <img src="https://img.shields.io/badge/Styled%20With-Material%20You-%23757575?style=for-the-badge&logo=material%20design" /></a>
 
-iDFT Calculator and Visualizer is an assist tool for college level students enrolled in digital signal subjects. The aim of this calculator is to help students cross-verify their DFT, IDFT, and Rx2FFT problems.
+DFT Calculator and Visualizer is an assist tool for college level students enrolled in digital signal subjects. The aim of this calculator is to help students cross-verify their DFT, IDFT, and Rx2FFT problems.
 
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=com.flutterDevAz21.dft" alt="Play Store">
