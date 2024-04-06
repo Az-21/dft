@@ -2,7 +2,7 @@ name: dft
 description: Calculate Discrete Fourier Transform using Radix2 Algorithm.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 2.3.14+28
+version: 2.3.15+29
 
 environment:
   sdk: '>=3.1.0-63.1.beta <4.0.0'
@@ -13,7 +13,7 @@ dependencies:
 
   easy_dynamic_theme: ^2.2.0
   complex: ^0.7.2
-  syncfusion_flutter_charts: ^24.1.43+1
+  syncfusion_flutter_charts: ^25.1.38
   url_launcher: ^6.1.11
   dynamic_color: ^1.6.3
   flutter_animate: ^4.1.1+1
