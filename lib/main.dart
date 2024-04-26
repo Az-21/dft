@@ -41,8 +41,20 @@ class MyApp extends StatelessWidget {
 
         return MaterialApp.router(
           title: 'DFT Calculator',
-          theme: ThemeData(colorScheme: lightColorScheme, useMaterial3: true),
-          darkTheme: ThemeData(colorScheme: darkColorScheme, useMaterial3: true),
+          theme: ThemeData(
+            colorScheme: lightColorScheme,
+            useMaterial3: true,
+            pageTransitionsTheme: const PageTransitionsTheme(
+              builders: { TargetPlatform.android: PredictiveBackPageTransitionsBuilder() },
+            ),
+          ),
+          darkTheme: ThemeData(
+            colorScheme: darkColorScheme,
+            useMaterial3: true,
+            pageTransitionsTheme: const PageTransitionsTheme(
+              builders: { TargetPlatform.android: PredictiveBackPageTransitionsBuilder() },
+            ),
+          ),
           themeMode: EasyDynamicTheme.of(context).themeMode,
           routerConfig: router,
         );
