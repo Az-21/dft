@@ -35,7 +35,7 @@ android {
     compileSdk 34
 
     // https://developer.android.com/ndk/downloads
-    ndkVersion "26.2.11394342"
+    ndkVersion "26.3.11579264"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

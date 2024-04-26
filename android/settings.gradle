@@ -20,7 +20,7 @@ plugins {
     id "dev.flutter.flutter-plugin-loader" version "1.0.0"
 
     // https://mvnrepository.com/artifact/com.android.application/com.android.application.gradle.plugin
-    id "com.android.application" version "8.3.1" apply false
+    id "com.android.application" version "8.3.2" apply false
 
     // https://kotlinlang.org/docs/releases.html
     id "org.jetbrains.kotlin.android" version "1.9.23" apply false
