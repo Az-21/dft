@@ -2,7 +2,7 @@ name: dft
 description: Calculate Discrete Fourier Transform using Radix2 Algorithm.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 2.3.16+30
+version: 2.4.0+30
 
 environment:
   sdk: '>=3.1.0-63.1.beta <4.0.0'
