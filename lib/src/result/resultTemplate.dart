@@ -122,12 +122,13 @@ class InteractiveChart extends StatelessWidget {
             interval: 1,
             crossesAt: 0,
             majorTickLines: MajorTickLines(size: 6, width: 2),
+            rangePadding: ChartRangePadding.round,
           ),
           legend: const Legend(isVisible: true, position: LegendPosition.bottom),
           series: <CartesianSeries>[
             ColumnSeries<ChartFFT, int>(
               name: 'Real Part',
-              width: 0.05,
+              width: 0.06,
               opacity: 0.3,
               dataSource: fftChartData,
               markerSettings: const MarkerSettings(isVisible: true, shape: DataMarkerType.circle),
@@ -136,7 +137,7 @@ class InteractiveChart extends StatelessWidget {
             ),
             ColumnSeries<ChartFFT, int>(
               name: 'Imaginary Part',
-              width: 0.05,
+              width: 0.06,
               opacity: 0.3,
               dataSource: fftChartData,
               markerSettings: const MarkerSettings(isVisible: true, shape: DataMarkerType.diamond),
