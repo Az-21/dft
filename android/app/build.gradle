@@ -32,10 +32,10 @@ android {
     namespace "com.flutterDevAz21.dft"
 
     // https://developer.android.com/tools/releases/platforms
-    compileSdk 35
+    compileSdk 36
 
     // https://developer.android.com/ndk/downloads
-    ndkVersion "27.2.12479018"
+    ndkVersion "27.3.13750724"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
