@@ -32,7 +32,7 @@ android {
     namespace "com.flutterDevAz21.dft"
 
     // https://developer.android.com/tools/releases/platforms
-    compileSdk 36
+    compileSdk 37
 
     // https://developer.android.com/ndk/downloads
     ndkVersion "27.3.13750724"
