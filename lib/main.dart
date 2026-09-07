@@ -1,12 +1,14 @@
 import 'package:dft/app.dart';
-import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
+import 'package:dft/theme/theme_controller.dart';
 import 'package:flutter/material.dart';
 
-/// Thin bootstrap entrypoint.
+/// Thin bootstrap entrypoint
 ///
-/// Application widget lives in `lib/app.dart` and routing in
-/// `lib/routing/` as part of the feature-first layout.
-void main() async {
+/// Startup awaits the persisted theme mode, which is why the binding is
+/// initialized here. Application widget lives in `lib/app.dart`, routing in
+/// `lib/routing/`, and theming in `lib/theme/`.
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(EasyDynamicThemeWidget(child: const MyApp()));
+  await ThemeController.init();
+  runApp(const MyApp());
 }

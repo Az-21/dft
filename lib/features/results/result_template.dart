@@ -1,5 +1,6 @@
 import 'package:complex/complex.dart';
 import 'package:dft/core/dsp/fourier_transform.dart';
+import 'package:dft/theme/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -264,7 +265,7 @@ class NumericResultListTile extends StatelessWidget {
           inputSignal[index].real.toString(),
           inputSignal[index].imaginary.toString(),
         ),
-        style: const TextStyle(fontFamily: "JetBrainsMono", fontSize: 12),
+        style: AppTheme.mono.copyWith(fontSize: 12),
       ),
       subtitle: SelectableText(
         printDiscretePoint(
@@ -273,7 +274,7 @@ class NumericResultListTile extends StatelessWidget {
           fOutputSignal[0][index],
           fOutputSignal[1][index],
         ),
-        style: const TextStyle(fontFamily: "JetBrainsMono", fontSize: 16),
+        style: AppTheme.mono.copyWith(fontSize: 16),
       ),
     );
   }

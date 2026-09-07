@@ -1,7 +1,7 @@
 import 'package:dft/routing/app_router.dart';
 import 'package:dft/theme/app_theme.dart';
+import 'package:dft/theme/theme_controller.dart';
 import 'package:dynamic_color/dynamic_color.dart';
-import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
 
 /// Root application widget
@@ -10,27 +10,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DynamicColorBuilder(
-      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-        final ColorScheme lightColorScheme;
-        final ColorScheme darkColorScheme;
+    // Rebuilds MaterialApp only when the manual theme override changes
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: ThemeController.instance,
+      builder: (context, mode, _) {
+        return DynamicColorBuilder(
+          builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+            // Each brightness falls back independently when dynamic color
+            // is unavailable
+            final lightScheme =
+                lightDynamic?.harmonized() ?? AppTheme.fallbackLightScheme();
+            final darkScheme =
+                darkDynamic?.harmonized() ?? AppTheme.fallbackDarkScheme();
 
-        if (lightDynamic != null && darkDynamic != null) {
-          // On Android S+ devices, use the provided dynamic color scheme
-          lightColorScheme = lightDynamic.harmonized();
-          darkColorScheme = darkDynamic.harmonized();
-        } else {
-          // Otherwise, use fallback schemes
-          lightColorScheme = AppTheme.fallbackLightScheme();
-          darkColorScheme = AppTheme.fallbackDarkScheme();
-        }
-
-        return MaterialApp.router(
-          title: 'DFT Calculator',
-          theme: AppTheme.light(lightColorScheme),
-          darkTheme: AppTheme.dark(darkColorScheme),
-          themeMode: EasyDynamicTheme.of(context).themeMode,
-          routerConfig: router,
+            return MaterialApp.router(
+              title: 'DFT Calculator',
+              theme: AppTheme.build(lightScheme),
+              darkTheme: AppTheme.build(darkScheme),
+              themeMode: mode,
+              routerConfig: router,
+            );
+          },
         );
       },
     );

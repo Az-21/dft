@@ -1,6 +1,7 @@
 import 'package:complex/complex.dart';
 import 'package:dft/core/dsp/fourier_transform.dart';
-import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
+import 'package:dft/theme/app_theme.dart';
+import 'package:dft/theme/theme_mode_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -125,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () => context.go("/about"),
             iconSize: 24,
           ),
-          EasyDynamicThemeSwitch(),
+          const ThemeModeButton(),
         ],
       ),
       // Add and remove FAB
@@ -164,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         real[index].text,
                         img[index].text,
                       ),
-                      style: const TextStyle(fontFamily: "JetBrainsMono"),
+                      style: AppTheme.mono,
                     ),
                     leading: const Icon(Icons.label_important_outline),
                   ),
@@ -194,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                           decoration: InputDecoration(
                             filled: true,
-                            fillColor: m3.background,
+                            fillColor: m3.surface,
                             border: const OutlineInputBorder(),
                             labelText: 'Real Part',
                           ),
@@ -232,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                           decoration: InputDecoration(
                             filled: true,
-                            fillColor: m3.background,
+                            fillColor: m3.surface,
                             border: const OutlineInputBorder(),
                             labelText: 'Imaginary Part',
                           ),

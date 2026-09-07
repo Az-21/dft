@@ -3,34 +3,17 @@ import 'package:flutter/material.dart';
 /// Application seed color used when platform dynamic color is unavailable
 const appSeedColor = Color(0xFF386A20);
 
-/// Centralizes light/dark [ThemeData] construction.
-///
-/// Behavior is intentionally identical to the previous inline themes in
-/// `MyApp`; this file only gives them a named home under `lib/theme/`
-/// as part of the feature-first layout.
-abstract final class AppTheme {
-  static ThemeData light(ColorScheme scheme) {
-    return ThemeData(
-      colorScheme: scheme,
-      useMaterial3: true,
-      pageTransitionsTheme: const PageTransitionsTheme(
-        builders: {
-          TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-        },
-      ),
-    );
-  }
+/// Identifier of the bundled monospace family declared in `pubspec.yaml`
+const monoFontFamily = 'JetBrainsMono';
 
-  static ThemeData dark(ColorScheme scheme) {
-    return ThemeData(
-      colorScheme: scheme,
-      useMaterial3: true,
-      pageTransitionsTheme: const PageTransitionsTheme(
-        builders: {
-          TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-        },
-      ),
-    );
+/// Central place for [ThemeData] construction and shared text styles
+///
+/// Relies on Flutter defaults for Material 3 and predictive back
+/// Dynamic color harmonization happens in `MyApp`
+abstract final class AppTheme {
+  /// Single builder shared by the light and dark themes
+  static ThemeData build(ColorScheme scheme) {
+    return ThemeData(colorScheme: scheme);
   }
 
   static ColorScheme fallbackLightScheme() {
@@ -43,4 +26,7 @@ abstract final class AppTheme {
       brightness: Brightness.dark,
     );
   }
+
+  /// Monospace style for numeric readouts; call sites add sizes as needed
+  static const TextStyle mono = TextStyle(fontFamily: monoFontFamily);
 }
