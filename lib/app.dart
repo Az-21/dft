@@ -1,8 +1,8 @@
-import 'package:dft/routing/app_router.dart';
-import 'package:dft/theme/app_theme.dart';
-import 'package:dft/theme/theme_controller.dart';
-import 'package:dynamic_color/dynamic_color.dart';
-import 'package:flutter/material.dart';
+import "package:dft/routing/app_router.dart";
+import "package:dft/theme/app_theme.dart";
+import "package:dft/theme/theme_controller.dart";
+import "package:dynamic_color/dynamic_color.dart";
+import "package:flutter/material.dart";
 
 /// Root application widget
 class MyApp extends StatelessWidget {
@@ -22,10 +22,11 @@ class MyApp extends StatelessWidget {
             final darkScheme = darkDynamic?.harmonized() ?? AppTheme.fallbackDarkScheme();
 
             return MaterialApp.router(
-              title: 'DFT Calculator',
+              title: "DFT Calculator",
               theme: AppTheme.build(lightScheme),
               darkTheme: AppTheme.build(darkScheme),
               themeMode: mode,
+              restorationScopeId: "app",
               routerConfig: router,
             );
           },

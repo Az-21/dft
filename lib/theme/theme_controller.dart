@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import "package:flutter/material.dart";
+import "package:shared_preferences/shared_preferences.dart";
 
 /// Manual [ThemeMode] override persisted across restarts
 ///
@@ -7,14 +7,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ThemeController extends ValueNotifier<ThemeMode> {
   ThemeController._(super.mode);
 
-  static const storageKey = 'themeMode';
+  static const storageKey = "themeMode";
 
   static ThemeController? _instance;
 
   /// Global instance; assert message points at the missing init call
   static ThemeController get instance {
     final controller = _instance;
-    assert(controller != null, 'Call ThemeController.init() in main() first');
+    assert(controller != null, "Call ThemeController.init() in main() first");
     return controller!;
   }
 

@@ -1,4 +1,4 @@
 /// Signal input feature
 library;
 
-export 'input_screen.dart';
+export "input_screen.dart";

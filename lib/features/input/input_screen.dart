@@ -1,11 +1,13 @@
-import 'package:complex/complex.dart';
-import 'package:dft/core/dsp/fourier_transform.dart';
-import 'package:dft/theme/app_theme.dart';
-import 'package:dft/theme/theme_mode_button.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:go_router/go_router.dart';
+import "package:complex/complex.dart";
+import "package:dft/core/dsp/fourier_transform.dart";
+import "package:dft/routing/app_routes.dart";
+import "package:dft/routing/transform_params.dart";
+import "package:dft/theme/app_theme.dart";
+import "package:dft/theme/theme_mode_button.dart";
+import "package:flutter/material.dart";
+import "package:flutter/services.dart";
+import "package:flutter_animate/flutter_animate.dart";
+import "package:go_router/go_router.dart";
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,8 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    real[0].text = '0';
-    img[0].text = '0';
+    real[0].text = "0";
+    img[0].text = "0";
   }
 
   // Add a discrete point
@@ -35,8 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
     real.add(TextEditingController());
     img.add(TextEditingController());
 
-    real[_numPoints].text = '0';
-    img[_numPoints].text = '0';
+    real[_numPoints].text = "0";
+    img[_numPoints].text = "0";
     _numPoints++;
 
     // Update UI
@@ -80,21 +82,21 @@ class _HomeScreenState extends State<HomeScreen> {
             FilledButton.tonal(
               onPressed: () {
                 _fixMissingTextFields(real, img);
-                context.go("/IDFT", extra: _parseTextfieldsAsComplex(real, img));
+                context.push(AppRoutes.idft, extra: TransformParams(_parseTextfieldsAsComplex(real, img)));
               },
               child: const Text("IDFT"),
             ),
             FilledButton.tonal(
               onPressed: () {
                 _fixMissingTextFields(real, img);
-                context.go("/DFT", extra: _parseTextfieldsAsComplex(real, img));
+                context.push(AppRoutes.dft, extra: TransformParams(_parseTextfieldsAsComplex(real, img)));
               },
               child: const Text("DFT"),
             ),
             FilledButton.tonal(
               onPressed: () {
                 _fixMissingTextFields(real, img);
-                context.go("/FFT", extra: _parseTextfieldsAsComplex(real, img));
+                context.push(AppRoutes.fft, extra: TransformParams(_parseTextfieldsAsComplex(real, img)));
               },
               child: const Text("FFT"),
             ),
@@ -108,7 +110,11 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 1,
         title: const Text("DFT Calculator"),
         actions: [
-          IconButton(icon: const Icon(Icons.info_outline), onPressed: () => context.go("/about"), iconSize: 24),
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            onPressed: () => context.push(AppRoutes.about),
+            iconSize: 24,
+          ),
           const ThemeModeButton(),
         ],
       ),
@@ -141,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return Column(
             children: <Widget>[
               ListTile(
-                title: Text(printDiscretePoint('x', index, real[index].text, img[index].text), style: AppTheme.mono),
+                title: Text(printDiscretePoint("x", index, real[index].text, img[index].text), style: AppTheme.mono),
                 leading: const Icon(Icons.label_important_outline),
               ),
               Row(
@@ -152,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       controller: real[index],
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^-?\d*\.?\d*)'))],
+                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r"(^-?\d*\.?\d*)"))],
                       onTap: () => WidgetsBinding.instance.addPostFrameCallback((_) => real[index].clear()),
                       onSubmitted: (value) {
                         _fixMissingTextField(real[index]);
@@ -167,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         filled: true,
                         fillColor: m3.surface,
                         border: const OutlineInputBorder(),
-                        labelText: 'Real Part',
+                        labelText: "Real Part",
                       ),
                     ),
                   ),
@@ -177,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       controller: img[index],
                       textInputAction: index + 1 == _numPoints ? TextInputAction.done : TextInputAction.next,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^-?\d*\.?\d*)'))],
+                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r"(^-?\d*\.?\d*)"))],
                       onTap: () => WidgetsBinding.instance.addPostFrameCallback((_) => img[index].clear()),
                       onSubmitted: (value) {
                         _fixMissingTextField(img[index]);
@@ -195,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         filled: true,
                         fillColor: m3.surface,
                         border: const OutlineInputBorder(),
-                        labelText: 'Imaginary Part',
+                        labelText: "Imaginary Part",
                       ),
                     ),
                   ),
@@ -222,18 +228,18 @@ void _fixMissingTextFields(List<TextEditingController> re, List<TextEditingContr
 
 /// WARN: Function with side-effect
 void _fixMissingTextField(TextEditingController textfield) {
-  if (textfield.text == '' || textfield.text == '-' || textfield.text == '.') {
-    textfield.text = '0';
+  if (textfield.text == "" || textfield.text == "-" || textfield.text == ".") {
+    textfield.text = "0";
   }
 }
 
 List<Complex> _parseTextfieldsAsComplex(List<TextEditingController> re, List<TextEditingController> im) {
   final N = re.length;
-  List<Complex> inputSignal = <Complex>[];
+  final List<Complex> inputSignal = <Complex>[];
 
   for (int i = 0; i < N; i++) {
-    double reParsed = double.tryParse(re[i].text) ?? 0;
-    double imParsed = double.tryParse(im[i].text) ?? 0;
+    final double reParsed = double.tryParse(re[i].text) ?? 0;
+    final double imParsed = double.tryParse(im[i].text) ?? 0;
     inputSignal.add(Complex(reParsed, imParsed));
   }
 

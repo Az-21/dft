@@ -1,10 +1,10 @@
-import 'package:complex/complex.dart';
-import 'package:dft/core/dsp/fourier_transform.dart';
-import 'package:dft/theme/app_theme.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+import "package:complex/complex.dart";
+import "package:dft/core/dsp/fourier_transform.dart";
+import "package:dft/theme/app_theme.dart";
+import "package:flutter/cupertino.dart";
+import "package:flutter/material.dart";
+import "package:flutter_animate/flutter_animate.dart";
+import "package:syncfusion_flutter_charts/charts.dart";
 
 class ResultsPageTemplate extends StatefulWidget {
   const ResultsPageTemplate({
@@ -37,15 +37,16 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
   @override
   void initState() {
     super.initState();
+    // Copy the navigation payload; the FFT step below pads this list in place
+    inputSignal = List.of(widget.points);
     // Calculate relevant Fourier transform of input signal
-    inputSignal = widget.points;
     outputSignal = fourierTransform(inputSignal, widget.operation);
     fOutputSignal = signalWithFixedPrecision(outputSignal, 3);
 
     // Pad input signal for FFT (eg: input with 3 signals will produce 4 outputs) to prevent index error
     if (widget.operation == SignalProcessingOperation.opRadix2FFT) {
       final int paddingRequired = outputSignal.length - inputSignal.length;
-      Complex complexZero = const Complex(0, 0);
+      final Complex complexZero = const Complex(0);
       for (int i = 0; i < paddingRequired; i++) {
         inputSignal.add(complexZero);
       }
@@ -83,7 +84,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
                   fOutputSignal = signalWithFixedPrecision(outputSignal, value + 1);
                   setState(() {});
                 },
-                children: [for (int precision in precisionList) Center(child: Text('$precision'))],
+                children: [for (int precision in precisionList) Center(child: Text("$precision"))],
               ),
             ),
           ),
@@ -110,7 +111,7 @@ class InteractiveChart extends StatelessWidget {
       child: SizedBox(
         child: SfCartesianChart(
           enableSideBySideSeriesPlacement: false,
-          title: const ChartTitle(text: 'Graphical Result'),
+          title: const ChartTitle(text: "Graphical Result"),
           primaryXAxis: const NumericAxis(
             interval: 1,
             crossesAt: 0,
@@ -120,16 +121,16 @@ class InteractiveChart extends StatelessWidget {
           legend: const Legend(isVisible: true, position: LegendPosition.bottom),
           series: <CartesianSeries<ChartFFT, int>>[
             ColumnSeries<ChartFFT, int>(
-              name: 'Real Part',
+              name: "Real Part",
               width: 0.06,
               opacity: 0.3,
               dataSource: fftChartData,
-              markerSettings: const MarkerSettings(isVisible: true, shape: DataMarkerType.circle),
+              markerSettings: const MarkerSettings(isVisible: true),
               xValueMapper: (ChartFFT data, _) => data.time,
               yValueMapper: (ChartFFT data, _) => data.realMag,
             ),
             ColumnSeries<ChartFFT, int>(
-              name: 'Imaginary Part',
+              name: "Imaginary Part",
               width: 0.06,
               opacity: 0.3,
               dataSource: fftChartData,
@@ -233,7 +234,7 @@ class NumericResultListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: SelectableText(
-        printDiscretePoint('x', index, inputSignal[index].real.toString(), inputSignal[index].imaginary.toString()),
+        printDiscretePoint("x", index, inputSignal[index].real.toString(), inputSignal[index].imaginary.toString()),
         style: AppTheme.mono.copyWith(fontSize: 12),
       ),
       subtitle: SelectableText(

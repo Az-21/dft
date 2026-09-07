@@ -1,12 +1,12 @@
-import 'package:dft/features/about/about_links.dart';
-import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_animate/flutter_animate.dart';
+import "package:dft/features/about/about_links.dart";
+import "package:flutter/material.dart";
+import "package:flutter_animate/flutter_animate.dart";
+import "package:url_launcher/url_launcher.dart";
 
 Future<void> _launchUrl(String url) async {
   final Uri uri = Uri.parse(url);
   if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-    throw Exception('Could not launch $url');
+    throw Exception("Could not launch $url");
   }
 }
 

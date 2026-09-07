@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 /// Application seed color used when platform dynamic color is unavailable
 const appSeedColor = Color(0xFF386A20);
 
 /// Identifier of the bundled monospace family declared in `pubspec.yaml`
-const monoFontFamily = 'JetBrainsMono';
+const monoFontFamily = "JetBrainsMono";
 
 /// Central place for [ThemeData] construction and shared text styles
 ///

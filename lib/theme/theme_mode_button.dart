@@ -1,5 +1,5 @@
-import 'package:dft/theme/theme_controller.dart';
-import 'package:flutter/material.dart';
+import "package:dft/theme/theme_controller.dart";
+import "package:flutter/material.dart";
 
 /// App bar action that cycles the manual theme override
 class ThemeModeButton extends StatelessWidget {
@@ -33,8 +33,8 @@ IconData _iconFor(ThemeMode mode) {
 /// Tooltip names the active mode and previews the next one
 String _tooltipFor(ThemeMode mode) {
   return switch (mode) {
-    ThemeMode.system => 'Theme: system (tap for light)',
-    ThemeMode.light => 'Theme: light (tap for dark)',
-    ThemeMode.dark => 'Theme: dark (tap for system)',
+    ThemeMode.system => "Theme: system (tap for light)",
+    ThemeMode.light => "Theme: light (tap for dark)",
+    ThemeMode.dark => "Theme: dark (tap for system)",
   };
 }

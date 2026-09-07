@@ -1,7 +1,7 @@
-import 'package:complex/complex.dart';
-import 'package:dft/core/dsp/fourier_transform.dart';
-import 'package:dft/features/results/result_template.dart';
-import 'package:flutter/material.dart';
+import "package:complex/complex.dart";
+import "package:dft/core/dsp/fourier_transform.dart";
+import "package:dft/features/results/result_template.dart";
+import "package:flutter/material.dart";
 
 class DFT extends StatelessWidget {
   final List<Complex> points;

@@ -1,17 +1,17 @@
-import 'dart:math';
-import 'package:complex/complex.dart';
+import "dart:math";
+import "package:complex/complex.dart";
 
 enum SignalProcessingOperation { opRadix2FFT, opDFT, opIDFT }
 
 /// Format output in `x(0) = a + (b)i` format
 String printDiscretePoint(String prefix, int index, String re, String im) {
-  String pointValue = '$prefix($index) = ';
+  String pointValue = "$prefix($index) = ";
 
   // Real part with '-' padding
-  re.startsWith('-') ? pointValue += '$re ' : pointValue += ' $re ';
+  re.startsWith("-") ? pointValue += "$re " : pointValue += " $re ";
 
   // * +/- sign aware imaginary part
-  im.startsWith('-') ? pointValue += '- (${im.substring(1)})i' : pointValue += '+ ($im)i';
+  im.startsWith("-") ? pointValue += "- (${im.substring(1)})i" : pointValue += "+ ($im)i";
 
   return pointValue;
 }
@@ -19,7 +19,7 @@ String printDiscretePoint(String prefix, int index, String re, String im) {
 /// Private f(x):=DiscreteFourierTransform(signal, isInverse flag) | Uses standard notation N, n, k
 List<Complex> _discreteFourierTransform(final List<Complex> inputSignal, {required bool isInverse}) {
   final N = inputSignal.length;
-  List<Complex> outputSignal = <Complex>[];
+  final List<Complex> outputSignal = <Complex>[];
 
   // Account for a minor difference between im(DFT) and im(IDFT)
   final signModifier = isInverse ? 1 : -1;
@@ -72,7 +72,7 @@ List<Complex> padWithZeros(List<Complex> f) {
   final int nextPowerOfTwo = pow(2, (log(N) / log(2)).ceil()).toInt();
   final int paddingRequired = nextPowerOfTwo - N;
 
-  return f + List<Complex>.filled(paddingRequired, const Complex(0, 0));
+  return f + List<Complex>.filled(paddingRequired, const Complex(0));
 }
 
 // Twiddle Factor Generator W_N^{k}
@@ -90,8 +90,8 @@ List<Complex> findFFT(List<Complex> f) {
   }
 
   // Init Lists for even and odd half splits
-  List<Complex> halfOdd = <Complex>[];
-  List<Complex> halfEven = <Complex>[];
+  final List<Complex> halfOdd = <Complex>[];
+  final List<Complex> halfEven = <Complex>[];
 
   // Get even and odd elements from {super:f}
   for (int i = 0; i < N; i += 2) {
@@ -105,7 +105,7 @@ List<Complex> findFFT(List<Complex> f) {
   final List<Complex> odd = findFFT(halfOdd);
 
   // Init currentFFT = [0+0i, 0+0i, ... , 0+0i];
-  final List<Complex> currentFFT = List<Complex>.filled(N, const Complex(0, 0));
+  final List<Complex> currentFFT = List<Complex>.filled(N, const Complex(0));
 
   // NOTE: in Dart, (number ~/ 2) == (number / 2).toInt
   final int d = N ~/ 2; // decimated length to gain advantage of W_N -> W_N/2
@@ -146,8 +146,8 @@ List<Complex> fourierTransform(final List<Complex> inputSignal, final SignalProc
 
 // Decimal precision handler
 List<List<String>> signalWithFixedPrecision(final List<Complex> signal, final int precision) {
-  List<String> reSignal = <String>[];
-  List<String> imSignal = <String>[];
+  final List<String> reSignal = <String>[];
+  final List<String> imSignal = <String>[];
 
   for (Complex point in signal) {
     reSignal.add(point.real.toStringAsFixed(precision));
