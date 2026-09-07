@@ -10,7 +10,7 @@ class Radix2FFT extends StatelessWidget {
 
   static String appBarTitle = "Radix2 DIF FFT";
   static String transformSymbol = "F₂";
-  static SignalProcessingOperation operation = SignalProcessingOperation.opRadix2FFT;
+  static SignalProcessingOperation operation = SignalProcessingOperation.radix2Fft;
 
   @override
   Widget build(BuildContext context) {

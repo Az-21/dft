@@ -32,6 +32,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
 
   // * List of precision digits for CupertinoPicker
   List<int> precisionList = List<int>.generate(15, (i) => i + 1);
+  final FixedExtentScrollController _precisionController = FixedExtentScrollController(initialItem: 2);
 
   // Extract data
   @override
@@ -44,19 +45,22 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
     fOutputSignal = signalWithFixedPrecision(outputSignal, 3);
 
     // Pad input signal for FFT (eg: input with 3 signals will produce 4 outputs) to prevent index error
-    if (widget.operation == SignalProcessingOperation.opRadix2FFT) {
+    if (widget.operation == SignalProcessingOperation.radix2Fft) {
       final int paddingRequired = outputSignal.length - inputSignal.length;
-      final Complex complexZero = const Complex(0);
+      const Complex complexZero = Complex(0);
       for (int i = 0; i < paddingRequired; i++) {
         inputSignal.add(complexZero);
       }
     }
 
-    // Create chart data point
-    for (var index = 0; index < fOutputSignal[0].length; index++) {
-      final ChartFFT o = ChartFFT(index, double.parse(fOutputSignal[0][index]), double.parse(fOutputSignal[1][index]));
-      fftChartData.add(o);
-    }
+    // Chart from raw full-precision output; text rows use fOutputSignal.
+    fftChartData = ChartFFT.fromSpectrum(outputSignal);
+  }
+
+  @override
+  void dispose() {
+    _precisionController.dispose();
+    super.dispose();
   }
 
   @override
@@ -75,7 +79,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
             trailing: SizedBox(
               width: MediaQuery.of(context).size.width * 0.34,
               child: CupertinoPicker(
-                scrollController: FixedExtentScrollController(initialItem: 2),
+                scrollController: _precisionController,
                 useMagnifier: true,
                 magnification: 1.2,
                 itemExtent: 32,
@@ -127,7 +131,7 @@ class InteractiveChart extends StatelessWidget {
               dataSource: fftChartData,
               markerSettings: const MarkerSettings(isVisible: true),
               xValueMapper: (ChartFFT data, _) => data.time,
-              yValueMapper: (ChartFFT data, _) => data.realMag,
+              yValueMapper: (ChartFFT data, _) => data.real,
             ),
             ColumnSeries<ChartFFT, int>(
               name: "Imaginary Part",
@@ -136,7 +140,7 @@ class InteractiveChart extends StatelessWidget {
               dataSource: fftChartData,
               markerSettings: const MarkerSettings(isVisible: true, shape: DataMarkerType.diamond),
               xValueMapper: (ChartFFT data, _) => data.time,
-              yValueMapper: (ChartFFT data, _) => data.imgMag,
+              yValueMapper: (ChartFFT data, _) => data.imaginary,
             ),
           ],
         ),

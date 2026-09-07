@@ -10,7 +10,7 @@ class DFT extends StatelessWidget {
 
   static String appBarTitle = "DFT";
   static String transformSymbol = "F";
-  static SignalProcessingOperation operation = SignalProcessingOperation.opDFT;
+  static SignalProcessingOperation operation = SignalProcessingOperation.dft;
 
   @override
   Widget build(BuildContext context) {

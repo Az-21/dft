@@ -10,7 +10,7 @@ class IDFT extends StatelessWidget {
 
   static String appBarTitle = "Inverse DFT";
   static String transformSymbol = "F′";
-  static SignalProcessingOperation operation = SignalProcessingOperation.opIDFT;
+  static SignalProcessingOperation operation = SignalProcessingOperation.idft;
 
   @override
   Widget build(BuildContext context) {
