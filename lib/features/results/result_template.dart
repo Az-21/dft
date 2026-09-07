@@ -1,5 +1,5 @@
 import 'package:complex/complex.dart';
-import 'package:dft/src/functions.dart';
+import 'package:dft/core/dsp/fourier_transform.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -87,10 +87,16 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
                 itemExtent: 32,
                 looping: true,
                 onSelectedItemChanged: (value) {
-                  fOutputSignal = signalWithFixedPrecision(outputSignal, value + 1);
+                  fOutputSignal = signalWithFixedPrecision(
+                    outputSignal,
+                    value + 1,
+                  );
                   setState(() {});
                 },
-                children: [for (int precision in precisionList) Center(child: Text('$precision'))],
+                children: [
+                  for (int precision in precisionList)
+                    Center(child: Text('$precision')),
+                ],
               ),
             ),
           ),
@@ -99,7 +105,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
             fOutputSignal: fOutputSignal,
             transformSymbol: widget.transformSymbol,
           ),
-          const SizedBox(height: 64) // Allow some over-scroll
+          const SizedBox(height: 64), // Allow some over-scroll
         ],
       ),
     );
@@ -124,14 +130,20 @@ class InteractiveChart extends StatelessWidget {
             majorTickLines: MajorTickLines(size: 6, width: 2),
             rangePadding: ChartRangePadding.round,
           ),
-          legend: const Legend(isVisible: true, position: LegendPosition.bottom),
+          legend: const Legend(
+            isVisible: true,
+            position: LegendPosition.bottom,
+          ),
           series: <CartesianSeries>[
             ColumnSeries<ChartFFT, int>(
               name: 'Real Part',
               width: 0.06,
               opacity: 0.3,
               dataSource: fftChartData,
-              markerSettings: const MarkerSettings(isVisible: true, shape: DataMarkerType.circle),
+              markerSettings: const MarkerSettings(
+                isVisible: true,
+                shape: DataMarkerType.circle,
+              ),
               xValueMapper: (ChartFFT data, _) => data.time,
               yValueMapper: (ChartFFT data, _) => data.realMag,
             ),
@@ -140,7 +152,10 @@ class InteractiveChart extends StatelessWidget {
               width: 0.06,
               opacity: 0.3,
               dataSource: fftChartData,
-              markerSettings: const MarkerSettings(isVisible: true, shape: DataMarkerType.diamond),
+              markerSettings: const MarkerSettings(
+                isVisible: true,
+                shape: DataMarkerType.diamond,
+              ),
               xValueMapper: (ChartFFT data, _) => data.time,
               yValueMapper: (ChartFFT data, _) => data.imgMag,
             ),
@@ -172,15 +187,18 @@ class NumericResults extends StatelessWidget {
       itemCount: fOutputSignal[0].length,
       itemBuilder: (_, index) {
         return NumericResultCard(
-          index: index,
-          inputSignal: inputSignal,
-          transformSymbol: transformSymbol,
-          fOutputSignal: fOutputSignal,
-        )
+              index: index,
+              inputSignal: inputSignal,
+              transformSymbol: transformSymbol,
+              fOutputSignal: fOutputSignal,
+            )
             .animate(delay: ((index + 1) * 100).ms)
             .fade(duration: 100.ms)
             .then()
-            .shimmer(duration: 200.ms, color: Theme.of(context).colorScheme.tertiaryContainer);
+            .shimmer(
+              duration: 200.ms,
+              color: Theme.of(context).colorScheme.tertiaryContainer,
+            );
       },
       // Separator
       separatorBuilder: (_, index) {
@@ -240,11 +258,21 @@ class NumericResultListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: SelectableText(
-        printDiscretePoint('x', index, inputSignal[index].real.toString(), inputSignal[index].imaginary.toString()),
+        printDiscretePoint(
+          'x',
+          index,
+          inputSignal[index].real.toString(),
+          inputSignal[index].imaginary.toString(),
+        ),
         style: const TextStyle(fontFamily: "JetBrainsMono", fontSize: 12),
       ),
       subtitle: SelectableText(
-        printDiscretePoint(transformSymbol, index, fOutputSignal[0][index], fOutputSignal[1][index]),
+        printDiscretePoint(
+          transformSymbol,
+          index,
+          fOutputSignal[0][index],
+          fOutputSignal[1][index],
+        ),
         style: const TextStyle(fontFamily: "JetBrainsMono", fontSize: 16),
       ),
     );

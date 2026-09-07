@@ -1,5 +1,5 @@
 import 'package:complex/complex.dart';
-import 'package:dft/src/functions.dart';
+import 'package:dft/core/dsp/fourier_transform.dart';
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -58,10 +58,20 @@ class _HomeScreenState extends State<HomeScreen> {
         SnackBar(
           backgroundColor: m3.errorContainer,
           content: ListTile(
-            leading: Icon(Icons.running_with_errors, color: m3.onErrorContainer),
-            title: Text("At least one point is required", style: TextStyle(color: m3.onErrorContainer)),
+            leading: Icon(
+              Icons.running_with_errors,
+              color: m3.onErrorContainer,
+            ),
+            title: Text(
+              "At least one point is required",
+              style: TextStyle(color: m3.onErrorContainer),
+            ),
           ),
-          action: SnackBarAction(label: "Got it", onPressed: () {}, textColor: m3.onErrorContainer),
+          action: SnackBarAction(
+            label: "Got it",
+            onPressed: () {},
+            textColor: m3.onErrorContainer,
+          ),
         ),
       );
     }
@@ -79,7 +89,10 @@ class _HomeScreenState extends State<HomeScreen> {
             FilledButton.tonal(
               onPressed: () {
                 _fixMissingTextFields(real, img);
-                context.go("/IDFT", extra: _parseTextfieldsAsComplex(real, img));
+                context.go(
+                  "/IDFT",
+                  extra: _parseTextfieldsAsComplex(real, img),
+                );
               },
               child: const Text("IDFT"),
             ),
@@ -142,73 +155,97 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: _numPoints,
         itemBuilder: (_, index) {
           return Column(
-            children: <Widget>[
-              ListTile(
-                title: Text(
-                  printDiscretePoint('x', index, real[index].text, img[index].text),
-                  style: const TextStyle(fontFamily: "JetBrainsMono"),
-                ),
-                leading: const Icon(Icons.label_important_outline),
-              ),
-              Row(
                 children: <Widget>[
-                  Expanded(
-                    // Real Part
-                    child: TextField(
-                      controller: real[index],
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^-?\d*\.?\d*)'))],
-                      onTap: () => WidgetsBinding.instance.addPostFrameCallback((_) => real[index].clear()),
-                      onSubmitted: (value) {
-                        _fixMissingTextField(real[index]);
-                        img[index].clear();
-                        setState(() {});
-                      },
-                      onTapOutside: (value) {
-                        _fixMissingTextField(real[index]);
-                        setState(() {});
-                      },
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: m3.background,
-                        border: const OutlineInputBorder(),
-                        labelText: 'Real Part',
+                  ListTile(
+                    title: Text(
+                      printDiscretePoint(
+                        'x',
+                        index,
+                        real[index].text,
+                        img[index].text,
                       ),
+                      style: const TextStyle(fontFamily: "JetBrainsMono"),
                     ),
+                    leading: const Icon(Icons.label_important_outline),
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: TextField(
-                      controller: img[index],
-                      textInputAction: index + 1 == _numPoints ? TextInputAction.done : TextInputAction.next,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^-?\d*\.?\d*)'))],
-                      onTap: () => WidgetsBinding.instance.addPostFrameCallback((_) => img[index].clear()),
-                      onSubmitted: (value) {
-                        _fixMissingTextField(img[index]);
-                        // Ensure index++ element actually exists
-                        if (index + 1 != _numPoints) {
-                          real[index + 1].clear();
-                        }
-                        setState(() {});
-                      },
-                      onTapOutside: (value) {
-                        _fixMissingTextField(img[index]);
-                        setState(() {});
-                      },
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: m3.background,
-                        border: const OutlineInputBorder(),
-                        labelText: 'Imaginary Part',
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        // Real Part
+                        child: TextField(
+                          controller: real[index],
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                              RegExp(r'(^-?\d*\.?\d*)'),
+                            ),
+                          ],
+                          onTap: () => WidgetsBinding.instance
+                              .addPostFrameCallback((_) => real[index].clear()),
+                          onSubmitted: (value) {
+                            _fixMissingTextField(real[index]);
+                            img[index].clear();
+                            setState(() {});
+                          },
+                          onTapOutside: (value) {
+                            _fixMissingTextField(real[index]);
+                            setState(() {});
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: m3.background,
+                            border: const OutlineInputBorder(),
+                            labelText: 'Real Part',
+                          ),
+                        ),
                       ),
-                    ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: TextField(
+                          controller: img[index],
+                          textInputAction: index + 1 == _numPoints
+                              ? TextInputAction.done
+                              : TextInputAction.next,
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                            signed: true,
+                          ),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                              RegExp(r'(^-?\d*\.?\d*)'),
+                            ),
+                          ],
+                          onTap: () => WidgetsBinding.instance
+                              .addPostFrameCallback((_) => img[index].clear()),
+                          onSubmitted: (value) {
+                            _fixMissingTextField(img[index]);
+                            // Ensure index++ element actually exists
+                            if (index + 1 != _numPoints) {
+                              real[index + 1].clear();
+                            }
+                            setState(() {});
+                          },
+                          onTapOutside: (value) {
+                            _fixMissingTextField(img[index]);
+                            setState(() {});
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: m3.background,
+                            border: const OutlineInputBorder(),
+                            labelText: 'Imaginary Part',
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               )
-            ],
-          ).animate().fadeIn(duration: 100.ms).then().shimmer(duration: 200.ms, color: m3.secondaryContainer);
+              .animate()
+              .fadeIn(duration: 100.ms)
+              .then()
+              .shimmer(duration: 200.ms, color: m3.secondaryContainer);
         },
         separatorBuilder: (_, index) => const SizedBox(height: 20),
       ),
@@ -217,7 +254,10 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 /// WARN: function with side-effect
-_fixMissingTextFields(List<TextEditingController> re, List<TextEditingController> im) {
+_fixMissingTextFields(
+  List<TextEditingController> re,
+  List<TextEditingController> im,
+) {
   final N = re.length;
 
   for (int i = 0; i < N; i++) {
@@ -233,7 +273,10 @@ _fixMissingTextField(TextEditingController textfield) {
   }
 }
 
-List<Complex> _parseTextfieldsAsComplex(List<TextEditingController> re, List<TextEditingController> im) {
+List<Complex> _parseTextfieldsAsComplex(
+  List<TextEditingController> re,
+  List<TextEditingController> im,
+) {
   final N = re.length;
   List<Complex> inputSignal = <Complex>[];
 

@@ -1,4 +1,4 @@
-import 'package:dft/constant/about.dart';
+import 'package:dft/features/about/about_links.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -56,18 +56,19 @@ class ListTilesFromIterable extends StatelessWidget {
 
       // Core widget
       itemCount: iterable.length,
-      itemBuilder: (context, index) => ListTile(
-        leading: const Icon(Icons.arrow_right),
-        title: Text(iterable[index][0]),
-        subtitle: Text(iterable[index][1]),
-        trailing: IconButton.outlined(
-          onPressed: () => _launchUrl(iterable[index][2]),
-          icon: const Icon(Icons.open_in_new),
-        ),
-      )
-          .animate(delay: ((index + 1) * 100).milliseconds)
-          .fadeIn()
-          .shimmer(color: Theme.of(context).colorScheme.surfaceTint),
+      itemBuilder: (context, index) =>
+          ListTile(
+                leading: const Icon(Icons.arrow_right),
+                title: Text(iterable[index][0]),
+                subtitle: Text(iterable[index][1]),
+                trailing: IconButton.outlined(
+                  onPressed: () => _launchUrl(iterable[index][2]),
+                  icon: const Icon(Icons.open_in_new),
+                ),
+              )
+              .animate(delay: ((index + 1) * 100).milliseconds)
+              .fadeIn()
+              .shimmer(color: Theme.of(context).colorScheme.surfaceTint),
     );
   }
 }
@@ -79,7 +80,10 @@ class CreditsListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final m3 = Theme.of(context).colorScheme;
     return ListTile(
-      leading: Icon(Icons.favorite_outline, color: m3.error).animate().shake(delay: 800.ms),
+      leading: Icon(
+        Icons.favorite_outline,
+        color: m3.error,
+      ).animate().shake(delay: 800.ms),
       title: const Text("Credits"),
       subtitle: const Text("Special thanks to these open source projects"),
     ).animate().fadeIn().shimmer(duration: 900.ms, color: m3.surfaceTint);

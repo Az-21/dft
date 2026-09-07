@@ -11,13 +11,18 @@ String printDiscretePoint(String prefix, int index, String re, String im) {
   re.startsWith('-') ? pointValue += '$re ' : pointValue += ' $re ';
 
   // * +/- sign aware imaginary part
-  im.startsWith('-') ? pointValue += '- (${im.substring(1)})i' : pointValue += '+ ($im)i';
+  im.startsWith('-')
+      ? pointValue += '- (${im.substring(1)})i'
+      : pointValue += '+ ($im)i';
 
   return pointValue;
 }
 
 /// Private f(x):=DiscreteFourierTransform(signal, isInverse flag) | Uses standard notation N, n, k
-List<Complex> _discreteFourierTransform(final List<Complex> inputSignal, {required bool isInverse}) {
+List<Complex> _discreteFourierTransform(
+  final List<Complex> inputSignal, {
+  required bool isInverse,
+}) {
   final N = inputSignal.length;
   List<Complex> outputSignal = <Complex>[];
 
@@ -31,8 +36,12 @@ List<Complex> _discreteFourierTransform(final List<Complex> inputSignal, {requir
     // Sigma DFT
     for (int k = 0; k < N; k++) {
       final double theta = 2 * pi * n * k / N;
-      re += inputSignal[k].real * cos(theta) - inputSignal[k].imaginary * sin(theta);
-      im += signModifier * inputSignal[k].real * sin(theta) + inputSignal[k].imaginary * cos(theta);
+      re +=
+          inputSignal[k].real * cos(theta) -
+          inputSignal[k].imaginary * sin(theta);
+      im +=
+          signModifier * inputSignal[k].real * sin(theta) +
+          inputSignal[k].imaginary * cos(theta);
     }
 
     // Extra scaling step to convert Sigma DFT -> Sigma IDFT
@@ -136,16 +145,28 @@ class ChartFFT {
 }
 
 // DFT, IDFT, and Rx2FFT handler
-List<Complex> fourierTransform(final List<Complex> inputSignal, final SignalProcessingOperation operation) {
+List<Complex> fourierTransform(
+  final List<Complex> inputSignal,
+  final SignalProcessingOperation operation,
+) {
   return switch (operation) {
     SignalProcessingOperation.opRadix2FFT => _radix2FFT(inputSignal),
-    SignalProcessingOperation.opDFT => _discreteFourierTransform(inputSignal, isInverse: false),
-    SignalProcessingOperation.opIDFT => _discreteFourierTransform(inputSignal, isInverse: true),
+    SignalProcessingOperation.opDFT => _discreteFourierTransform(
+      inputSignal,
+      isInverse: false,
+    ),
+    SignalProcessingOperation.opIDFT => _discreteFourierTransform(
+      inputSignal,
+      isInverse: true,
+    ),
   };
 }
 
 // Decimal precision handler
-List<List<String>> signalWithFixedPrecision(final List<Complex> signal, final int precision) {
+List<List<String>> signalWithFixedPrecision(
+  final List<Complex> signal,
+  final int precision,
+) {
   List<String> reSignal = <String>[];
   List<String> imSignal = <String>[];
 
