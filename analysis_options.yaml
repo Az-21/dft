@@ -1,28 +1,53 @@
-# This file configures the analyzer, which statically analyzes Dart code to
-# check for errors, warnings, and lints.
+# Strict static analysis baseline for this project
 #
-# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
-# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
-# invoked from the command line by running `flutter analyze`.
-
-# The following line activates a set of recommended lints for Flutter apps,
-# packages, and plugins designed to encourage good coding practices.
+# Combines the recommended `flutter_lints` set with Dart strict mode and a
+# curated set of additional lints. The formatter width below is authoritative:
+# run `dart format` to apply it. Keep this file warning-free and treat new
+# diagnostics as build failures.
 include: package:flutter_lints/flutter.yaml
 
-linter:
-  # The lint rules applied to this project can be customized in the
-  # section below to disable rules from the `package:flutter_lints/flutter.yaml`
-  # included above or to enable additional rules. A list of all available lints
-  # and their documentation is published at https://dart.dev/lints.
-  #
-  # Instead of disabling a lint rule for the entire project in the
-  # section below, it can also be suppressed for a single line of code
-  # or a specific dart file by using the `// ignore: name_of_lint` and
-  # `// ignore_for_file: name_of_lint` syntax on the line or in the file
-  # producing the lint.
-  rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+  language:
+    # Disallow implicit downcasts from `dynamic`
+    strict-casts: true
+    # Require explicit types where inference would fall back to `dynamic`
+    strict-inference: true
+    # Disallow raw generic types such as `List` without type arguments
+    strict-raw-types: true
 
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
+formatter:
+  page_width: 120
+
+linter:
+  rules:
+    # Top-level and member declarations must state their return type
+    always_declare_return_types:
+    # Flag arguments that repeat the parameter default
+    avoid_redundant_argument_values:
+    # Reach packages through `package:` imports, never relative `lib/` paths
+    avoid_relative_lib_imports:
+    # Documentation `[references]` must resolve to real declarations
+    comment_references:
+    # Keep imports sorted with `dart:` first and `package:` alphabetical
+    directives_ordering:
+    # Public API must not leak private types
+    library_private_types_in_public_api:
+    # Library prefixes use `lower_snake_case` without leading underscores
+    no_leading_underscores_for_library_prefixes:
+    # Wildcard `_` stays a placeholder and is never read
+    no_wildcard_variable_uses:
+    # Only throw `Exception`, `Error`, or subtypes of them
+    only_throw_errors:
+    # Unnamed libraries stay unnamed; named ones use the package prefix
+    package_prefixed_library_names:
+    # Fields assigned once are `final`
+    prefer_final_fields:
+    # Locals assigned once are `final`
+    prefer_final_locals:
+    # Async gaps and discarded futures must be explicit
+    unawaited_futures:
+    # Prefer tear-offs over lambdas that only forward the call
+    unnecessary_lambdas:
