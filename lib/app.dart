@@ -18,10 +18,8 @@ class MyApp extends StatelessWidget {
           builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
             // Each brightness falls back independently when dynamic color
             // is unavailable
-            final lightScheme =
-                lightDynamic?.harmonized() ?? AppTheme.fallbackLightScheme();
-            final darkScheme =
-                darkDynamic?.harmonized() ?? AppTheme.fallbackDarkScheme();
+            final lightScheme = lightDynamic?.harmonized() ?? AppTheme.fallbackLightScheme();
+            final darkScheme = darkDynamic?.harmonized() ?? AppTheme.fallbackDarkScheme();
 
             return MaterialApp.router(
               title: 'DFT Calculator',

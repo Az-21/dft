@@ -35,12 +35,9 @@ void main() {
     expect(find.text('DFT Calculator'), findsOneWidget);
   });
 
-  testWidgets('Renders home with doubled text and high contrast', (
-    tester,
-  ) async {
+  testWidgets('Renders home with doubled text and high contrast', (tester) async {
     tester.platformDispatcher.textScaleFactorTestValue = 2;
-    tester.platformDispatcher.accessibilityFeaturesTestValue =
-        const FakeAccessibilityFeatures(highContrast: true);
+    tester.platformDispatcher.accessibilityFeaturesTestValue = const FakeAccessibilityFeatures(highContrast: true);
     addTearDown(tester.platformDispatcher.clearAllTestValues);
 
     await pumpApp(tester);

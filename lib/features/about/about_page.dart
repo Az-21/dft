@@ -16,11 +16,7 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 100,
-        elevation: 1,
-        title: const Text("About"),
-      ),
+      appBar: AppBar(toolbarHeight: 100, elevation: 1, title: const Text("About")),
       body: ListView(
         children: const [
           // Basic info
@@ -80,10 +76,7 @@ class CreditsListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final m3 = Theme.of(context).colorScheme;
     return ListTile(
-      leading: Icon(
-        Icons.favorite_outline,
-        color: m3.error,
-      ).animate().shake(delay: 800.ms),
+      leading: Icon(Icons.favorite_outline, color: m3.error).animate().shake(delay: 800.ms),
       title: const Text("Credits"),
       subtitle: const Text("Special thanks to these open source projects"),
     ).animate().fadeIn().shimmer(duration: 900.ms, color: m3.surfaceTint);

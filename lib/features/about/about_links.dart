@@ -13,25 +13,13 @@ const List<List<String>> constDataCredit = [
     "Apache 2.0 License",
     "${_github}material-foundation/flutter-packages/tree/main/packages/dynamic_color",
   ],
-  [
-    "Flutter Animate",
-    "BSD 3-Clause License",
-    "${_github}gskinner/flutter_animate",
-  ],
+  ["Flutter Animate", "BSD 3-Clause License", "${_github}gskinner/flutter_animate"],
   [
     "Syncfusion Flutter Charts",
     "Syncfusion Community License",
     "${_github}syncfusion/flutter-widgets/tree/master/packages/syncfusion_flutter_charts",
   ],
   ["Easy Dynamic Theme", "MIT License", "${_github}rlazom/easy_dynamic_theme"],
-  [
-    "URL Launcher",
-    "BSD 3-Clause License",
-    "${_github}flutter/packages/tree/main/packages/url_launcher/url_launcher",
-  ],
-  [
-    "JetBrains Mono",
-    "SIL Open Font License 1.1",
-    "${_github}JetBrains/JetBrainsMono",
-  ],
+  ["URL Launcher", "BSD 3-Clause License", "${_github}flutter/packages/tree/main/packages/url_launcher/url_launcher"],
+  ["JetBrains Mono", "SIL Open Font License 1.1", "${_github}JetBrains/JetBrainsMono"],
 ];

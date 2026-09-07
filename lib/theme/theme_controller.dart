@@ -22,10 +22,7 @@ class ThemeController extends ValueNotifier<ThemeMode> {
   static Future<ThemeController> init({SharedPreferences? prefs}) async {
     final store = prefs ?? await SharedPreferences.getInstance();
     final raw = store.getString(storageKey);
-    final saved = ThemeMode.values.firstWhere(
-      (each) => each.name == raw,
-      orElse: () => ThemeMode.system,
-    );
+    final saved = ThemeMode.values.firstWhere((each) => each.name == raw, orElse: () => ThemeMode.system);
     final controller = _instance ?? ThemeController._(saved);
     controller.value = saved;
     _instance = controller;

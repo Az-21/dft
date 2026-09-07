@@ -21,10 +21,7 @@ abstract final class AppTheme {
   }
 
   static ColorScheme fallbackDarkScheme() {
-    return ColorScheme.fromSeed(
-      seedColor: appSeedColor,
-      brightness: Brightness.dark,
-    );
+    return ColorScheme.fromSeed(seedColor: appSeedColor, brightness: Brightness.dark);
   }
 
   /// Monospace style for numeric readouts; call sites add sizes as needed

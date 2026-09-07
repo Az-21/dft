@@ -53,11 +53,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
 
     // Create chart data point
     for (var index = 0; index < fOutputSignal[0].length; index++) {
-      final ChartFFT o = ChartFFT(
-        index,
-        double.parse(fOutputSignal[0][index]),
-        double.parse(fOutputSignal[1][index]),
-      );
+      final ChartFFT o = ChartFFT(index, double.parse(fOutputSignal[0][index]), double.parse(fOutputSignal[1][index]));
       fftChartData.add(o);
     }
   }
@@ -65,11 +61,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 100,
-        elevation: 1,
-        title: Text(widget.appBarTitle),
-      ),
+      appBar: AppBar(toolbarHeight: 100, elevation: 1, title: Text(widget.appBarTitle)),
       body: ListView(
         shrinkWrap: true,
         physics: const ClampingScrollPhysics(),
@@ -88,16 +80,10 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
                 itemExtent: 32,
                 looping: true,
                 onSelectedItemChanged: (value) {
-                  fOutputSignal = signalWithFixedPrecision(
-                    outputSignal,
-                    value + 1,
-                  );
+                  fOutputSignal = signalWithFixedPrecision(outputSignal, value + 1);
                   setState(() {});
                 },
-                children: [
-                  for (int precision in precisionList)
-                    Center(child: Text('$precision')),
-                ],
+                children: [for (int precision in precisionList) Center(child: Text('$precision'))],
               ),
             ),
           ),
@@ -131,20 +117,14 @@ class InteractiveChart extends StatelessWidget {
             majorTickLines: MajorTickLines(size: 6, width: 2),
             rangePadding: ChartRangePadding.round,
           ),
-          legend: const Legend(
-            isVisible: true,
-            position: LegendPosition.bottom,
-          ),
-          series: <CartesianSeries>[
+          legend: const Legend(isVisible: true, position: LegendPosition.bottom),
+          series: <CartesianSeries<ChartFFT, int>>[
             ColumnSeries<ChartFFT, int>(
               name: 'Real Part',
               width: 0.06,
               opacity: 0.3,
               dataSource: fftChartData,
-              markerSettings: const MarkerSettings(
-                isVisible: true,
-                shape: DataMarkerType.circle,
-              ),
+              markerSettings: const MarkerSettings(isVisible: true, shape: DataMarkerType.circle),
               xValueMapper: (ChartFFT data, _) => data.time,
               yValueMapper: (ChartFFT data, _) => data.realMag,
             ),
@@ -153,10 +133,7 @@ class InteractiveChart extends StatelessWidget {
               width: 0.06,
               opacity: 0.3,
               dataSource: fftChartData,
-              markerSettings: const MarkerSettings(
-                isVisible: true,
-                shape: DataMarkerType.diamond,
-              ),
+              markerSettings: const MarkerSettings(isVisible: true, shape: DataMarkerType.diamond),
               xValueMapper: (ChartFFT data, _) => data.time,
               yValueMapper: (ChartFFT data, _) => data.imgMag,
             ),
@@ -196,10 +173,7 @@ class NumericResults extends StatelessWidget {
             .animate(delay: ((index + 1) * 100).ms)
             .fade(duration: 100.ms)
             .then()
-            .shimmer(
-              duration: 200.ms,
-              color: Theme.of(context).colorScheme.tertiaryContainer,
-            );
+            .shimmer(duration: 200.ms, color: Theme.of(context).colorScheme.tertiaryContainer);
       },
       // Separator
       separatorBuilder: (_, index) {
@@ -259,21 +233,11 @@ class NumericResultListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: SelectableText(
-        printDiscretePoint(
-          'x',
-          index,
-          inputSignal[index].real.toString(),
-          inputSignal[index].imaginary.toString(),
-        ),
+        printDiscretePoint('x', index, inputSignal[index].real.toString(), inputSignal[index].imaginary.toString()),
         style: AppTheme.mono.copyWith(fontSize: 12),
       ),
       subtitle: SelectableText(
-        printDiscretePoint(
-          transformSymbol,
-          index,
-          fOutputSignal[0][index],
-          fOutputSignal[1][index],
-        ),
+        printDiscretePoint(transformSymbol, index, fOutputSignal[0][index], fOutputSignal[1][index]),
         style: AppTheme.mono.copyWith(fontSize: 16),
       ),
     );
