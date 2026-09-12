@@ -1,7 +1,7 @@
-import 'package:complex/complex.dart';
-import 'package:dft/src/functions.dart';
-import 'package:dft/src/result/resultTemplate.dart';
-import 'package:flutter/material.dart';
+import "package:complex/complex.dart";
+import "package:dft/core/dsp/fourier_transform.dart";
+import "package:dft/features/results/result_template.dart";
+import "package:flutter/material.dart";
 
 class IDFT extends StatelessWidget {
   final List<Complex> points;
@@ -10,7 +10,7 @@ class IDFT extends StatelessWidget {
 
   static String appBarTitle = "Inverse DFT";
   static String transformSymbol = "F′";
-  static SignalProcessingOperation operation = SignalProcessingOperation.opIDFT;
+  static SignalProcessingOperation operation = SignalProcessingOperation.idft;
 
   @override
   Widget build(BuildContext context) {

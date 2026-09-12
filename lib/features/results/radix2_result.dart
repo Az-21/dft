@@ -1,7 +1,7 @@
-import 'package:complex/complex.dart';
-import 'package:dft/src/functions.dart';
-import 'package:dft/src/result/resultTemplate.dart';
-import 'package:flutter/material.dart';
+import "package:complex/complex.dart";
+import "package:dft/core/dsp/fourier_transform.dart";
+import "package:dft/features/results/result_template.dart";
+import "package:flutter/material.dart";
 
 class Radix2FFT extends StatelessWidget {
   final List<Complex> points;
@@ -10,7 +10,7 @@ class Radix2FFT extends StatelessWidget {
 
   static String appBarTitle = "Radix2 DIF FFT";
   static String transformSymbol = "F₂";
-  static SignalProcessingOperation operation = SignalProcessingOperation.opRadix2FFT;
+  static SignalProcessingOperation operation = SignalProcessingOperation.radix2Fft;
 
   @override
   Widget build(BuildContext context) {

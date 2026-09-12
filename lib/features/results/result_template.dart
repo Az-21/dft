@@ -1,9 +1,10 @@
-import 'package:complex/complex.dart';
-import 'package:dft/src/functions.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+import "package:complex/complex.dart";
+import "package:dft/core/dsp/fourier_transform.dart";
+import "package:dft/theme/app_theme.dart";
+import "package:flutter/cupertino.dart";
+import "package:flutter/material.dart";
+import "package:flutter_animate/flutter_animate.dart";
+import "package:syncfusion_flutter_charts/charts.dart";
 
 class ResultsPageTemplate extends StatefulWidget {
   const ResultsPageTemplate({
@@ -31,44 +32,41 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
 
   // * List of precision digits for CupertinoPicker
   List<int> precisionList = List<int>.generate(15, (i) => i + 1);
+  final FixedExtentScrollController _precisionController = FixedExtentScrollController(initialItem: 2);
 
   // Extract data
   @override
   void initState() {
     super.initState();
+    // Copy the navigation payload; the FFT step below pads this list in place
+    inputSignal = List.of(widget.points);
     // Calculate relevant Fourier transform of input signal
-    inputSignal = widget.points;
     outputSignal = fourierTransform(inputSignal, widget.operation);
     fOutputSignal = signalWithFixedPrecision(outputSignal, 3);
 
     // Pad input signal for FFT (eg: input with 3 signals will produce 4 outputs) to prevent index error
-    if (widget.operation == SignalProcessingOperation.opRadix2FFT) {
+    if (widget.operation == SignalProcessingOperation.radix2Fft) {
       final int paddingRequired = outputSignal.length - inputSignal.length;
-      Complex complexZero = const Complex(0, 0);
+      const Complex complexZero = Complex(0);
       for (int i = 0; i < paddingRequired; i++) {
         inputSignal.add(complexZero);
       }
     }
 
-    // Create chart data point
-    for (var index = 0; index < fOutputSignal[0].length; index++) {
-      final ChartFFT o = ChartFFT(
-        index,
-        double.parse(fOutputSignal[0][index]),
-        double.parse(fOutputSignal[1][index]),
-      );
-      fftChartData.add(o);
-    }
+    // Chart from raw full-precision output; text rows use fOutputSignal.
+    fftChartData = ChartFFT.fromSpectrum(outputSignal);
+  }
+
+  @override
+  void dispose() {
+    _precisionController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 100,
-        elevation: 1,
-        title: Text(widget.appBarTitle),
-      ),
+      appBar: AppBar(toolbarHeight: 100, elevation: 1, title: Text(widget.appBarTitle)),
       body: ListView(
         shrinkWrap: true,
         physics: const ClampingScrollPhysics(),
@@ -81,7 +79,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
             trailing: SizedBox(
               width: MediaQuery.of(context).size.width * 0.34,
               child: CupertinoPicker(
-                scrollController: FixedExtentScrollController(initialItem: 2),
+                scrollController: _precisionController,
                 useMagnifier: true,
                 magnification: 1.2,
                 itemExtent: 32,
@@ -90,7 +88,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
                   fOutputSignal = signalWithFixedPrecision(outputSignal, value + 1);
                   setState(() {});
                 },
-                children: [for (int precision in precisionList) Center(child: Text('$precision'))],
+                children: [for (int precision in precisionList) Center(child: Text("$precision"))],
               ),
             ),
           ),
@@ -99,7 +97,7 @@ class _ResultsPageTemplateState extends State<ResultsPageTemplate> {
             fOutputSignal: fOutputSignal,
             transformSymbol: widget.transformSymbol,
           ),
-          const SizedBox(height: 64) // Allow some over-scroll
+          const SizedBox(height: 64), // Allow some over-scroll
         ],
       ),
     );
@@ -117,7 +115,7 @@ class InteractiveChart extends StatelessWidget {
       child: SizedBox(
         child: SfCartesianChart(
           enableSideBySideSeriesPlacement: false,
-          title: const ChartTitle(text: 'Graphical Result'),
+          title: const ChartTitle(text: "Graphical Result"),
           primaryXAxis: const NumericAxis(
             interval: 1,
             crossesAt: 0,
@@ -125,24 +123,24 @@ class InteractiveChart extends StatelessWidget {
             rangePadding: ChartRangePadding.round,
           ),
           legend: const Legend(isVisible: true, position: LegendPosition.bottom),
-          series: <CartesianSeries>[
+          series: <CartesianSeries<ChartFFT, int>>[
             ColumnSeries<ChartFFT, int>(
-              name: 'Real Part',
+              name: "Real Part",
               width: 0.06,
               opacity: 0.3,
               dataSource: fftChartData,
-              markerSettings: const MarkerSettings(isVisible: true, shape: DataMarkerType.circle),
+              markerSettings: const MarkerSettings(isVisible: true),
               xValueMapper: (ChartFFT data, _) => data.time,
-              yValueMapper: (ChartFFT data, _) => data.realMag,
+              yValueMapper: (ChartFFT data, _) => data.real,
             ),
             ColumnSeries<ChartFFT, int>(
-              name: 'Imaginary Part',
+              name: "Imaginary Part",
               width: 0.06,
               opacity: 0.3,
               dataSource: fftChartData,
               markerSettings: const MarkerSettings(isVisible: true, shape: DataMarkerType.diamond),
               xValueMapper: (ChartFFT data, _) => data.time,
-              yValueMapper: (ChartFFT data, _) => data.imgMag,
+              yValueMapper: (ChartFFT data, _) => data.imaginary,
             ),
           ],
         ),
@@ -172,11 +170,11 @@ class NumericResults extends StatelessWidget {
       itemCount: fOutputSignal[0].length,
       itemBuilder: (_, index) {
         return NumericResultCard(
-          index: index,
-          inputSignal: inputSignal,
-          transformSymbol: transformSymbol,
-          fOutputSignal: fOutputSignal,
-        )
+              index: index,
+              inputSignal: inputSignal,
+              transformSymbol: transformSymbol,
+              fOutputSignal: fOutputSignal,
+            )
             .animate(delay: ((index + 1) * 100).ms)
             .fade(duration: 100.ms)
             .then()
@@ -240,12 +238,12 @@ class NumericResultListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: SelectableText(
-        printDiscretePoint('x', index, inputSignal[index].real.toString(), inputSignal[index].imaginary.toString()),
-        style: const TextStyle(fontFamily: "JetBrainsMono", fontSize: 12),
+        printDiscretePoint("x", index, inputSignal[index].real.toString(), inputSignal[index].imaginary.toString()),
+        style: AppTheme.mono.copyWith(fontSize: 12),
       ),
       subtitle: SelectableText(
         printDiscretePoint(transformSymbol, index, fOutputSignal[0][index], fOutputSignal[1][index]),
-        style: const TextStyle(fontFamily: "JetBrainsMono", fontSize: 16),
+        style: AppTheme.mono.copyWith(fontSize: 16),
       ),
     );
   }

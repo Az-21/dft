@@ -1,12 +1,12 @@
-import 'package:dft/constant/about.dart';
-import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_animate/flutter_animate.dart';
+import "package:dft/features/about/about_links.dart";
+import "package:flutter/material.dart";
+import "package:flutter_animate/flutter_animate.dart";
+import "package:url_launcher/url_launcher.dart";
 
 Future<void> _launchUrl(String url) async {
   final Uri uri = Uri.parse(url);
   if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-    throw Exception('Could not launch $url');
+    throw Exception("Could not launch $url");
   }
 }
 
@@ -16,11 +16,7 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 100,
-        elevation: 1,
-        title: const Text("About"),
-      ),
+      appBar: AppBar(toolbarHeight: 100, elevation: 1, title: const Text("About")),
       body: ListView(
         children: const [
           // Basic info
@@ -56,18 +52,19 @@ class ListTilesFromIterable extends StatelessWidget {
 
       // Core widget
       itemCount: iterable.length,
-      itemBuilder: (context, index) => ListTile(
-        leading: const Icon(Icons.arrow_right),
-        title: Text(iterable[index][0]),
-        subtitle: Text(iterable[index][1]),
-        trailing: IconButton.outlined(
-          onPressed: () => _launchUrl(iterable[index][2]),
-          icon: const Icon(Icons.open_in_new),
-        ),
-      )
-          .animate(delay: ((index + 1) * 100).milliseconds)
-          .fadeIn()
-          .shimmer(color: Theme.of(context).colorScheme.surfaceTint),
+      itemBuilder: (context, index) =>
+          ListTile(
+                leading: const Icon(Icons.arrow_right),
+                title: Text(iterable[index][0]),
+                subtitle: Text(iterable[index][1]),
+                trailing: IconButton.outlined(
+                  onPressed: () => _launchUrl(iterable[index][2]),
+                  icon: const Icon(Icons.open_in_new),
+                ),
+              )
+              .animate(delay: ((index + 1) * 100).milliseconds)
+              .fadeIn()
+              .shimmer(color: Theme.of(context).colorScheme.surfaceTint),
     );
   }
 }
