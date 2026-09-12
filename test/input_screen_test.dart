@@ -68,6 +68,47 @@ void main() {
     expect(find.text("Graphical Result"), findsOneWidget);
   });
 
+  testWidgets("duplicating a row copies its values next to it", (tester) async {
+    await pumpApp(tester);
+    await tester.tap(find.byTooltip("Add point"));
+    await tester.pumpAndSettle();
+    final List<TextFormField> fields = tester.widgetList<TextFormField>(find.byType(TextFormField)).toList();
+    expect(fields, hasLength(4));
+    await tester.enterText(find.byType(TextFormField).at(0), "5");
+    await tester.pump();
+    await tester.enterText(find.byType(TextFormField).at(2), "7");
+    await tester.pump();
+
+    await tester.tap(find.byTooltip("Duplicate point x(0)"));
+    await tester.pumpAndSettle();
+
+    // New row lands at index 1 with row 0's values; old row 1 shifts to 2.
+    final List<String?> texts = tester
+        .widgetList<TextFormField>(find.byType(TextFormField))
+        .map((TextFormField field) => field.controller?.text)
+        .toList();
+    expect(texts, ["5", "0", "5", "0", "7", "0"]);
+  });
+
+  testWidgets("deleting a row removes its values", (tester) async {
+    await pumpApp(tester);
+    await tester.tap(find.byTooltip("Add point"));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextFormField).at(0), "5");
+    await tester.pump();
+    await tester.enterText(find.byType(TextFormField).at(2), "7");
+    await tester.pump();
+
+    await tester.tap(find.byTooltip("Remove point x(0)"));
+    await tester.pumpAndSettle();
+
+    final List<String?> texts = tester
+        .widgetList<TextFormField>(find.byType(TextFormField))
+        .map((TextFormField field) => field.controller?.text)
+        .toList();
+    expect(texts, ["7", "0"]);
+  });
+
   testWidgets("example loader replaces the input", (tester) async {
     await pumpApp(tester);
     await tester.tap(find.byTooltip("Input actions"));

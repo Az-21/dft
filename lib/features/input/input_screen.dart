@@ -6,7 +6,6 @@ import "package:dft/routing/transform_params.dart";
 import "package:dft/theme/app_theme.dart";
 import "package:dft/theme/theme_mode_button.dart";
 import "package:flutter/material.dart";
-import "package:flutter_animate/flutter_animate.dart";
 import "package:go_router/go_router.dart";
 
 /// Runtime state for one editable point: the string draft plus its focus
@@ -49,6 +48,10 @@ class _HomeScreenState extends State<HomeScreen> with RestorationMixin {
 
   GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   late List<_PointState> _points;
+
+  /// Ids whose entrance shimmer has not played yet. Slots are matched
+  /// positionally, so mount position cannot identify a new row; this set can.
+  final Set<int> _freshIds = <int>{0};
   int _nextId = 1;
 
   @override
@@ -73,6 +76,9 @@ class _HomeScreenState extends State<HomeScreen> with RestorationMixin {
           for (final SignalPointInput draft in restored.points) _PointState(draft, _handleFocusChange),
         ];
         _nextId = restored.nextId;
+        _freshIds
+          ..clear()
+          ..addAll(<int>[for (final _PointState point in _points) point.draft.id]);
       }
     }
   }
@@ -108,19 +114,12 @@ class _HomeScreenState extends State<HomeScreen> with RestorationMixin {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
-  /// Shimmer sweep played once when a transitioning row first builds, so
-  /// existing rows do not replay it on parent rebuilds.
-  Widget _withShimmer(Widget child) {
-    final Color shimmerColor = Theme.of(context).colorScheme.tertiaryContainer;
-    return child.animate().shimmer(duration: 400.ms, color: shimmerColor);
-  }
-
-  /// Addition: the new row slides in from the left with a shimmer sweep.
+  /// Addition: the new row slides in from outside the left edge.
   Widget _animateInsertion(Widget child, Animation<double> animation) {
     final CurvedAnimation curved = CurvedAnimation(parent: animation, curve: Curves.easeOut);
     return SlideTransition(
       position: Tween(begin: const Offset(-1, 0), end: Offset.zero).animate(curved),
-      child: _withShimmer(child),
+      child: child,
     );
   }
 
@@ -129,9 +128,10 @@ class _HomeScreenState extends State<HomeScreen> with RestorationMixin {
   /// a [ReverseAnimation] to travel outward as the value falls.
   Widget _animateRemoval(Widget child, Animation<double> animation) {
     return SlideTransition(
-      position: Tween(begin: Offset.zero, end: const Offset(1, 0)).animate(
-        CurvedAnimation(parent: ReverseAnimation(animation), curve: Curves.easeIn),
-      ),
+      position: Tween(
+        begin: Offset.zero,
+        end: const Offset(1, 0),
+      ).animate(CurvedAnimation(parent: ReverseAnimation(animation), curve: Curves.easeIn)),
       child: child,
     );
   }
@@ -153,8 +153,10 @@ class _HomeScreenState extends State<HomeScreen> with RestorationMixin {
       _showMessage("Maximum of $maxInputPoints points reached - DFT cost grows quadratically.");
       return;
     }
+    final int id = _nextId++;
     setState(() {
-      _points.add(_PointState(SignalPointInput(id: _nextId++), _handleFocusChange));
+      _points.add(_PointState(SignalPointInput(id: id), _handleFocusChange));
+      _freshIds.add(id);
       _syncPayload();
     });
     _listKey.currentState?.insertItem(_points.length - 1);
@@ -195,14 +197,13 @@ class _HomeScreenState extends State<HomeScreen> with RestorationMixin {
       return;
     }
     final SignalPointInput source = _points[index].draft;
+    final int id = _nextId++;
     setState(() {
       _points.insert(
         index + 1,
-        _PointState(
-          SignalPointInput(id: _nextId++, real: source.real, imaginary: source.imaginary),
-          _handleFocusChange,
-        ),
+        _PointState(SignalPointInput(id: id, real: source.real, imaginary: source.imaginary), _handleFocusChange),
       );
+      _freshIds.add(id);
       _syncPayload();
     });
     _listKey.currentState?.insertItem(index + 1);
@@ -229,9 +230,13 @@ class _HomeScreenState extends State<HomeScreen> with RestorationMixin {
       for (final _PointState point in _points) {
         point.dispose();
       }
-      _points = <_PointState>[_PointState(SignalPointInput(id: _nextId++), _handleFocusChange)];
+      final int id = _nextId++;
+      _points = <_PointState>[_PointState(SignalPointInput(id: id), _handleFocusChange)];
       // Wholesale replacement: swap in a fresh list instead of animating.
       _listKey = GlobalKey<AnimatedListState>();
+      _freshIds
+        ..clear()
+        ..add(id);
       _syncPayload();
     });
   }
@@ -255,6 +260,9 @@ class _HomeScreenState extends State<HomeScreen> with RestorationMixin {
       ];
       // Wholesale replacement: swap in a fresh list instead of animating.
       _listKey = GlobalKey<AnimatedListState>();
+      _freshIds
+        ..clear()
+        ..addAll(<int>[for (final _PointState point in _points) point.draft.id]);
       _syncPayload();
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -265,13 +273,18 @@ class _HomeScreenState extends State<HomeScreen> with RestorationMixin {
   }
 
   /// Builds the editable row for [index], spaced from the next row.
+  ///
+  /// Consumes the row's freshness: the shimmer plays only for ids still in
+  /// [_freshIds], i.e. rows that have never been shown before.
   Widget _buildRow(int index) {
     final _PointState point = _points[index];
+    final bool fresh = _freshIds.remove(point.draft.id);
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: SignalPointRow(
         key: ValueKey<int>(point.draft.id),
         index: index,
+        autoplayShimmer: fresh,
         point: point.draft,
         isLast: index == _points.length - 1,
         realFocus: point.realFocus,
@@ -450,6 +463,11 @@ class _HomeScreenState extends State<HomeScreen> with RestorationMixin {
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 initialItemCount: _points.length,
                 itemBuilder: (BuildContext context, int index, Animation<double> animation) {
+                  // Slots are matched positionally, so the entrance slide
+                  // always plays on the inserted slot (which shows the new
+                  // row). The shimmer instead is gated per row id inside
+                  // [_buildRow]: only genuinely new rows play it, so shifts
+                  // and deletions stay silent.
                   return _animateInsertion(_buildRow(index), animation);
                 },
               ),

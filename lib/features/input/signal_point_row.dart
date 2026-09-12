@@ -4,6 +4,7 @@ import "package:dft/features/input/signal_input.dart";
 import "package:dft/theme/app_theme.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
+import "package:flutter_animate/flutter_animate.dart";
 
 /// One editable signal point.
 ///
@@ -18,6 +19,7 @@ class SignalPointRow extends StatefulWidget {
   const SignalPointRow({
     super.key,
     required this.index,
+    required this.autoplayShimmer,
     required this.point,
     required this.isLast,
     required this.realFocus,
@@ -29,6 +31,10 @@ class SignalPointRow extends StatefulWidget {
     required this.onDuplicate,
   });
 
+  /// Whether the entrance shimmer plays when this row mounts. The screen
+  /// sets it only for rows that have never been shown; list slots are matched
+  /// positionally, so mount position alone cannot identify a new row.
+  final bool autoplayShimmer;
   final FocusNode imagFocus;
   final int index;
   final bool isLast;
@@ -88,7 +94,11 @@ class _SignalPointRowState extends State<SignalPointRow> {
   @override
   Widget build(BuildContext context) {
     final ColorScheme m3 = Theme.of(context).colorScheme;
-    return Column(
+    // Shimmer lives inside the keyed row (not in the list-level transition
+    // wrapper, whose elements are matched positionally). It plays only when
+    // the screen flags this row as never shown - never on shifts, never on
+    // delete.
+    final Widget content = Column(
       children: <Widget>[
         ListTile(
           contentPadding: const EdgeInsets.only(left: 12),
@@ -156,5 +166,9 @@ class _SignalPointRowState extends State<SignalPointRow> {
         ),
       ],
     );
+    if (!widget.autoplayShimmer) {
+      return content;
+    }
+    return content.animate().shimmer(duration: 400.ms, color: m3.tertiaryContainer);
   }
 }
